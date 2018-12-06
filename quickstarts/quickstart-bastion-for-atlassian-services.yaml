@@ -1,0 +1,126 @@
+---
+# bring up diffs between this file and the BitbucketDataCenter.template, and JiraDataCenter.template.
+# As a rule, we should work to minimize our diffs between these files as best we can, so that future changes are easy to make across all supported CloudFormation templates.
+# Using YAML as our file format will allow us to put a block comment at the top of the file saying exactly this.
+AWSTemplateFormatVersion: 2010-09-09
+Description: QS(5027) Atlassian Vpc Bastion Oct,19,2016
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Networking
+        Parameters: [VPC, Subnet, AccessCIDR, KeyName]
+      - Label:
+          default: 'Linux Bastion Configuration'
+        Parameters: [EnableTCPForwarding, EnableX11Forwarding]
+    ParameterLabels:
+      AccessCIDR:
+        default: IP range Permitted Access
+      EnableTCPForwarding:
+        default: Enable TCP Forwarding
+      EnableX11Forwarding:
+        default: Enable X11 Forwarding
+      KeyName:
+        default: Key Name *
+      Subnet:
+        default: External subnet *
+      VPC:
+        default: VPC *
+Parameters:
+  AccessCIDR:
+    Default: '0.0.0.0/0'
+    AllowedPattern: '(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})'
+    ConstraintDescription: Must be a valid IP CIDR range of the form x.x.x.x/x.
+    Description: The CIDR IP range that is permitted to access Services in this VPC. Use 0.0.0.0/0 if you want public access from the internet.
+    Type: String
+    MinLength: 9
+    MaxLength: 18
+  EnableTCPForwarding:
+    Type: String
+    Description: Enable/Disable TCP Forwarding
+    Default: 'true'
+    AllowedValues:
+      - 'true'
+      - 'false'
+  EnableX11Forwarding:
+    Type: String
+    Description: Enable/Disable X11 Forwarding
+    Default: 'false'
+    AllowedValues:
+      - 'true'
+      - 'false'
+  KeyName:
+    ConstraintDescription: Must be the name of an existing EC2 Key Pair.
+    Description: The EC2 Key Pair to allow SSH access to the instances
+    Type: AWS::EC2::KeyPair::KeyName
+  Subnet:
+    ConstraintDescription: Must be one of the external Subnet ID's within the selected VPC.
+    Description: External Subnet where your bastion will be deployed. MUST be within the selected VPC.
+    Type: "AWS::EC2::Subnet::Id"
+  VPC:
+    ConstraintDescription: Must be the ID of a VPC.
+    Description: Virtual Private Cloud
+    Type: "AWS::EC2::VPC::Id"
+
+Mappings:
+  RegionAmiMap:
+    ap-northeast-1:
+      "ami": "ami-06cd52961ce9f0d85"
+    ap-northeast-2:
+      "ami": "ami-0a10b2721688ce9d2"
+    ap-south-1:
+      "ami": "ami-0912f71e06545ad88"
+    ap-southeast-1:
+      "ami": "ami-08569b978cc4dfa10"
+    ap-southeast-2:
+      "ami": "ami-09b42976632b27e9b"
+    ca-central-1:
+      "ami": "ami-0b18956f"
+    eu-central-1:
+      "ami": "ami-0233214e13e500f77"
+    eu-west-1:
+      "ami": "ami-047bb4163c506cd98"
+    eu-west-2:
+      "ami": "ami-f976839e"
+    eu-west-3:
+      "ami": "ami-0ebc281c20e89ba4b"
+    sa-east-1:
+      "ami": "ami-07b14488da8ea02a0"
+    us-east-1:
+      "ami": "ami-0ff8a91507f77f867"
+    us-east-2:
+      "ami": "ami-0b59bfac6be064b78"
+    us-west-1:
+      "ami": "ami-0bdb828fd58c52235"
+    us-west-2:
+      "ami": "ami-a0cfeed8"
+
+Resources:
+  Bastion:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !FindInMap [RegionAmiMap, !Ref "AWS::Region", "ami"]
+      InstanceType: t2.micro
+      KeyName: !Ref KeyName
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet: [ !Ref SecurityGroup ]
+          SubnetId: !Ref Subnet
+      Tags:
+        - Key: Name
+          Value: "Bastion for Atlassian Product VPC"
+  SecurityGroup:
+    Type: "AWS::EC2::SecurityGroup"
+    Properties:
+      GroupDescription: Security group allowing SSH access
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref AccessCIDR
+Outputs:
+  BastionPubIp:
+    Description: The Public IP to ssh to the Bastion
+    Value: !GetAtt Bastion.PublicIp
