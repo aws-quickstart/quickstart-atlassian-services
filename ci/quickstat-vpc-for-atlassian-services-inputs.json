@@ -1,0 +1,10 @@
+[
+    {
+        "ParameterKey": "AvailabilityZones",
+        "ParameterValue": "$[taskcat_genaz_2]"
+    },
+    {
+        "ParameterKey": "KeyPairName",
+        "ParameterValue": "replaced-by-taskcat-override-file"
+    }
+]
