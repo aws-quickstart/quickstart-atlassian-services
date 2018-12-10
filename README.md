@@ -7,6 +7,9 @@ This Quick Start sets up a highly available, secure AWS Virtual Private Cloud
 slightly from the standard [AWS VPC configuration][aws-vpc] to enable multiple
 products under the same VPC for cross-application integration.
 
+You should deploy this Quick Start VPC, or configure your own VPC before you 
+deploy the other Atlassian Product Quick Starts.
+
 ### Example deployed VPC (with Jira Data Center)
 
 ![Example deployed VPC (with Jira Data Center)][vpc-img]
