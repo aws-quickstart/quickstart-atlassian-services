@@ -223,3 +223,6 @@ Outputs:
     Value: !GetAtt VPCStack.Outputs.VPCID
     Export:
       Name: 'ATL-VPCID'
+  BastionPubIp:
+    Description: The Public IP to ssh to the Bastion
+    Value: !GetAtt 'BastionStack.Outputs.BastionPubIp'
