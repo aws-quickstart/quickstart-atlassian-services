@@ -1,5 +1,13 @@
 [
     {
+        "ParameterKey":"QSS3BucketName",
+        "ParameterValue":"$[taskcat_autobucket]"
+    },
+    {
+        "ParameterKey":"QSS3KeyPrefix",
+        "ParameterValue":"quickstart-atlassian-services/"
+    },
+    {
         "ParameterKey": "AvailabilityZones",
         "ParameterValue": "$[taskcat_genaz_2]"
     },
