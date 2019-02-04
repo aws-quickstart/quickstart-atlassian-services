@@ -103,7 +103,7 @@ Parameters:
       It cannot start or end with a hyphen (-).
     Type: String
   QSS3KeyPrefix:
-    Default: 'atlassian-standard-infrastructure/'
+    Default: 'quickstart-atlassian-services/'
     AllowedPattern: ^[0-9a-zA-Z-/]*$
     ConstraintDescription: Quick Start key prefix can include numbers, lowercase letters,
       uppercase letters, hyphens (-), and forward slash (/).
