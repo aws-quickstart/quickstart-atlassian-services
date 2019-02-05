@@ -1,32 +1,14 @@
-# Getting Started
+# quickstart-atlassian-services
+## Atlassian Standard Infrastructure on the AWS Cloud
 
-This Quick Start sets up a highly available, secure AWS Virtual Private Cloud
-(VPC) to host [Atlassian Data Center][data-center] products. This VPC differs
-slightly from the standard [AWS VPC configuration][aws-vpc] to enable multiple
-products under the same VPC for cross-application integration.
+This Quick Start sets up the Atlassian Standard Infrastructure (ASI) in your AWS account in about 20 minutes. ASI is a highly available, secure virtual private cloud (VPC) that is specifically customized to host Atlassian Data Center products. 
 
-You should deploy this Quick Start VPC, or configure your own VPC before you 
-deploy the other Atlassian Product Quick Starts.
+The ASI includes two public and two private subnets in two Availability Zones in your AWS account, and contains all the components required for the deployment and integration of multiple Atlassian Data Center products within the same VPC.
 
-### Example deployed VPC (with Jira Data Center installed)
+The [Jira](https://fwd.aws/kRapJ), [Confluence](https://fwd.aws/JAEM9), and [Bitbucket](https://fwd.aws/BBeJW) Quick Starts all require the ASI.
 
-Once you deploy his Atlassian Services VPC, you will have two (2) public subnets, one per availability zone selected along with two (2) private subnets. These are matched to ensure that your Atlassian products that are deployed, can be provisioned securely.
+For architectural details, best practices, step-by-step instructions, and customization options, see the 
+[deployment guide](https://fwd.aws/xYyYy).
 
-Select this provisioned VPC when using the additional Atlassian Quick Start guides.
-
-![Example deployed VPC (with Jira Data Center)][vpc-img]
-
-
-## Next Steps
-
-See our individual product Quick Starts, at:
-
-Quick Start for [Confluence Data Center](https://confluence.atlassian.com/doc/running-confluence-data-center-in-aws-879956085.html#RunningConfluenceDataCenterinAWS-DeployingConfluenceDataCenterusingtheAWSQuickStart)
-
-Quick Start for [Jira Data Center](https://confluence.atlassian.com/adminjiraserver/getting-started-with-jira-data-center-on-aws-938846966.html)
-
-Quick Start for [Bitbucket Data Center](https://confluence.atlassian.com/bitbucketserver/getting-started-with-bitbucket-server-and-aws-776640193.html)
-
-[data-center]: https://www.atlassian.com/enterprise/data-center
-[aws-vpc]: https://github.com/aws-quickstart/quickstart-aws-vpc
-[vpc-img]: https://github.com/tarka/quickstart-atlassian-services/raw/master/docs/vpc-with-jira.png
+To post feedback, submit feature ideas, or report bugs, use the **Issues** section of this GitHub repo.
+If you'd like to submit code for this Quick Start, please review the [AWS Quick Start Contributor's Kit](https://aws-quickstart.github.io/). 
