@@ -5,6 +5,8 @@ This Quick Start sets up the Atlassian Standard Infrastructure (ASI) in your AWS
 
 The ASI includes two public and two private subnets in two Availability Zones in your AWS account, and contains all the components required for the deployment and integration of multiple Atlassian Data Center products within the same VPC.
 
+![Quick Start architecture for Atlassian Standard Infrastructure on AWS](https://d0.awsstatic.com/partner-network/QuickStart/datasheets/atlassian-standard-architecture-on-the-aws-cloud.png)
+
 The [Jira](https://fwd.aws/kRapJ), [Confluence](https://fwd.aws/JAEM9), and [Bitbucket](https://fwd.aws/BBeJW) Quick Starts all require the ASI.
 
 For architectural details, best practices, step-by-step instructions, and customization options, see the 
