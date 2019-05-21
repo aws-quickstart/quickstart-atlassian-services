@@ -112,9 +112,9 @@ Parameters:
 
 Conditions:
     UseAurora:
-      !Equals: [!Ref DatabaseImplementation, 'AWS Aurora PostgreSQL']
+      !Equals [!Ref DatabaseImplementation, 'AWS Aurora PostgreSQL']
     UsePostgres:
-      !Equals: [!Ref DatabaseImplementation, 'PostgreSQL']
+      !Equals [!Ref DatabaseImplementation, 'PostgreSQL']
     GovCloudCondition:
       !Equals [!Ref 'AWS::Region', 'us-gov-west-1']
     DBProvisionedIops:
