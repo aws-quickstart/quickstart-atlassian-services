@@ -129,7 +129,7 @@ Resources:
     Properties:
       TemplateURL: 
         !Sub
-          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}/submodules/quickstart-amazon-aurora
+          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-amazon-aurora/templates/aurora_postgres.yaml
           - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       Parameters:
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
@@ -151,7 +151,7 @@ Resources:
     Properties:
       TemplateURL:
         !Sub
-          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}/submodules/quickstart-atlassian-postgres
+          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-postgres-for-atlassian-services.yaml
           - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       Parameters:
         DBAutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
