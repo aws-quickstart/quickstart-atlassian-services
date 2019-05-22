@@ -98,11 +98,11 @@ Parameters:
     Description: Whether or not to encrypt the database
     Type: String
   DBStorageType:
-    Default: gp2
+    Default: General Purpose (SSD)
     AllowedValues:
-      - gp2
-      - io1
-    ConstraintDescription: Must be 'gp2' (General Purpose SSD) or 'io1' (Provisioned IOPS).
+      - General Purpose (SSD)
+      - Provisioned IOPS
+    ConstraintDescription: Must be 'General Purpose (SSD)' or 'Provisioned IOPS'. Not valid for Aurora
     Description: Database storage type
     Type: String
   CustomDBSecurityGroup:

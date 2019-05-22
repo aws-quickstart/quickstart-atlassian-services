@@ -129,7 +129,7 @@ Resources:
     Properties:
       TemplateURL: 
         !Sub
-          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-amazon-aurora/templates/aurora_postgres.yaml
+          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.yaml
           - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       Parameters:
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
@@ -151,7 +151,7 @@ Resources:
     Properties:
       TemplateURL:
         !Sub
-          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-postgres-for-atlassian-services.yaml
+          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
           - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       Parameters:
         DBAutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
@@ -164,7 +164,7 @@ Resources:
         DBPort: '5432'
         DBAllocatedStorage: !Ref DBAllocatedStorage
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
-        DBStorageType: !If [DBProvisionedIops, io1, gp2]
+        DBStorageType: !Ref DBStorageType
         CustomDBSecurityGroup: !Ref DBSecurityGroup
         Subnet1ID: !Select [0, !Split [ ",", !ImportValue ATL-PriNets]]
         Subnet2ID: !Select [1, !Split [ ",", !ImportValue ATL-PriNets]]
