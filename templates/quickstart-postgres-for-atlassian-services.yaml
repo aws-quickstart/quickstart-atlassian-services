@@ -118,8 +118,6 @@ Parameters:
 Conditions:
   DBProvisionedIops:
     !Equals [!Ref DBStorageType, io1]
-  DoSetDBMasterUserPassword:
-    !Not [!Equals [!Ref DBMasterUserPassword, '']]
   UseDatabaseEncryption:
     !Equals [!Ref DBAllocatedStorageEncrypted, true]
 
@@ -170,7 +168,7 @@ Resources:
       Iops: !If [DBProvisionedIops, !Ref DBIops, !Ref 'AWS::NoValue']
       KmsKeyId: !If [UseDatabaseEncryption, !GetAtt EncryptionKey.Arn, !Ref 'AWS::NoValue']
       MasterUsername: !Ref DBMasterUsername
-      MasterUserPassword: !If [DoSetDBMasterUserPassword, !Ref DBMasterUserPassword, !Ref 'AWS::NoValue']
+      MasterUserPassword: !Ref DBMasterUserPassword
       MultiAZ: !Ref DBMultiAZ
       StorageEncrypted: !If [UseDatabaseEncryption, !Ref DBAllocatedStorageEncrypted, !Ref 'AWS::NoValue']
       StorageType: !If [DBProvisionedIops, io1, gp2]
