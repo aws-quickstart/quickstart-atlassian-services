@@ -117,8 +117,6 @@ Conditions:
       !Equals [!Ref DatabaseImplementation, 'PostgreSQL']
     GovCloudCondition:
       !Equals [!Ref 'AWS::Region', 'us-gov-west-1']
-    DBProvisionedIops:
-      !Equals [!Ref DBStorageType, io1]
     UseDatabaseEncryption:
       !Equals [!Ref DBStorageEncrypted, true]
 
