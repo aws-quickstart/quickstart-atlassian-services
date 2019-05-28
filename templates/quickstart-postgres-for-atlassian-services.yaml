@@ -82,10 +82,6 @@ Parameters:
       - false
     ConstraintDescription: Must be 'true' or 'false'.
     Type: String
-  DBPort:
-    Description: The port for the database to listen for connections
-    Default: 5432
-    Type: Number
   DBAllocatedStorage:
     Default: 10
     Description: Database allocated storage size, in gigabytes (GB). If you choose Provisioned IOPS, storage should be between 100 and 6144
@@ -160,8 +156,7 @@ Resources:
       AutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
       BackupRetentionPeriod: !Ref DBBackupRetentionPeriod
       DBInstanceClass: !Ref DBInstanceClass
-      DBInstanceIdentifier: !Ref AWS::StackName
-      Port: !Ref DBPort
+      DBInstanceIdentifier: !Sub ["${RootStack}-db", RootStack: !Select [0, !Split ['-', !Ref 'AWS::StackName']]]
       DBSubnetGroupName: !Ref DBSubnetGroup
       Engine: postgres
       EngineVersion: '9.6'

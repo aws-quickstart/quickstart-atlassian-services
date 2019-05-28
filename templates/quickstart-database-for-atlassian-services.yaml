@@ -159,7 +159,6 @@ Resources:
         DBMasterUsername: postgres
         DBMasterUserPassword: !Ref DBMasterUserPassword
         DBMultiAZ: !Ref DBMultiAZ
-        DBPort: '5432'
         DBAllocatedStorage: !Ref DBAllocatedStorage
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBStorageType: !Ref DBStorageType
