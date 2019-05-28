@@ -64,7 +64,7 @@ Parameters:
     NoEcho: true
     Type: String
   DBMultiAZ:
-    Description: Whether to provision a multi-AZ RDS instance.
+    Description: When DBEngine is 'PostgreSQL', this will determine whether to provision a multi-AZ RDS instance. When DBEngine is 'AWS Aurora PostgreSQL', this will determine whether to provision a single or a multi node Aurora cluster
     Default: true
     AllowedValues:
       - true
