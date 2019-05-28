@@ -21,7 +21,7 @@ Parameters:
       - "true"
       - "false"
     Default: "false"
-    Description: "Select true/false to setup Auto Minor Version upgrade"
+    Description: "Select true/false to setup Auto Minor Version upgrade. e.g. PostgreSQL 9.6.8 -> 9.6.11"
     Type: String
   DBBackupRetentionPeriod: 
     Default: "7"
