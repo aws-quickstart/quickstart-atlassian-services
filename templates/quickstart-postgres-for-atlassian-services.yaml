@@ -102,7 +102,7 @@ Parameters:
     AllowedValues:
       - General Purpose (SSD)
       - Provisioned IOPS
-    ConstraintDescription: Must be 'General Purpose (SSD)' or 'Provisioned IOPS'. Not valid for Aurora
+    ConstraintDescription: Must be 'General Purpose (SSD)' or 'Provisioned IOPS'.
     Description: Database storage type
     Type: String
   CustomDBSecurityGroup:
