@@ -136,6 +136,7 @@ Resources:
         DBEngineVersion: 9.6.11
         DBMasterUserPassword: !Ref DBMasterUserPassword
         DBMultiAZ: !Ref DBMultiAZ
+        DBName: ''
         DBPort: '5432'
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         CustomDBSecurityGroup: !Ref DBSecurityGroup
