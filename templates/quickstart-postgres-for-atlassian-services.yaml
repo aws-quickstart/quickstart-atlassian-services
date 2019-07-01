@@ -29,8 +29,14 @@ Parameters:
     Description: "The number of days for which automatic database snapshots are retained."
     Type: String
   DBInstanceClass:
-    Default: db.t2.medium
+    Default: db.m5.large
     AllowedValues:
+      - db.m5.large
+      - db.m5.xlarge
+      - db.m5.2xlarge
+      - db.m5.4xlarge
+      - db.m5.12xlarge
+      - db.m5.24xlarge
       - db.m4.large
       - db.m4.xlarge
       - db.m4.2xlarge
@@ -43,6 +49,12 @@ Parameters:
       - db.r4.4xlarge
       - db.r4.8xlarge
       - db.r4.16xlarge
+      - db.r5.large
+      - db.r5.xlarge
+      - db.r5.2xlarge
+      - db.r5.4xlarge
+      - db.r5.12xlarge
+      - db.r5.24xlarge
       - db.t2.medium
       - db.t2.large
       - db.t2.xlarge
