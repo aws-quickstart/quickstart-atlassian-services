@@ -2,7 +2,7 @@
 # This template is a wrapper for compatible database templates. It exposes a single input/output API and can be referenced the same way no
 # matter which Database "Implementation" is chosen.
 AWSTemplateFormatVersion: 2010-09-09
-Description: RDS Bootstrap template for use with Atlassian Services
+Description: RDS Bootstrap template for use with Atlassian Services (qs-1pj6s43hc)
 Parameters:
   DatabaseImplementation:
     Default: 'Amazon Aurora PostgreSQL'

@@ -15,7 +15,7 @@
 # DBAllocatedStorageEncrypted
 # DBStorageType
 AWSTemplateFormatVersion: 2010-09-09
-Description: RDS Postgres Database for use in Atlassian Standard Infrastructure
+Description: RDS Postgres Database for use in Atlassian Standard Infrastructure (qs-1aj6s44e4)
 Parameters:
   DBAutoMinorVersionUpgrade:
     Default: true
