@@ -8,13 +8,11 @@ Metadata:
           default: ' VPC Network Configuration'
         Parameters:
           - AccessCIDR
-          - AssociatePublicIpAddress
           - AvailabilityZones
           - PrivateSubnet1CIDR
           - PrivateSubnet2CIDR
           - PublicSubnet1CIDR
           - PublicSubnet2CIDR
-          - SSLCertificateName
           - VPCCIDR
       - Label:
           default: Amazon EC2 Configuration
