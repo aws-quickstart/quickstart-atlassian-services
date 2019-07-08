@@ -150,7 +150,7 @@ Resources:
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
         DBInstanceClass: !Ref DBInstanceClass
         DBMasterUsername: postgres
-        DBEngineVersion: 9.6.11
+        DBEngineVersion: 9.6.12
         DBMasterUserPassword: !Ref DBMasterUserPassword
         DBMultiAZ: !Ref DBMultiAZ
         DBName: ''
