@@ -157,8 +157,7 @@ Resources:
         DBMultiAZ: !Ref DBMultiAZ
         DBName: ''
         DBPort: '5432'
-        DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
-        CustomDBSecurityGroup: !Ref DBSecurityGroup
+        EnableEventSubscription: 'false'
         Subnet1ID: !Select [0, !Split [ ",", !ImportValue ATL-PriNets]]
         Subnet2ID: !Select [1, !Split [ ",", !ImportValue ATL-PriNets]]
         # NB: The VPCID is not used by the aurora template but it will fail if it is not provided.
