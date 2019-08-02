@@ -147,16 +147,17 @@ Resources:
           - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.template.yaml
           - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       Parameters:
+        CustomDBSecurityGroup: !Ref DBSecurityGroup
+        DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
+        DBEngineVersion: 9.6.12
         DBInstanceClass: !Ref DBInstanceClass
         DBMasterUsername: postgres
-        DBEngineVersion: 9.6.12
         DBMasterUserPassword: !Ref DBMasterUserPassword
         DBMultiAZ: !Ref DBMultiAZ
         DBName: ''
         DBPort: '5432'
-        DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
-        CustomDBSecurityGroup: !Ref DBSecurityGroup
+        EnableEventSubscription: 'false'
         Subnet1ID: !Select [0, !Split [ ",", !ImportValue ATL-PriNets]]
         Subnet2ID: !Select [1, !Split [ ",", !ImportValue ATL-PriNets]]
         # NB: The VPCID is not used by the aurora template but it will fail if it is not provided.
@@ -171,6 +172,9 @@ Resources:
           - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
           - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       Parameters:
+        CustomDBSecurityGroup: !Ref DBSecurityGroup
+        DBAllocatedStorage: !Ref DBAllocatedStorage
+        DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBAutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
         DBInstanceClass: !Ref DBInstanceClass
@@ -178,10 +182,7 @@ Resources:
         DBMasterUsername: postgres
         DBMasterUserPassword: !Ref DBMasterUserPassword
         DBMultiAZ: !Ref DBMultiAZ
-        DBAllocatedStorage: !Ref DBAllocatedStorage
-        DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBStorageType: !Ref DBStorageType
-        CustomDBSecurityGroup: !Ref DBSecurityGroup
         Subnet1ID: !Select [0, !Split [ ",", !ImportValue ATL-PriNets]]
         Subnet2ID: !Select [1, !Split [ ",", !ImportValue ATL-PriNets]]
 
