@@ -172,7 +172,9 @@ Resources:
       AutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
       BackupRetentionPeriod: !Ref DBBackupRetentionPeriod
       DBInstanceClass: !Ref DBInstanceClass
-      DBInstanceIdentifier: !Sub ["${RootStack}-db", RootStack: !Select [0, !Split ['-', !Ref 'AWS::StackName']]]
+      # In the next line of code the '-DB' delimeter is used to get the root stack name for database identifier
+      # 'AWS::StackName' produces MASTER_STACK_NAME-DB (as DB is the name of the nested stack resource).
+      DBInstanceIdentifier: !Sub ["${RootStack}-db", RootStack: !Select [0, !Split ['-DB', !Ref 'AWS::StackName']]]
       DBSubnetGroupName: !Ref DBSubnetGroup
       Engine: postgres
       EngineVersion: '9.6'
