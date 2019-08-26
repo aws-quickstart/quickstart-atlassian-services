@@ -18,7 +18,7 @@ global:
 
 tests:
   vpc:
-    parameter_input: quickstat-vpc-for-atlassian-services-inputs.json
+    parameter_input: params/default/quickstart-asi-custom-export.json
     template_file: quickstart-vpc-for-atlassian-services.yaml
     regions:
       - us-east-1
