@@ -1,0 +1,26 @@
+[
+    {
+        "ParameterKey":"QSS3BucketName",
+        "ParameterValue":"$[taskcat_autobucket]"
+    },
+    {
+        "ParameterKey":"QSS3KeyPrefix",
+        "ParameterValue":"quickstart-atlassian-services/"
+    },
+    {
+        "ParameterKey": "AvailabilityZones",
+        "ParameterValue": "$[taskcat_genaz_2]"
+    },
+    {
+        "ParameterKey": "AccessCIDR",
+        "ParameterValue": "10.0.0.0/16"
+    },
+    {
+        "ParameterKey": "ExportPrefix",
+        "ParameterValue": "CUSTOM"
+    },
+    {
+        "ParameterKey": "KeyPairName",
+        "ParameterValue": "replaced-by-taskcat-override-file"
+    }
+]
