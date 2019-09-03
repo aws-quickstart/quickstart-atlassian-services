@@ -16,6 +16,11 @@
         "ParameterValue": "10.0.0.0/16"
     },
     {
+        "ParameterKey": "ExportPrefix",
+        "ParameterValue": "$[taskcat_random-string]"
+    },
+
+    {
         "ParameterKey": "KeyPairName",
         "ParameterValue": "replaced-by-taskcat-override-file"
     }
