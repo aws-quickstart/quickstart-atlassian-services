@@ -1,0 +1,68 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Atlassian Jira Data Center Backups
+
+Resources:
+  BackupsEncryptionKey:
+    DeletionPolicy: Retain
+    Type: AWS::KMS::Key
+    Properties:
+      KeyPolicy:
+        Version: 2012-10-17
+        Id: !Sub "${AWS::StackName}"
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - !Sub "arn:aws:iam::${AWS::AccountId}:root"
+            Action: 'kms:*'
+            Resource: '*'
+      Tags:
+        - Key: Name
+          Value: !Sub ["${StackName} Backups Encryption Key", {StackName: !Ref 'AWS::StackName'}]
+  BackupsEncryptionKeyAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: !Sub "alias/${AWS::StackName}"
+      TargetKeyId: !Ref BackupsEncryptionKey
+  JiraBackupVaultWithDailyBackups:
+    Type: "AWS::Backup::BackupVault"
+    Properties:
+      BackupVaultName: "JiraBackupVaultWithDailyBackups"
+      EncryptionKeyArn: !GetAtt BackupsEncryptionKey.Arn
+  JiraBackupPlanWithDailyBackups:
+    Type: "AWS::Backup::BackupPlan"
+    DependsOn: JiraBackupVaultWithDailyBackups
+    Properties:
+      BackupPlan:
+        BackupPlanName: "JiraBackupPlanWithDailyBackups"
+        BackupPlanRule:
+          - RuleName: "RuleForDailyBackups"
+            TargetBackupVault: !Ref JiraBackupVaultWithDailyBackups
+            ScheduleExpression: "cron(0 5 ? * * *)"
+  BackupRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "backup.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForBackup"
+  ArnBasedBackupSelection:
+    Type: "AWS::Backup::BackupSelection"
+    Properties:
+      BackupSelection:
+        SelectionName: "TagBasedBackupSelection"
+        IamRoleArn: !GetAtt BackupRole.Arn
+        ListOfTags:
+          - ConditionType: "STRINGEQUALS"
+            ConditionKey: "backup"
+            ConditionValue: "daily"
+      BackupPlanId: !Ref JiraBackupPlanWithDailyBackups
+    DependsOn: JiraBackupPlanWithDailyBackups
