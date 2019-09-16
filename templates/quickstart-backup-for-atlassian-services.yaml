@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
-Description: Atlassian Jira Data Center Backups
+Description: Atlassian Data Center Backups
 
 Resources:
   BackupsEncryptionKey:
@@ -25,20 +25,20 @@ Resources:
     Properties:
       AliasName: !Sub "alias/${AWS::StackName}"
       TargetKeyId: !Ref BackupsEncryptionKey
-  JiraBackupVaultWithDailyBackups:
+  AtlassianBackupVaultWithDailyBackups:
     Type: "AWS::Backup::BackupVault"
     Properties:
-      BackupVaultName: "JiraBackupVaultWithDailyBackups"
+      BackupVaultName: "AtlassianBackupVaultWithDailyBackups"
       EncryptionKeyArn: !GetAtt BackupsEncryptionKey.Arn
-  JiraBackupPlanWithDailyBackups:
+  AtlassianBackupPlanWithDailyBackups:
     Type: "AWS::Backup::BackupPlan"
-    DependsOn: JiraBackupVaultWithDailyBackups
+    DependsOn: AtlassianBackupVaultWithDailyBackups
     Properties:
       BackupPlan:
-        BackupPlanName: "JiraBackupPlanWithDailyBackups"
+        BackupPlanName: "AtlassianBackupPlanWithDailyBackups"
         BackupPlanRule:
           - RuleName: "RuleForDailyBackups"
-            TargetBackupVault: !Ref JiraBackupVaultWithDailyBackups
+            TargetBackupVault: !Ref AtlassianBackupVaultWithDailyBackups
             ScheduleExpression: "cron(0 5 ? * * *)"
   BackupRole:
     Type: "AWS::IAM::Role"
@@ -64,5 +64,5 @@ Resources:
           - ConditionType: "STRINGEQUALS"
             ConditionKey: "backup"
             ConditionValue: "daily"
-      BackupPlanId: !Ref JiraBackupPlanWithDailyBackups
-    DependsOn: JiraBackupPlanWithDailyBackups
+      BackupPlanId: !Ref AtlassianBackupPlanWithDailyBackups
+    DependsOn: AtlassianBackupPlanWithDailyBackups
