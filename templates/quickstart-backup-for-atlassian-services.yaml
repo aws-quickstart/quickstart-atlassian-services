@@ -54,7 +54,7 @@ Resources:
               - "sts:AssumeRole"
       ManagedPolicyArns:
         - "arn:aws:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForBackup"
-  ArnBasedBackupSelection:
+  TagBasedBackupSelection:
     Type: "AWS::Backup::BackupSelection"
     Properties:
       BackupSelection:
