@@ -1,2 +1,2 @@
 templates:
-  - templates/*
+  - templates/*.yaml
