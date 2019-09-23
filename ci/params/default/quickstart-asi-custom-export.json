@@ -17,7 +17,7 @@
     },
     {
         "ParameterKey": "ExportPrefix",
-        "ParameterValue": "CUSTOM"
+        "ParameterValue": "$[taskcat_random-string]"
     },
     {
         "ParameterKey": "KeyPairName",
