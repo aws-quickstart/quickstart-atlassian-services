@@ -10,7 +10,7 @@ Parameters:
     AllowedValues:
       - 'Amazon Aurora PostgreSQL'
       - 'PostgreSQL'
-    ConstraintDescription: Must be 'true' or 'false'.
+    ConstraintDescription: Must be 'Amazon Aurora PostgreSQL' or 'PostgreSQL'.
     Type: String
   DBSecurityGroup:
     Description: "ID of the security group (e.g. sg-0234se). One will be created for you if left empty."
