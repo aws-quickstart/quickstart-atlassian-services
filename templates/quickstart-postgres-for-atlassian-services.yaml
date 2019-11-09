@@ -189,7 +189,7 @@ Resources:
       StorageType: !If [DBProvisionedIops, io1, gp2]
       Tags:
         - Key: Name
-          Value: !Sub ["${StackName} Confluence PostgreSQL Database", StackName: !Ref 'AWS::StackName']
+          Value: !Sub ["${StackName} PostgreSQL Database", StackName: !Ref 'AWS::StackName']
       VPCSecurityGroups: [!Ref CustomDBSecurityGroup]
 
 Outputs:
