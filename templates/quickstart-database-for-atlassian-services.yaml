@@ -16,14 +16,14 @@ Parameters:
     Description: "ID of the security group (e.g. sg-0234se). One will be created for you if left empty."
     Type: String
     Default: ''
-  DBAutoMinorVersionUpgrade: 
-    AllowedValues: 
+  DBAutoMinorVersionUpgrade:
+    AllowedValues:
       - "true"
       - "false"
     Default: "false"
     Description: "Select true/false to setup Auto Minor Version upgrade. e.g. PostgreSQL 9.6.8 -> 9.6.11"
     Type: String
-  DBBackupRetentionPeriod: 
+  DBBackupRetentionPeriod:
     Default: "7"
     Description: "The number of days for which automatic database snapshots are retained."
     Type: String
@@ -128,26 +128,31 @@ Parameters:
       can include numbers, lowercase letters, uppercase letters, hyphens (-), and
       forward slash (/).
     Type: String
+  ExportPrefix:
+    Default: 'ATL-'
+    Description:
+      Prefix for the exported variables (VPCID, SubnetIDs, KeyName) that are reused by other Atlassian AWS Quickstarts.
+    Type: String
 
 Conditions:
-    UseAurora:
-      !Equals [!Ref DatabaseImplementation, 'Amazon Aurora PostgreSQL']
-    UsePostgres:
-      !Equals [!Ref DatabaseImplementation, 'PostgreSQL']
-    GovCloudCondition:
-      !Equals [!Ref 'AWS::Region', 'us-gov-west-1']
-    UseDatabaseEncryption:
-      !Equals [!Ref DBStorageEncrypted, true]
+  UseAurora:
+    !Equals [!Ref DatabaseImplementation, 'Amazon Aurora PostgreSQL']
+  UsePostgres:
+    !Equals [!Ref DatabaseImplementation, 'PostgreSQL']
+  GovCloudCondition:
+    !Equals [!Ref 'AWS::Region', 'us-gov-west-1']
+  UseDatabaseEncryption:
+    !Equals [!Ref DBStorageEncrypted, true]
 
 Resources:
   AuroraDatabase:
     Type: AWS::CloudFormation::Stack
     Condition: UseAurora
     Properties:
-      TemplateURL: 
+      TemplateURL:
         !Sub
-          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.template.yaml
-          - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
+        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.template.yaml
+        - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       Parameters:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
@@ -160,10 +165,19 @@ Resources:
         DBName: ''
         DBPort: '5432'
         EnableEventSubscription: 'false'
-        Subnet1ID: !Select [0, !Split [ ",", !ImportValue ATL-PriNets]]
-        Subnet2ID: !Select [1, !Split [ ",", !ImportValue ATL-PriNets]]
+        Subnet1ID: !Select
+          - 0
+          - !Split
+            - ","
+            - Fn::ImportValue: !Sub "${ExportPrefix}PriNets"
+        Subnet2ID: !Select
+          - 1
+          - !Split
+            - ","
+            - Fn::ImportValue: !Sub "${ExportPrefix}PriNets"
         # NB: The VPCID is not used by the aurora template but it will fail if it is not provided.
-        VPCID: !ImportValue ATL-VPCID
+        VpcId:
+          Fn::ImportValue: !Sub "${ExportPrefix}VPCID"
 
   PostgresDatabase:
     Type: AWS::CloudFormation::Stack
@@ -171,8 +185,8 @@ Resources:
     Properties:
       TemplateURL:
         !Sub
-          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
-          - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
+        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
+        - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       Parameters:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
         DBAllocatedStorage: !Ref DBAllocatedStorage
@@ -185,8 +199,17 @@ Resources:
         DBMasterUserPassword: !Ref DBMasterUserPassword
         DBMultiAZ: !Ref DBMultiAZ
         DBStorageType: !Ref DBStorageType
-        Subnet1ID: !Select [0, !Split [ ",", !ImportValue ATL-PriNets]]
-        Subnet2ID: !Select [1, !Split [ ",", !ImportValue ATL-PriNets]]
+        Subnet1ID: !Select
+          - 0
+          - !Split
+            - ","
+            - Fn::ImportValue: !Sub "${ExportPrefix}PriNets"
+        Subnet2ID: !Select
+          - 1
+          - !Split
+            - ","
+            - Fn::ImportValue: !Sub "${ExportPrefix}PriNets"
+
 
 Outputs:
   RDSEndPointAddress:
