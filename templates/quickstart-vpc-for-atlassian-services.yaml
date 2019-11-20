@@ -142,7 +142,7 @@ Resources:
             - s3
       Parameters:
         AvailabilityZones:
-          Fn::Join:
+          !Join
             - ','
             - !Ref 'AvailabilityZones'
         KeyPairName: !Ref 'KeyPairName'
@@ -191,3 +191,13 @@ Outputs:
   BastionPubIp:
     Description: The Public IP to ssh to the Bastion
     Value: !GetAtt 'BastionStack.Outputs.BastionPubIp'
+  NatGatewayIP1:
+    Description: Public IP for NAT gateway in Private Subnet 1
+    Value: !GetAtt VPCStack.Outputs.NAT1EIP
+    Export:
+      Name: !Sub '${ExportPrefix}NAT1EIP'
+  NatGatewayIP2:
+    Description: Public IP for NAT gateway in Private Subnet 2
+    Value: !GetAtt VPCStack.Outputs.NAT2EIP
+    Export:
+      Name: !Sub '${ExportPrefix}NAT2EIP'
