@@ -69,8 +69,13 @@ Parameters:
       after it launches
     Type: AWS::EC2::KeyPair::KeyName
   NATInstanceType:
-    Default: t2.small
+    Default: t3.small
     AllowedValues:
+      - t3.nano
+      - t3.micro
+      - t3.small
+      - t3.medium
+      - t3.large
       - t2.nano
       - t2.micro
       - t2.small
@@ -157,7 +162,7 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub
-        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}quickstarts/quickstart-bastion-for-atlassian-services.yaml
+        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
         - QSS3Region: !If
             - GovCloudCondition
             - s3-us-gov-west-1
