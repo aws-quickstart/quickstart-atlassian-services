@@ -131,7 +131,7 @@ Parameters:
   ExportPrefix:
     Default: 'ATL-'
     Description:
-      Prefix for the exported variables (VPCID, SubnetIDs, KeyName) that are reused by other Atlassian AWS Quickstarts.
+      Each Atlassian Standard Infrastructure (ASI) uses a unique identifier. If you have multiple ASIs within the same AWS region, use this field to specify where to deploy the DB.
     Type: String
 
 Conditions:
