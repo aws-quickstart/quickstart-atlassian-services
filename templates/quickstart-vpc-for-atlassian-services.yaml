@@ -31,7 +31,7 @@ Metadata:
       AvailabilityZones:
         default: Availability Zones
       ExportPrefix:
-        default: Export variable prefix
+        default: ASI identifier
       KeyPairName:
         default: Key Name
       NATInstanceType:
@@ -61,7 +61,7 @@ Parameters:
     Type: List<AWS::EC2::AvailabilityZone::Name>
   ExportPrefix:
     Default: ATL-
-    Description: Prefix for the exported variables (VPCID, SubnetIDs, KeyName) that are reused by other Atlassian AWS
+    Description: Identifier used in all variables exported from this deployment’s Atlassian Standard Infrastructure (VPCID, SubnetIDs, KeyName). Use different identifier to deploy multiple Atlassian Standard Infrastructures in the same AWS region.
       Quickstarts.
     Type: String
   KeyPairName:
@@ -69,8 +69,13 @@ Parameters:
       after it launches
     Type: AWS::EC2::KeyPair::KeyName
   NATInstanceType:
-    Default: t2.small
+    Default: t3.small
     AllowedValues:
+      - t3.nano
+      - t3.micro
+      - t3.small
+      - t3.medium
+      - t3.large
       - t2.nano
       - t2.micro
       - t2.small
@@ -157,7 +162,7 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub
-        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}quickstarts/quickstart-bastion-for-atlassian-services.yaml
+        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
         - QSS3Region: !If
             - GovCloudCondition
             - s3-us-gov-west-1
