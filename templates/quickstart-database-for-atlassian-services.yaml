@@ -175,8 +175,7 @@ Resources:
           - !Split
             - ","
             - Fn::ImportValue: !Sub "${ExportPrefix}PriNets"
-        # NB: The VPCID is not used by the aurora template but it will fail if it is not provided.
-        VpcId:
+        VPCID:
           Fn::ImportValue: !Sub "${ExportPrefix}VPCID"
 
   PostgresDatabase:
