@@ -145,6 +145,7 @@ Conditions:
     !Equals [!Ref DBStorageEncrypted, true]
 
 Resources:
+
   AuroraDatabase:
     Type: AWS::CloudFormation::Stack
     Condition: UseAurora
@@ -177,6 +178,12 @@ Resources:
             - Fn::ImportValue: !Sub "${ExportPrefix}PriNets"
         VPCID:
           Fn::ImportValue: !Sub "${ExportPrefix}VPCID"
+      Tags:
+        # NOTE: The leading COMMIT/TIMESTAMP are used to locate the position to update; see scripts/update-tags.py
+        - Key: "atl:quickstart:commit-id"
+          Value: "COMMIT: 6cea1be1cc4804fc26b7020b78f05fd3d74325ab"
+        - key: "atl:quickstart:timestamp"
+          Value: "TIMESTAMP: 20200107:01.55"
 
   PostgresDatabase:
     Type: AWS::CloudFormation::Stack
@@ -208,6 +215,12 @@ Resources:
           - !Split
             - ","
             - Fn::ImportValue: !Sub "${ExportPrefix}PriNets"
+      Tags:
+        # NOTE: The leading COMMIT/TIMESTAMP are used to locate the position to update; see scripts/update-tags.py
+        - Key: "atl:quickstart:commit-id"
+          Value: "COMMIT: 6cea1be1cc4804fc26b7020b78f05fd3d74325ab"
+        - key: "atl:quickstart:timestamp"
+          Value: "TIMESTAMP: 20200107:01.55"
 
 
 Outputs:
