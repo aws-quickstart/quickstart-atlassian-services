@@ -3,8 +3,6 @@
 import datetime
 import fileinput
 import glob
-import os
-from os.path import isfile, join
 import re
 import subprocess
 import sys
