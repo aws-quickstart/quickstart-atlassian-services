@@ -162,10 +162,11 @@ Resources:
         PublicSubnet2CIDR: !Ref 'PublicSubnet2CIDR'
         VPCCIDR: !Ref 'VPCCIDR'
       Tags:
+        # NOTE: The leading COMMIT/TIMESTAMP are used to locate the position to update; see scripts/update-tags.py
         - Key: "atl:quickstart:commit-id"
-          Value: "022f8d10c5509a800028d68342c2d45a520eaeae"
+          Value: "COMMIT: 022f8d10c5509a800028d68342c2d45a520eaeae"
         - key: "atl:quickstart:timestamp"
-          Value: "20200107:00.45"
+          Value: "TIMESTAMP: 20200107:00.45"
 
   BastionStack:
     Type: AWS::CloudFormation::Stack
