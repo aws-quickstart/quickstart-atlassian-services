@@ -191,15 +191,13 @@ Resources:
       Tags:
         - Key: Name
           Value: !Sub ["${StackName} PostgreSQL Database", StackName: !Ref 'AWS::StackName']
+        # NOTE: The leading COMMIT/TIMESTAMP are used to locate the position to update; see scripts/update-tags.py
+        - Key: "atl:quickstart:commit-id"
+          Value: "COMMIT: da3b13803bf12bc77c4ea41800eb274f1da528b4"
+        - Key: "atl:quickstart:timestamp"
+          Value: "TIMESTAMP: 20200108:22.26"
       VPCSecurityGroups: [!Ref CustomDBSecurityGroup]
-
-    Tags:
-      # NOTE: The leading COMMIT/TIMESTAMP are used to locate the position to update; see scripts/update-tags.py
-      - Key: "atl:quickstart:commit-id"
-        Value: "COMMIT: 6cea1be1cc4804fc26b7020b78f05fd3d74325ab"
-      - key: "atl:quickstart:timestamp"
-        Value: "TIMESTAMP: 20200107:01.55"
-
+    
 Outputs:
   RDSEndPointAddress:
     Description: The Database Connection String
