@@ -1,0 +1,11 @@
+#!/bin/bash
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+
+pushd $REPO_ROOT
+
+# Ensure all template tags are updated.
+./scripts/update-tags.py
+git add .
+
+popd

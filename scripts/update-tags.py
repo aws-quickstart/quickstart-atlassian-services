@@ -1,5 +1,11 @@
 #!/usr/bin/python3
 
+# Update the metadata tags for all the templates under the `templates`
+# directory. This includes the _current_ git hash, and a timestamp.
+# The use of the hash is ugly (as in practice it will always lag the
+# real commit hash) but in conjunction with the timestamp is simplest
+# method of tying a given CFN stack to a version.
+
 import datetime
 import fileinput
 import glob
