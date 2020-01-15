@@ -64,9 +64,9 @@ Resources:
           Value: "Bastion for Atlassian Product VPC"
         # NOTE: The leading COMMIT/TIMESTAMP are used to locate the position to update; see scripts/update-tags.py
         - Key: "atl:quickstart:commit-id"
-          Value: "COMMIT: da3b13803bf12bc77c4ea41800eb274f1da528b4"
+          Value: "COMMIT: b3a4f98b82723f9e76f9a445d19c83210d9ef5b5"
         - Key: "atl:quickstart:timestamp"
-          Value: "TIMESTAMP: 20200108:22.26"
+          Value: "TIMESTAMP: 20200114:03.48"
   SecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
     Properties:
