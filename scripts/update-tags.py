@@ -17,7 +17,7 @@ commit = subprocess.getoutput("git rev-parse HEAD").split()[0]
 tstamp = '{:%Y%m%d:%H.%M}'.format(datetime.datetime.utcnow())
 
 def update_tags(fname):
-  with fileinput.input(fname, inplace=True, backup=".bak") as fd:
+  with fileinput.input(fname, inplace=True) as fd:
       cpat = re.compile(r'^(\s+)Value:\s+"COMMIT:')
       tpat = re.compile(r'^(\s+)Value:\s+"TIMESTAMP:')
 
