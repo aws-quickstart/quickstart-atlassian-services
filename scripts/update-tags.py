@@ -14,7 +14,7 @@ import subprocess
 import sys
 
 commit = subprocess.getoutput("git rev-parse HEAD").split()[0]
-tstamp = '{:%Y%m%d:%H.%M}'.format(datetime.datetime.utcnow())
+tstamp = datetime.datetime.utcnow().isoformat()
 
 def update_tags(fname):
   with fileinput.input(fname, inplace=True) as fd:
