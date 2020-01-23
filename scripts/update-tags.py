@@ -13,8 +13,9 @@ import re
 import subprocess
 import sys
 
+# Use same ISO8601 format as Ansible. See https://github.com/ansible/ansible/blob/devel/lib/ansible/module_utils/facts/system/date_time.py
+tstamp = datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
 commit = subprocess.getoutput("git rev-parse HEAD").split()[0]
-tstamp = datetime.datetime.utcnow().isoformat()
 
 def update_tags(fname):
   with fileinput.input(fname, inplace=True) as fd:
