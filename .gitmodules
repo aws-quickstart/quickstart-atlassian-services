@@ -1,6 +1,6 @@
 [submodule "submodules/quickstart-aws-vpc"]
 	path = submodules/quickstart-aws-vpc
-	url = ../../aws-quickstart/quickstart-aws-vpc.git
+	url = https://github.com/aws-quickstart/quickstart-aws-vpc.git
 [submodule "submodules/quickstart-amazon-aurora"]
 	path = submodules/quickstart-amazon-aurora
 	url = https://github.com/aws-quickstart/quickstart-amazon-aurora.git
