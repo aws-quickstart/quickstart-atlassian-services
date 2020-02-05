@@ -43,40 +43,6 @@
         "title": "Log group: ${ProductFamilyName}-${ProductStackName}",
         "view": "table"
       }
-    },
-    {
-      "type": "metric",
-      "x": 15,
-      "y": 12,
-      "width": 9,
-      "height": 6,
-      "properties": {
-        "view": "timeSeries",
-        "stacked": false,
-        "metrics": [
-          [ "AWS/RDS", "DatabaseConnections", "DBInstanceIdentifier", "${DatabaseIdentifier}" ]
-        ],
-        "region": "${AWS::Region}"
-      }
-    },
-    {
-      "type": "metric",
-      "x": 0,
-      "y": 12,
-      "width": 15,
-      "height": 6,
-      "properties": {
-        "view": "singleValue",
-        "metrics": [
-          [ "AWS/RDS", "WriteThroughput", "DBInstanceIdentifier", "${DatabaseIdentifier}" ],
-            [ ".", "WriteLatency", ".", "." ],
-            [ ".", "ReadLatency", ".", "." ],
-            [ ".", "ReadThroughput", ".", "." ],
-            [ ".", "WriteIOPS", ".", "." ],
-            [ ".", "ReadIOPS", ".", "." ]
-          ],
-          "region": "${AWS::Region}"
-      }
     }
   ]
 }
