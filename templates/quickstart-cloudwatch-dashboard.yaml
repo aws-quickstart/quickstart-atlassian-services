@@ -9,7 +9,6 @@ Metadata:
           - ProductStackName
           - ProductFamilyName
           - AsgToMonitor
-          - DatabaseIdentifier
 
 Parameters:
   ProductStackName:
@@ -20,9 +19,6 @@ Parameters:
     Type: "String"
   AsgToMonitor:
     Description: "Name of the ASG to monitor"
-    Type: "String"
-  DatabaseIdentifier:
-    Description: "Identifier of database to monitor"
     Type: "String"
 
 Resources:
