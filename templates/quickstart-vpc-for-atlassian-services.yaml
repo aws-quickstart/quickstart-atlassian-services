@@ -207,6 +207,8 @@ Outputs:
   BastionPubIp:
     Description: The Public IP to ssh to the Bastion
     Value: !GetAtt 'BastionStack.Outputs.BastionPubIp'
+    Export:
+      Name: !Sub '${ExportPrefix}BastionIp'
   NatGatewayIP1:
     Description: Public IP for NAT gateway in Private Subnet 1
     Value: !GetAtt VPCStack.Outputs.NAT1EIP
