@@ -81,3 +81,6 @@ Outputs:
   BastionPubIp:
     Description: The Public IP to ssh to the Bastion
     Value: !GetAtt Bastion.PublicIp
+  BastionPrivateIp:
+    Description: The Private IP of the Bastion within the VPC
+    Value: !GetAtt Bastion.PrivateIp
