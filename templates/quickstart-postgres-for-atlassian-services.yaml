@@ -168,6 +168,53 @@ Resources:
     Properties:
       AliasName: !Sub "alias/${AWS::StackName}"
       TargetKeyId: !Ref EncryptionKey
+  ## We need a custom resource to generate a meaningful name. If the stack name
+  ## is longer than 57 characters, using {StackName}-db would cause a deployment failure
+  DbInstanceNameCustom:
+    Type: Custom::DbInstanceNameCustom
+    Version: 1.0
+    Properties:
+      ServiceToken: !GetAtt DBNameGenerator.Arn
+      StackName: !Ref 'AWS::StackName'
+  DBNameGenerator:
+    Type: "AWS::Lambda::Function"
+    Properties:
+      Handler: index.lambda_handler
+      Role: !GetAtt DBNameGeneratorExecutionRole.Arn
+      Runtime: python3.7
+      Timeout: 120
+      Code:
+        ZipFile: |
+          import cfnresponse
+          def lambda_handler(event, context):
+            stack_name = event['ResourceProperties']['StackName']
+            responseData = {}
+            responseData['DBInstanceName'] = stack_name[:57] + "-db"
+            cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
+  DBNameGeneratorExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+      Policies:
+      - PolicyName: root
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource: arn:aws:logs:*:*:*
   DB:
     Type: AWS::RDS::DBInstance
     Properties:
@@ -175,9 +222,7 @@ Resources:
       AutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
       BackupRetentionPeriod: !Ref DBBackupRetentionPeriod
       DBInstanceClass: !Ref DBInstanceClass
-      # In the next line of code the '-DB' delimeter is used to get the root stack name for database identifier
-      # 'AWS::StackName' produces MASTER_STACK_NAME-DB (as DB is the name of the nested stack resource).
-      DBInstanceIdentifier: !Sub ["${RootStack}-db", RootStack: !Select [0, !Split ['-DB', !Ref 'AWS::StackName']]]
+      DBInstanceIdentifier: !GetAtt DbInstanceNameCustom.DBInstanceName
       DBSubnetGroupName: !Ref DBSubnetGroup
       Engine: postgres
       EngineVersion: '9.6'
