@@ -170,8 +170,8 @@ Resources:
       TargetKeyId: !Ref EncryptionKey
   ## We need a custom resource to generate a meaningful name. If the stack name
   ## is longer than 57 characters, using {StackName}-db would cause a deployment failure
-  DbInstanceNameCustom:
-    Type: Custom::DbInstanceNameCustom
+  DbInstanceName:
+    Type: Custom::DbInstanceName
     Version: 1.0
     Properties:
       ServiceToken: !GetAtt DBNameGenerator.Arn
@@ -214,7 +214,7 @@ Resources:
             - logs:CreateLogGroup
             - logs:CreateLogStream
             - logs:PutLogEvents
-            Resource: arn:aws:logs:*:*:*
+            Resource: !Sub "arn:aws:logs:*:${AWS::AccountId}:log-group:/aws/lambda/*DBNameGenerator*"
   DB:
     Type: AWS::RDS::DBInstance
     Properties:
@@ -222,7 +222,7 @@ Resources:
       AutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
       BackupRetentionPeriod: !Ref DBBackupRetentionPeriod
       DBInstanceClass: !Ref DBInstanceClass
-      DBInstanceIdentifier: !GetAtt DbInstanceNameCustom.DBInstanceName
+      DBInstanceIdentifier: !GetAtt DbInstanceName.DBInstanceName
       DBSubnetGroupName: !Ref DBSubnetGroup
       Engine: postgres
       EngineVersion: '9.6'
