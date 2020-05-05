@@ -15,6 +15,10 @@ Metadata:
           - PublicSubnet2CIDR
           - VPCCIDR
       - Label:
+          default: Bastion host provisioning
+        Parameters:
+          - BastionHostRequired
+      - Label:
           default: Amazon EC2 Configuration
         Parameters:
           - KeyPairName
@@ -34,6 +38,8 @@ Metadata:
         default: ASI identifier
       KeyPairName:
         default: Key Name
+      BastionHostRequired:
+        default: Enable Bastion host deployment
       NATInstanceType:
         default: NAT Instance Type
       PrivateSubnet1CIDR:
@@ -57,7 +63,7 @@ Parameters:
     Description: CIDR block allowed to access Atlassian Services. This should be set to a trusted IP range; if you want to give public access use '0.0.0.0/0'.
     Type: String
   AvailabilityZones:
-    Description: 'List of Availability Zones to use for the subnets in the VPC. Note: You must specify 2 AZs here; 
+    Description: 'List of Availability Zones to use for the subnets in the VPC. Note: You must specify 2 AZs here;
       if more are specified only the first 2 will be used.'
     Type: List<AWS::EC2::AvailabilityZone::Name>
   ExportPrefix:
@@ -68,7 +74,15 @@ Parameters:
   KeyPairName:
     Description: Public/private key pairs allow you to securely connect to your instance
       after it launches
-    Type: AWS::EC2::KeyPair::KeyName
+    Type: String
+    Default: ''
+  BastionHostRequired:
+    Default: "false"
+    AllowedValues:
+      - "true"
+      - "false"
+    Description: Whether to provision a Bastion host instance. (if true then an SSH Key Pair must be provided)
+    Type: String
   NATInstanceType:
     Default: t3.small
     AllowedValues:
@@ -137,6 +151,13 @@ Conditions:
   GovCloudCondition: !Equals
     - !Ref 'AWS::Region'
     - us-gov-west-1
+  UseBastionHost:
+    !Equals [!Ref BastionHostRequired, true]
+  KeyProvided:
+    !Not [!Equals [!Ref KeyPairName, '']]
+  ProvisionBastion: !And
+    - !Equals [!Ref BastionHostRequired, true]
+    - !Condition KeyProvided
 
 Resources:
   VPCStack:
@@ -170,6 +191,7 @@ Resources:
 
   BastionStack:
     Type: AWS::CloudFormation::Stack
+    Condition: ProvisionBastion
     Properties:
       TemplateURL: !Sub
         - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
@@ -184,11 +206,6 @@ Resources:
         VPC: !GetAtt VPCStack.Outputs.VPCID
 
 Outputs:
-  DefaultKey:
-    Description: Default Ec2 keypair name
-    Value: !Ref 'KeyPairName'
-    Export:
-      Name: !Sub '${ExportPrefix}DefaultKey'
   PrivateSubnets:
     Description: A list of 2 Private subnets
     Value: !Join [ ',', [ !GetAtt VPCStack.Outputs.PrivateSubnet1AID, !GetAtt VPCStack.Outputs.PrivateSubnet2AID ]]
@@ -205,9 +222,11 @@ Outputs:
     Export:
       Name: !Sub '${ExportPrefix}VPCID'
   BastionPubIp:
+    Condition: ProvisionBastion
     Description: The Public IP to ssh to the Bastion
     Value: !GetAtt 'BastionStack.Outputs.BastionPubIp'
   BastionPrivIp:
+    Condition: ProvisionBastion
     Description: The Private IP of the Bastion within the VPC
     Value: !GetAtt 'BastionStack.Outputs.BastionPrivateIp'
     Export:
