@@ -189,7 +189,7 @@ Resources:
           def lambda_handler(event, context):
             stack_name = event['ResourceProperties']['StackName']
             responseData = {}
-            responseData['DBInstanceName'] = stack_name[:57] + "-db"
+            responseData['DBInstanceName'] = stack_name[:57].replace('-','') + "-db"
             cfnresponse.send(event, context, cfnresponse.SUCCESS, responseData)
   DBNameGeneratorExecutionRole:
     Type: "AWS::IAM::Role"
