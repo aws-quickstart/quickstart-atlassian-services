@@ -151,8 +151,6 @@ Conditions:
   GovCloudCondition: !Equals
     - !Ref 'AWS::Region'
     - us-gov-west-1
-  UseBastionHost:
-    !Equals [!Ref BastionHostRequired, true]
   KeyProvided:
     !Not [!Equals [!Ref KeyPairName, '']]
   ProvisionBastion: !And
