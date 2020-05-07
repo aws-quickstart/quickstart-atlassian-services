@@ -77,7 +77,7 @@ Parameters:
     Type: String
     Default: ''
   BastionHostRequired:
-    Default: "false"
+    Default: "true"
     AllowedValues:
       - "true"
       - "false"
