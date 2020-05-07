@@ -39,7 +39,7 @@ Metadata:
       KeyPairName:
         default: Key Name
       BastionHostRequired:
-        default: Enable Bastion host deployment
+        default: Deploy Bastion host
       NATInstanceType:
         default: NAT Instance Type
       PrivateSubnet1CIDR:
@@ -81,7 +81,7 @@ Parameters:
     AllowedValues:
       - "true"
       - "false"
-    Description: Whether to provision a Bastion host instance. (if true then an SSH Key Pair must be provided)
+    Description: Whether to provision a Bastion host instance; if 'true', then you need to provide an SSH Key Pair
     Type: String
   NATInstanceType:
     Default: t3.small
