@@ -206,7 +206,7 @@ Resources:
 Outputs:
   DefaultKey:
     Condition: KeyProvided
-    Description: Default Ec2 keypair name
+    Description: Default EC2 keypair name
     Value: !Ref 'KeyPairName'
     Export:
       Name: !Sub '${ExportPrefix}DefaultKey'
