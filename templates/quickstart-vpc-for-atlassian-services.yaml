@@ -37,7 +37,7 @@ Metadata:
       ExportPrefix:
         default: ASI identifier
       KeyPairName:
-        default: Key Name
+        default: SSH Key Pair Name
       BastionHostRequired:
         default: Deploy Bastion host
       NATInstanceType:
@@ -204,6 +204,12 @@ Resources:
         VPC: !GetAtt VPCStack.Outputs.VPCID
 
 Outputs:
+  DefaultKey:
+    Condition: KeyProvided
+    Description: Default Ec2 keypair name
+    Value: !Ref 'KeyPairName'
+    Export:
+      Name: !Sub '${ExportPrefix}DefaultKey'
   PrivateSubnets:
     Description: A list of 2 Private subnets
     Value: !Join [ ',', [ !GetAtt VPCStack.Outputs.PrivateSubnet1AID, !GetAtt VPCStack.Outputs.PrivateSubnet2AID ]]
