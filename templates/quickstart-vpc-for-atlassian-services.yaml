@@ -18,10 +18,10 @@ Metadata:
           default: Bastion host provisioning
         Parameters:
           - BastionHostRequired
+          - KeyPairName
       - Label:
           default: Amazon EC2 Configuration
         Parameters:
-          - KeyPairName
           - NATInstanceType
       - Label:
           default: AWS Quick Start Configuration
@@ -72,8 +72,7 @@ Parameters:
       Quickstarts.
     Type: String
   KeyPairName:
-    Description: Public/private key pairs allow you to securely connect to your instance
-      after it launches
+    Description: Public/private EC2 Key Pairs to allow you to securely access the Bastion host
     Type: String
     Default: ''
   BastionHostRequired:
@@ -81,7 +80,7 @@ Parameters:
     AllowedValues:
       - "true"
       - "false"
-    Description: Whether to provision a Bastion host instance; if 'true', then you need to provide an SSH Key Pair
+    Description: Whether to provision a Bastion host instance; if 'true', then you need to provide an EC2 Key Pair
     Type: String
   NATInstanceType:
     Default: t3.small
