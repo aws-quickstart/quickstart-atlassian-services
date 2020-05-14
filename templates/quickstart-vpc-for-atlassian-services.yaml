@@ -150,11 +150,11 @@ Conditions:
   GovCloudCondition: !Equals
     - !Ref 'AWS::Region'
     - us-gov-west-1
-  KeyProvided:
+  KeyPairProvided:
     !Not [!Equals [!Ref KeyPairName, '']]
   ProvisionBastion: !And
     - !Equals [!Ref BastionHostRequired, true]
-    - !Condition KeyProvided
+    - !Condition KeyPairProvided
 
 Resources:
   VPCStack:
@@ -204,7 +204,7 @@ Resources:
 
 Outputs:
   DefaultKey:
-    Condition: KeyProvided
+    Condition: KeyPairProvided
     Description: Default EC2 keypair name
     Value: !Ref 'KeyPairName'
     Export:
