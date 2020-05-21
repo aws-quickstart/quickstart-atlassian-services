@@ -111,11 +111,6 @@ Parameters:
       - false
     Description: Whether or not to encrypt the database
     Type: String
-  DBStorageEncryptionKey:
-    Default: ''
-    AllowedPattern: '^arn:aws:kms:[\w\-]+:\d{12}:key\/[\w\-]+|^(?![\s\S])'
-    Description: Provide the KMS key ARN for a pre-generated encryption key. If this is provided, RDS and EFS will be encrypted at-rest using this key. If left blank one will be generated
-    Type: String
   DBStorageType:
     Default: General Purpose (SSD)
     AllowedValues:
@@ -139,9 +134,6 @@ Conditions:
     !Equals [!Ref DBStorageType, io1]
   UseDatabaseEncryption:
     !Equals [!Ref DBAllocatedStorageEncrypted, true]
-  GenerateEncryptionKey: !And
-    - !Equals [!Ref DBStorageEncryptionKey, '']
-    - !Condition UseDatabaseEncryption
 
 Resources:
   DBSubnetGroup: 
@@ -152,7 +144,7 @@ Resources:
        - !Ref Subnet1ID
        - !Ref Subnet2ID
   EncryptionKey:
-    Condition: GenerateEncryptionKey
+    Condition: UseDatabaseEncryption
     DeletionPolicy: Retain
     UpdateReplacePolicy: Retain
     Type: AWS::KMS::Key
@@ -171,7 +163,7 @@ Resources:
         - Key: Name
           Value: !Sub ["${StackName} Encryption Key", StackName: !Ref 'AWS::StackName']
   EncryptionKeyAlias:
-    Condition: GenerateEncryptionKey
+    Condition: UseDatabaseEncryption
     Type: AWS::KMS::Alias
     Properties:
       AliasName: !Sub "alias/${AWS::StackName}"
@@ -235,10 +227,7 @@ Resources:
       Engine: postgres
       EngineVersion: '9.6'
       Iops: !If [DBProvisionedIops, !Ref DBIops, !Ref 'AWS::NoValue']
-      KmsKeyId: !If
-        - GenerateEncryptionKey
-        - !GetAtt EncryptionKey.Arn
-        - !Ref DBStorageEncryptionKey
+      KmsKeyId: !If [UseDatabaseEncryption, !GetAtt EncryptionKey.Arn, !Ref 'AWS::NoValue']
       MasterUsername: !Ref DBMasterUsername
       MasterUserPassword: !Ref DBMasterUserPassword
       MultiAZ: !Ref DBMultiAZ
@@ -263,8 +252,5 @@ Outputs:
     Value: !GetAtt DB.Endpoint.Port
   RDSEncryptionKey:
     Condition: UseDatabaseEncryption
-    Description: The encryption key used for RDS
-    Value: !If
-      - GenerateEncryptionKey
-      - !Ref EncryptionKey
-      - !Ref DBStorageEncryptionKey 
+    Description: The alias of the encryption key created for RDS
+    Value: !Ref EncryptionKeyAlias
