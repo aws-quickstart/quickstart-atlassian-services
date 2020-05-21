@@ -101,11 +101,6 @@ Parameters:
       - false
     Description: Whether or not to encrypt the database
     Type: String
-  DBStorageEncryptionKey:
-    Default: ''
-    AllowedPattern: '^arn:aws:kms:[\w\-]+:\d{12}:key\/[\w\-]+|^(?![\s\S])'
-    Description: Provide the KMS key ARN for a pre-generated encryption key. If this is provided, RDS and EFS will be encrypted at-rest using this key. If left blank one will be generated
-    Type: String
   DBStorageType:
     Default: General Purpose (SSD)
     AllowedValues:
@@ -157,8 +152,6 @@ Conditions:
     !Equals [!Ref QSS3BucketName, 'aws-quickstart']
   UseDatabaseEncryption:
     !Equals [!Ref DBStorageEncrypted, true]
-  DatabaseEncryptionKeyProvided:
-    !Not [!Equals [!Ref DBStorageEncryptionKey, '']]
 
 Resources:
 
@@ -215,10 +208,6 @@ Resources:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
         DBAllocatedStorage: !Ref DBAllocatedStorage
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
-        DBStorageEncryptionKey: !If
-          - DatabaseEncryptionKeyProvided 
-          - !Ref DBStorageEncryptionKey
-          - !Ref 'AWS::NoValue'
         DBAutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
         DBInstanceClass: !Ref DBInstanceClass
@@ -254,5 +243,5 @@ Outputs:
     Value: !If [UseAurora, !GetAtt AuroraDatabase.Outputs.RDSEndPointPort, !GetAtt PostgresDatabase.Outputs.RDSEndPointPort]
   RDSEncryptionKey:
     Condition: UseDatabaseEncryption
-    Description: The encryption key used for RDS
+    Description: The alias of the encryption key created for RDS
     Value: !If [UseAurora, !GetAtt AuroraDatabase.Outputs.RDSEncryptionKey, !GetAtt PostgresDatabase.Outputs.RDSEncryptionKey]
