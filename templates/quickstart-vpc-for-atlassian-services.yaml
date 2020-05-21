@@ -24,6 +24,7 @@ Metadata:
         Parameters:
           - ExportPrefix
           - QSS3BucketName
+          - QSS3BucketRegion
           - QSS3KeyPrefix
     ParameterLabels:
       AccessCIDR:
@@ -46,6 +47,8 @@ Metadata:
         default: Public Subnet 2 CIDR
       QSS3BucketName:
         default: Quick Start S3 Bucket Name
+      QSS3BucketRegion:
+        default: Quick Start S3 bucket region
       QSS3KeyPrefix:
         default: Quick Start S3 Key Prefix
       VPCCIDR:
@@ -118,6 +121,15 @@ Parameters:
       can include numbers, lowercase letters, uppercase letters, and hyphens (-).
       It cannot start or end with a hyphen (-).
     Type: String
+  QSS3BucketRegion:
+    Default: 'us-east-1'
+    AllowedPattern: ^[0-9a-z]+([0-9a-z-]*[0-9a-z])*$
+    ConstraintDescription: Quick Start bucket region can include numbers, lowercase
+      letters, and hyphens (-). It cannot start or end with a hyphen
+      (-).
+    Description: The AWS Region where the Quick Start S3 bucket (QSS3BucketName) is
+      hosted. When using your own bucket, you must specify this value.
+    Type: String
   QSS3KeyPrefix:
     Default: 'quickstart-atlassian-services/'
     AllowedPattern: ^[0-9a-zA-Z-/]*$
@@ -134,20 +146,17 @@ Parameters:
     Type: String
 
 Conditions:
-  GovCloudCondition: !Equals
-    - !Ref 'AWS::Region'
-    - us-gov-west-1
+  UsingDefaultBucket:
+    !Equals [!Ref QSS3BucketName, 'aws-quickstart']
 
 Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub
-        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
-        - QSS3Region: !If
-            - GovCloudCondition
-            - s3-us-gov-west-1
-            - s3
+        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
+        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
         AvailabilityZones:
           !Join
@@ -172,11 +181,9 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub
-        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
-        - QSS3Region: !If
-            - GovCloudCondition
-            - s3-us-gov-west-1
-            - s3
+        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
+        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
         AccessCIDR: !Ref AccessCIDR
         KeyName: !Ref 'KeyPairName'
