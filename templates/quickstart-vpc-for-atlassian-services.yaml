@@ -15,9 +15,13 @@ Metadata:
           - PublicSubnet2CIDR
           - VPCCIDR
       - Label:
+          default: Bastion host provisioning
+        Parameters:
+          - BastionHostRequired
+          - KeyPairName
+      - Label:
           default: Amazon EC2 Configuration
         Parameters:
-          - KeyPairName
           - NATInstanceType
       - Label:
           default: AWS Quick Start Configuration
@@ -33,7 +37,9 @@ Metadata:
       ExportPrefix:
         default: ASI identifier
       KeyPairName:
-        default: Key Name
+        default: SSH Key Pair Name
+      BastionHostRequired:
+        default: Deploy Bastion host
       NATInstanceType:
         default: NAT Instance Type
       PrivateSubnet1CIDR:
@@ -66,9 +72,16 @@ Parameters:
       Quickstarts.
     Type: String
   KeyPairName:
-    Description: Public/private key pairs allow you to securely connect to your instance
-      after it launches
-    Type: AWS::EC2::KeyPair::KeyName
+    Description: Public/private EC2 Key Pairs to allow you to securely access the Bastion host
+    Type: String
+    Default: ''
+  BastionHostRequired:
+    Default: "true"
+    AllowedValues:
+      - "true"
+      - "false"
+    Description: Whether to provision a Bastion host instance; if 'true', then you need to provide an EC2 Key Pair
+    Type: String
   NATInstanceType:
     Default: t3.small
     AllowedValues:
@@ -137,6 +150,11 @@ Conditions:
   GovCloudCondition: !Equals
     - !Ref 'AWS::Region'
     - us-gov-west-1
+  KeyPairProvided:
+    !Not [!Equals [!Ref KeyPairName, '']]
+  ProvisionBastion: !And
+    - !Equals [!Ref BastionHostRequired, true]
+    - !Condition KeyPairProvided
 
 Resources:
   VPCStack:
@@ -170,6 +188,7 @@ Resources:
 
   BastionStack:
     Type: AWS::CloudFormation::Stack
+    Condition: ProvisionBastion
     Properties:
       TemplateURL: !Sub
         - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
@@ -185,7 +204,8 @@ Resources:
 
 Outputs:
   DefaultKey:
-    Description: Default Ec2 keypair name
+    Condition: KeyPairProvided
+    Description: Default EC2 keypair name
     Value: !Ref 'KeyPairName'
     Export:
       Name: !Sub '${ExportPrefix}DefaultKey'
@@ -205,9 +225,11 @@ Outputs:
     Export:
       Name: !Sub '${ExportPrefix}VPCID'
   BastionPubIp:
+    Condition: ProvisionBastion
     Description: The Public IP to ssh to the Bastion
     Value: !GetAtt 'BastionStack.Outputs.BastionPubIp'
   BastionPrivIp:
+    Condition: ProvisionBastion
     Description: The Private IP of the Bastion within the VPC
     Value: !GetAtt 'BastionStack.Outputs.BastionPrivateIp'
     Export:
