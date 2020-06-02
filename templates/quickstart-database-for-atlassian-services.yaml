@@ -12,6 +12,13 @@ Parameters:
       - 'PostgreSQL'
     ConstraintDescription: Must be 'Amazon Aurora PostgreSQL' or 'PostgreSQL'.
     Type: String
+  DBAuroraPostgresEngineVersion:
+    Default: 9.6.12
+    AllowedValues:
+      - 9.6.12
+      - 11.4
+    Description: "Select the Aurora PostgreSQL engine version to use"
+    Type: String
   DBPostgresEngineVersion:
     Default: 9.6
     AllowedValues:
@@ -166,7 +173,7 @@ Resources:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
-        DBEngineVersion: 9.6.12
+        DBEngineVersion: !Ref DBAuroraPostgresEngineVersion
         DBInstanceClass: !Ref DBInstanceClass
         DBMasterUsername: postgres
         DBMasterUserPassword: !Ref DBMasterUserPassword
