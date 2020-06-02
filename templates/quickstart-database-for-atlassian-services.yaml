@@ -12,6 +12,14 @@ Parameters:
       - 'PostgreSQL'
     ConstraintDescription: Must be 'Amazon Aurora PostgreSQL' or 'PostgreSQL'.
     Type: String
+  DBPostgresEngineVersion:
+    Default: 9.6
+    AllowedValues:
+      - 9.6
+      - 10
+      - 11
+    Description: "Select the Postgres engine version to use"
+    Type: String
   DBSecurityGroup:
     Description: "ID of the security group (e.g. sg-0234se). One will be created for you if left empty."
     Type: String
@@ -195,6 +203,7 @@ Resources:
         - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       Parameters:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
+        DBEngineVersion: !Ref DBPostgresEngineVersion
         DBAllocatedStorage: !Ref DBAllocatedStorage
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBAutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
