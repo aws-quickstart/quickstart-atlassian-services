@@ -18,10 +18,13 @@ The [Jira](https://fwd.aws/kRapJ), [Confluence](https://fwd.aws/JAEM9), and
 For architectural details, best practices, step-by-step instructions, and
 customization options, see the [deployment guide](https://fwd.aws/xYyYy).
 
-To post feedback, submit feature ideas, or report bugs, use the **Issues**
-section of this GitHub repo.  If you'd like to submit code for this Quick Start,
-please review the [AWS Quick Start Contributor's
-Kit](https://aws-quickstart.github.io/).
+### Contributing & issues
+
+Please note that issues are disabled for this repository, because it is a
+downstream repository that is not actively supported.
+We welcome pull requests, issues, and comments in the **[upstream repository](https://github.com/aws-quickstart/quickstart-atlassian-services/)**.
+
+If you'd like to submit code for this Quick Start, please review the [AWS Quick Start Contributor's Kit](https://aws-quickstart.github.io/).
 
 ## Development notes
 
