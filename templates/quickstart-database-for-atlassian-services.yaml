@@ -180,10 +180,7 @@ Resources:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
-        DBEngineVersion: !If 
-          - UsePostgres
-          - !FindInMap [SemanticDBVersions, PostgreSQL, !Ref DBEngineVersion]
-          - !FindInMap [SemanticDBVersions, AuroraPostgreSQL, !Ref DBEngineVersion]
+        DBEngineVersion: !FindInMap [SemanticDBVersions, AuroraPostgreSQL, !Ref DBEngineVersion]
         DBInstanceClass: !Ref DBInstanceClass
         DBMasterUsername: postgres
         DBMasterUserPassword: !Ref DBMasterUserPassword
@@ -220,10 +217,7 @@ Resources:
         - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       Parameters:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
-        DBEngineVersion: !If
-          - UsePostgres
-          - !FindInMap [SemanticDBVersions, PostgreSQL, !Ref DBEngineVersion]
-          - !FindInMap [SemanticDBVersions, AuroraPostgreSQL, !Ref DBEngineVersion]
+        DBEngineVersion: !FindInMap [SemanticDBVersions, PostgreSQL, !Ref DBEngineVersion]
         DBAllocatedStorage: !Ref DBAllocatedStorage
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBAutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
