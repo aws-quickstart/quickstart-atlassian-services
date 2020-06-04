@@ -161,7 +161,7 @@ Mappings:
     AuroraPostgreSQL:
       "9": "9.6.12"
       "10": "10.7"
-      "11": "11.4"
+      "11": "11.7"
 
 Resources:
   AuroraDatabase:
