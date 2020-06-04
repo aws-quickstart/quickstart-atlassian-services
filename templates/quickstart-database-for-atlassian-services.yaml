@@ -12,20 +12,13 @@ Parameters:
       - 'PostgreSQL'
     ConstraintDescription: Must be 'Amazon Aurora PostgreSQL' or 'PostgreSQL'.
     Type: String
-  DBAuroraPostgresEngineVersion:
-    Default: 9.6.12
-    AllowedValues:
-      - 9.6.12
-      - 11.4
-    Description: "Select the Aurora PostgreSQL engine version to use"
-    Type: String
-  DBPostgresEngineVersion:
+  DBImplementationVersion:
     Default: 9.6
     AllowedValues:
       - 9.6
       - 10
       - 11
-    Description: "Select the Postgres engine version to use"
+    Description: "Select the engine version to use"
     Type: String
   DBSecurityGroup:
     Description: "ID of the security group (e.g. sg-0234se). One will be created for you if left empty."
@@ -159,8 +152,18 @@ Conditions:
   UseDatabaseEncryption:
     !Equals [!Ref DBStorageEncrypted, true]
 
-Resources:
+Mappings:    
+  SemanticDBVersions:
+    PostgreSQL:
+      9.6: 9.6
+      10: 10
+      11: 11
+    AuroraPostgreSQL:
+      9.6: 9.6.12
+      10: 10
+      11: 11.4
 
+Resources:
   AuroraDatabase:
     Type: AWS::CloudFormation::Stack
     Condition: UseAurora
@@ -173,7 +176,10 @@ Resources:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
-        DBEngineVersion: !Ref DBAuroraPostgresEngineVersion
+        DBEngineVersion: !If 
+          - UsePostgres
+          - !FindInMap [SemanticDBVersions, PostgreSQL, !Ref DBImplementationVersion]
+          - !FindInMap [SemanticDBVersions, AuroraPostgreSQL, !Ref DBImplementationVersion]
         DBInstanceClass: !Ref DBInstanceClass
         DBMasterUsername: postgres
         DBMasterUserPassword: !Ref DBMasterUserPassword
@@ -210,7 +216,10 @@ Resources:
         - QSS3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       Parameters:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
-        DBEngineVersion: !Ref DBPostgresEngineVersion
+        DBEngineVersion: !If
+          - UsePostgres
+          - !FindInMap [SemanticDBVersions, PostgreSQL, !Ref DBImplementationVersion]
+          - !FindInMap [SemanticDBVersions, AuroraPostgreSQL, !Ref DBImplementationVersion]
         DBAllocatedStorage: !Ref DBAllocatedStorage
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBAutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
