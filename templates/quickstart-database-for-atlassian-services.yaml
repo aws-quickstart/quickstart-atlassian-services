@@ -154,14 +154,18 @@ Conditions:
 
 Mappings:    
   SemanticDBVersions:
+    # Officialy supported mapped versions taken from here:
+    # https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.DBVersions
     PostgreSQL:
       "9": "9.6"
       "10": "10"
       "11": "11"
+    # Officialy supported mapped versions taken from here:
+    # https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Updates.20180305.html
     AuroraPostgreSQL:
       "9": "9.6.12"
       "10": "10.7"
-      "11": "11.7"
+      "11": "11.6"
 
 Resources:
   AuroraDatabase:
