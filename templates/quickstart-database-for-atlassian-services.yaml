@@ -12,10 +12,10 @@ Parameters:
       - 'PostgreSQL'
     ConstraintDescription: Must be 'Amazon Aurora PostgreSQL' or 'PostgreSQL'.
     Type: String
-  DBImplementationVersion:
-    Default: 9.6
+  DBEngineVersion:
+    Default: 9
     AllowedValues:
-      - 9.6
+      - 9
       - 10
       - 11
     Description: "Select the engine version to use"
@@ -155,13 +155,13 @@ Conditions:
 Mappings:    
   SemanticDBVersions:
     PostgreSQL:
-      9.6: 9.6
-      10: 10
-      11: 11
+      "9": "9.6"
+      "10": "10"
+      "11": "11"
     AuroraPostgreSQL:
-      9.6: 9.6.12
-      10: 10
-      11: 11.4
+      "9": "9.6.12"
+      "10": "10.5"
+      "11": "11.4"
 
 Resources:
   AuroraDatabase:
@@ -178,8 +178,8 @@ Resources:
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
         DBEngineVersion: !If 
           - UsePostgres
-          - !FindInMap [SemanticDBVersions, PostgreSQL, !Ref DBImplementationVersion]
-          - !FindInMap [SemanticDBVersions, AuroraPostgreSQL, !Ref DBImplementationVersion]
+          - !FindInMap [SemanticDBVersions, PostgreSQL, !Ref DBEngineVersion]
+          - !FindInMap [SemanticDBVersions, AuroraPostgreSQL, !Ref DBEngineVersion]
         DBInstanceClass: !Ref DBInstanceClass
         DBMasterUsername: postgres
         DBMasterUserPassword: !Ref DBMasterUserPassword
@@ -218,8 +218,8 @@ Resources:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
         DBEngineVersion: !If
           - UsePostgres
-          - !FindInMap [SemanticDBVersions, PostgreSQL, !Ref DBImplementationVersion]
-          - !FindInMap [SemanticDBVersions, AuroraPostgreSQL, !Ref DBImplementationVersion]
+          - !FindInMap [SemanticDBVersions, PostgreSQL, !Ref DBEngineVersion]
+          - !FindInMap [SemanticDBVersions, AuroraPostgreSQL, !Ref DBEngineVersion]
         DBAllocatedStorage: !Ref DBAllocatedStorage
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBAutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade
