@@ -15,7 +15,7 @@ Parameters:
   DBEngineVersion:
     Default: 9.6
     AllowedValues:
-      - 9
+      - 9.6
       - 10
       - 11
     Description: "Select the engine version to use"
