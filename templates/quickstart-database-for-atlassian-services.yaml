@@ -13,7 +13,7 @@ Parameters:
     ConstraintDescription: Must be 'Amazon Aurora PostgreSQL' or 'PostgreSQL'.
     Type: String
   DBEngineVersion:
-    Default: 9
+    Default: 9.6
     AllowedValues:
       - 9
       - 10
@@ -153,19 +153,17 @@ Conditions:
     !Equals [!Ref DBStorageEncrypted, true]
 
 Mappings:    
+  # Supported semantic version mappings taken from:
+  # https://confluence.atlassian.com/adminjiraserver/supported-platforms-938846830.html
   SemanticDBVersions:
-    # Officialy supported mapped versions taken from here:
-    # https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html#PostgreSQL.Concepts.General.DBVersions
     PostgreSQL:
-      "9": "9.6"
+      "9.6": "9.6"
       "10": "10"
       "11": "11"
-    # Officialy supported mapped versions taken from here:
-    # https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraPostgreSQL.Updates.20180305.html
     AuroraPostgreSQL:
-      "9": "9.6.12"
+      "9.6": "9.6.12"
       "10": "10.7"
-      "11": "11.7"
+      "11": "11.4"
 
 Resources:
   AuroraDatabase:
