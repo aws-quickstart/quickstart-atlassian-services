@@ -1,0 +1,49 @@
+project:
+  name: quickstart-atlassian-services
+  owner: quickstart-eng@amazon.com
+  s3_regional_buckets: true
+  package_lambda: false
+  regions:
+  - us-west-2
+  - ap-south-1
+  - eu-west-1
+  - us-east-1
+  - ca-central-1
+  - ap-northeast-1
+  - ap-southeast-2
+  - ap-southeast-1
+  - ap-northeast-2
+  - us-east-2
+  - eu-west-2
+  - eu-central-1
+  - us-west-1
+  - sa-east-1
+  - eu-west-3
+  s3_bucket: ''
+tests:
+  atlassian-vpc:
+    parameters:
+      AccessCIDR: 10.0.0.0/16
+      AvailabilityZones: $[taskcat_genaz_2]
+      ExportPrefix: $[taskcat_random-string]
+      KeyPairName: replaced-by-taskcat-override-file
+      QSS3BucketName: $[taskcat_autobucket]
+      QSS3KeyPrefix: quickstart-atlassian-services/
+    regions:
+    - us-west-2
+    - ap-south-1
+    - eu-west-1
+    - us-east-1
+    - ca-central-1
+    - ap-northeast-1
+    - ap-southeast-2
+    - ap-southeast-1
+    - ap-northeast-2
+    - us-east-2
+    - eu-west-2
+    - eu-central-1
+    - us-west-1
+    - sa-east-1
+    - eu-west-3
+    s3_bucket: ''
+    template: templates/quickstart-vpc-for-atlassian-services.yaml
