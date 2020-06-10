@@ -18,9 +18,9 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: RDS Postgres Database for use in Atlassian Standard Infrastructure (qs-1aj6s44e4)
 Parameters:
   DBEngineVersion:
-    Default: 9
+    Default: 9.6
     AllowedValues:
-      - 9
+      - 9.6
       - 10
       - 11
     Description: "Select the Postgres engine version to use"
