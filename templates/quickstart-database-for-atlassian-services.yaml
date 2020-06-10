@@ -13,9 +13,9 @@ Parameters:
     ConstraintDescription: Must be 'Amazon Aurora PostgreSQL' or 'PostgreSQL'.
     Type: String
   DBEngineVersion:
-    Default: 9.6
+    Default: 9
     AllowedValues:
-      - 9.6
+      - 9
       - 10
       - 11
     Description: "Select the engine version to use"
@@ -157,11 +157,11 @@ Mappings:
   # https://confluence.atlassian.com/adminjiraserver/supported-platforms-938846830.html
   SemanticDBVersions:
     PostgreSQL:
-      "9.6": "9.6"
+      "9": "9.6"
       "10": "10"
       "11": "11"
     AuroraPostgreSQL:
-      "9.6": "9.6.12"
+      "9": "9.6.12"
       "10": "10.7"
       "11": "11.4"
 
