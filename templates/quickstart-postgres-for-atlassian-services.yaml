@@ -23,7 +23,7 @@ Parameters:
       - 9.6
       - 10
       - 11
-    Description: "Select the Postgres engine version to use"
+    Description: "The database engine version to use. We'll install a supported minor version that's suitable for your chosen engine"
     Type: String
   DBAutoMinorVersionUpgrade:
     Default: true
