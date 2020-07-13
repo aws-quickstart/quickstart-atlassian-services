@@ -123,12 +123,27 @@ Parameters:
     Type: String
   QSS3BucketRegion:
     Default: 'us-east-1'
-    AllowedPattern: ^[0-9a-z]+([0-9a-z-]*[0-9a-z])*$
-    ConstraintDescription: Quick Start bucket region can include numbers, lowercase
-      letters, and hyphens (-). It cannot start or end with a hyphen
-      (-).
+    AllowedValues:
+      - us-east-1
+      - us-east-2
+      - us-west-1
+      - us-west-2
+      - ca-central-1
+      - eu-west-1
+      - eu-central-1
+      - eu-west-2
+      - eu-west-3
+      - eu-north-1
+      - ap-northeast-1
+      - ap-northeast-2
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-south-1
+      - sa-east-1
+      - us-gov-west-1
+      - us-gov-east-1
     Description: The AWS Region where the Quick Start S3 bucket (QSS3BucketName) is
-      hosted. When using your own bucket, you must specify this value.
+      hosted. By default this is set to us-east-1 and should not be updated unless specifying your own bucket. When bringing your own bucket you must specify the region in which your custom bucket resides.
     Type: String
   QSS3KeyPrefix:
     Default: 'quickstart-atlassian-services/'
