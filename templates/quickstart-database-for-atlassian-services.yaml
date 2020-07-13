@@ -12,6 +12,14 @@ Parameters:
       - 'PostgreSQL'
     ConstraintDescription: Must be 'Amazon Aurora PostgreSQL' or 'PostgreSQL'.
     Type: String
+  DBEngineVersion:
+    Default: 9
+    AllowedValues:
+      - 9
+      - 10
+      - 11
+    Description: "The database engine version to use. We'll install a supported minor version that's suitable for your chosen engine"
+    Type: String
   DBSecurityGroup:
     Description: "ID of the security group (e.g. sg-0234se). One will be created for you if left empty."
     Type: String
@@ -168,8 +176,20 @@ Conditions:
   UseDatabaseEncryption:
     !Equals [!Ref DBStorageEncrypted, true]
 
-Resources:
+Mappings:    
+  # Supported semantic version mappings taken from:
+  # https://confluence.atlassian.com/adminjiraserver/supported-platforms-938846830.html
+  SemanticDBVersions:
+    PostgreSQL:
+      "9": "9.6"
+      "10": "10"
+      "11": "11"
+    AuroraPostgreSQL:
+      "9": "9.6.12"
+      "10": "10.7"
+      "11": "11.4"
 
+Resources:
   AuroraDatabase:
     Type: AWS::CloudFormation::Stack
     Condition: UseAurora
@@ -183,7 +203,7 @@ Resources:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBBackupRetentionPeriod: !Ref DBBackupRetentionPeriod
-        DBEngineVersion: 9.6.12
+        DBEngineVersion: !FindInMap [SemanticDBVersions, AuroraPostgreSQL, !Ref DBEngineVersion]
         DBInstanceClass: !Ref DBInstanceClass
         DBMasterUsername: postgres
         DBMasterUserPassword: !Ref DBMasterUserPassword
@@ -221,6 +241,7 @@ Resources:
           S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
+        DBEngineVersion: !FindInMap [SemanticDBVersions, PostgreSQL, !Ref DBEngineVersion]
         DBAllocatedStorage: !Ref DBAllocatedStorage
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
         DBAutoMinorVersionUpgrade: !Ref DBAutoMinorVersionUpgrade

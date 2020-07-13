@@ -17,6 +17,14 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: RDS Postgres Database for use in Atlassian Standard Infrastructure (qs-1aj6s44e4)
 Parameters:
+  DBEngineVersion:
+    Default: 9.6
+    AllowedValues:
+      - 9.6
+      - 10
+      - 11
+    Description: "The database engine version to use. We'll install a supported minor version that's suitable for your chosen engine"
+    Type: String
   DBAutoMinorVersionUpgrade:
     Default: true
     AllowedValues:
@@ -225,7 +233,7 @@ Resources:
       DBInstanceIdentifier: !GetAtt DbInstanceName.DBInstanceName
       DBSubnetGroupName: !Ref DBSubnetGroup
       Engine: postgres
-      EngineVersion: '9.6'
+      EngineVersion: !Ref DBEngineVersion
       Iops: !If [DBProvisionedIops, !Ref DBIops, !Ref 'AWS::NoValue']
       KmsKeyId: !If [UseDatabaseEncryption, !GetAtt EncryptionKey.Arn, !Ref 'AWS::NoValue']
       MasterUsername: !Ref DBMasterUsername
