@@ -159,7 +159,7 @@ Parameters:
       hosted. By default this is set to us-east-1 and should not be updated unless specifying your own bucket. When bringing your own bucket you must specify the region in which your custom bucket resides.
     Type: String
   QSS3KeyPrefix:
-      Default: 'quickstart-atlassian-services/'
+    Default: 'quickstart-atlassian-services/'
     AllowedPattern: ^[0-9a-zA-Z-/]*$
     ConstraintDescription: Quick Start key prefix can include numbers, lowercase letters,
       uppercase letters, hyphens (-), and forward slash (/).
