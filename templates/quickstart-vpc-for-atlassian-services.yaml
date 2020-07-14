@@ -159,7 +159,7 @@ Parameters:
       hosted. By default this is set to us-east-1 and should not be updated unless specifying your own bucket. When bringing your own bucket you must specify the region in which your custom bucket resides.
     Type: String
   QSS3KeyPrefix:
-    Default: 'quickstart-atlassian-services/'
+      Default: 'quickstart-atlassian-services/'
     AllowedPattern: ^[0-9a-zA-Z-/]*$
     ConstraintDescription: Quick Start key prefix can include numbers, lowercase letters,
       uppercase letters, hyphens (-), and forward slash (/).
@@ -182,12 +182,22 @@ Conditions:
     - !Equals [!Ref BastionHostRequired, true]
     - !Condition KeyPairProvided
 
+Mappings:
+  TemplateUrl:
+    AwsVpcTemplate:
+      custom: "https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template"
+      default: "https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template"
+               
+    BastionStackTemplate:
+      custom: "https://aws-quickstart-us-east-1.s3.us-east-1.amazonaws.com/${QSS3KeyPrefix}/submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml"
+      default: "https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml"
+
 Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
     Properties:
       TemplateURL: !Sub
-        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
+        - !If [UsingDefaultBucket, !FindInMap [TemplateUrl, AwsVpcTemplate, default], !FindInMap [TemplateUrls, AwsVpcTemplateUrl, custom]]
         - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
           S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
@@ -215,7 +225,7 @@ Resources:
     Condition: ProvisionBastion
     Properties:
       TemplateURL: !Sub
-        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
+        - !If [UsingDefaultBucket, !FindInMap [TemplateUrl, BastionStackTemplate, default], !FindInMap [TemplateUrls, AwsVpcTemplateUrl, custom]]
         - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
           S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
