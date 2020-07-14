@@ -174,8 +174,14 @@ Parameters:
     Type: String
 
 Conditions:
+  GovCloudCondition: !Equals
+    - !Ref 'AWS::Region'
+    - us-gov-west-1
   UsingDefaultBucket:
     !Equals [!Ref QSS3BucketName, 'aws-quickstart']
+  UsingDefaultPrefixAndBucket: !And
+    - !Equals [!Ref QSS3KeyPrefix, 'quickstart-atlassian-services/']
+    - !Condition UsingDefaultBucket
   KeyPairProvided:
     !Not [!Equals [!Ref KeyPairName, '']]
   ProvisionBastion: !And
@@ -186,10 +192,28 @@ Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub
-        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
-        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+      TemplateURL: !If
+        # Historically this template has never been supplied with the parameters; QSS3BucketName or QSS3KeyPrefix therefore it
+        # has ALWAYS been interpolated (regardless of product stack) to its default value which in this case is:
+        # http://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
+        #
+        # This is also the case for templates sourced from custom S3 buckets! 
+        # 
+        # As a result if we change this template we need to make sure it will accommodate those product templates which are being called 
+        # from custom S3 buckets and do not pass the parameters; QSS3BucketName, QSS3KeyPrefix. If we dont do this stack deployments will 
+        # fail. As a result we keep the original yaml below to fall back to in the event that this template is called without the parameters 
+        # mentioned
+        - UsingDefaultPrefixAndBucket
+        - !Sub
+          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
+          - QSS3Region: !If
+              - GovCloudCondition
+              - s3-us-gov-west-1
+              - s3        
+        - !Sub
+          - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
+          - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+            S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
         AvailabilityZones:
           !Join
@@ -214,10 +238,28 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Condition: ProvisionBastion
     Properties:
-      TemplateURL: !Sub
-        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
-        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+      TemplateURL: !If
+        # Historically this template has never been supplied with the parameters; QSS3BucketName or QSS3KeyPrefix therefore it
+        # has ALWAYS been interpolated (regardless of product stack) to its default value which in this case is:
+        # http://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
+        #
+        # This is also the case for templates sourced from custom S3 buckets! 
+        # 
+        # As a result if we change this template we need to make sure it will accommodate those product templates which are being called 
+        # from custom S3 buckets and do not pass the parameters; QSS3BucketName, QSS3KeyPrefix. If we dont do this stack deployments will 
+        # fail. As a result we keep the original yaml below to fall back to in the event that this template is called without the parameters 
+        # mentioned
+        - UsingDefaultPrefixAndBucket
+        - !Sub
+          - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
+          - QSS3Region: !If
+              - GovCloudCondition
+              - s3-us-gov-west-1
+              - s3
+        - !Sub
+          - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
+          - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+            S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]    
       Parameters:
         AccessCIDR: !Ref AccessCIDR
         KeyName: !Ref 'KeyPairName'
@@ -268,13 +310,29 @@ Outputs:
       Name: !Sub '${ExportPrefix}NAT2EIP'
   VpCTemplateUrl:
     Description: The URL used to source the VPC Stack Template
-    Value: !Sub
-      - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
-      - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-        S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+    Value: !If
+      - UsingDefaultPrefixAndBucket
+      - !Sub
+        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
+        - QSS3Region: !If
+            - GovCloudCondition
+            - s3-us-gov-west-1
+            - s3
+      - !Sub
+        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
+        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
   BastionTemplateUrl:
     Description: The URL used to source the Bastion Stack Template
-    Value: !Sub
-      - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
-      - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-        S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+    Value: !If
+      - UsingDefaultPrefixAndBucket
+      - !Sub
+        - https://${QSS3BucketName}.${QSS3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
+        - QSS3Region: !If
+            - GovCloudCondition
+            - s3-us-gov-west-1
+            - s3             
+      - !Sub
+        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
+        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
