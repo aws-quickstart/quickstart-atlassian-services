@@ -186,16 +186,10 @@ Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !If
-        - UsingDefaultBucket
-        - !Sub
-          - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
-          - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-            S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
-        - !Sub
-          - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
-          - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-            S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+      TemplateURL: !Sub
+        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
+        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
         AvailabilityZones:
           !Join
@@ -220,16 +214,10 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Condition: ProvisionBastion
     Properties:
-      TemplateURL: !If
-        - UsingDefaultBucket
-        - !Sub
-          - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
-          - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-            S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
-        - !Sub
-          - https://aws-quickstart-us-east-1.s3.us-east-1.amazonaws.com/${QSS3KeyPrefix}/submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
-          - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-            S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+      TemplateURL: !Sub
+        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
+        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
         AccessCIDR: !Ref AccessCIDR
         KeyName: !Ref 'KeyPairName'
@@ -278,3 +266,15 @@ Outputs:
     Value: !GetAtt VPCStack.Outputs.NAT2EIP
     Export:
       Name: !Sub '${ExportPrefix}NAT2EIP'
+  VpCTemplateUrl:
+    Description: The URL used to source the VPC Stack Template
+    Value: !Sub
+      - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
+      - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+        S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+  BastionTemplateUrl:
+    Description: The URL used to source the Bastion Stack Template
+    Value: !Sub
+      - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
+      - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+        S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
