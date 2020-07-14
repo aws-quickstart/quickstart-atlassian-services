@@ -282,6 +282,7 @@ Outputs:
     Description: The alias of the encryption key created for RDS
     Value: !If [UseAurora, !GetAtt AuroraDatabase.Outputs.RDSEncryptionKey, !GetAtt PostgresDatabase.Outputs.RDSEncryptionKey]
   PostgresTemplateUrl:
+    Condition: UsePostgres
     Description: The URL used to source the PostgreSQL Stack Template
     Value:
       !Sub
@@ -289,6 +290,7 @@ Outputs:
       - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
         S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
   AuroraTemplateUrl:
+    Condition: UseAurora
     Description: The URL used to source the Aurora Stack Template
     Value:
       !Sub
