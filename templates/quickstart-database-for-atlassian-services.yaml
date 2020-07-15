@@ -180,6 +180,7 @@ Resources:
     Condition: UseAurora
     Properties:
       TemplateURL: !If
+        # Maintain backward compatibility for non-region support
         - NoBucketRegionSupplied
         - !Sub
           - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.template.yaml
@@ -224,6 +225,7 @@ Resources:
     Condition: UsePostgres
     Properties:
       TemplateURL: !If
+        # Maintain backward compatibility for non-region support
         - NoBucketRegionSupplied
         - !Sub
           - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
