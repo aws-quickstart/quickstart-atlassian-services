@@ -159,11 +159,9 @@ Conditions:
     - us-gov-west-1
   UsingDefaultBucket:
     !Equals [!Ref QSS3BucketName, 'aws-quickstart']
-  NoBucketRegionSupplied:
-    !Equals [!Ref QSS3BucketRegion, '']
-  BucketRegionAndPrefixNotSupplied: !And
-    - !Equals [!Ref QSS3KeyPrefix, '']
-    - !Condition NoBucketRegionSupplied
+  NoBucketRegionSuppliedOrPrexixIsDefault: !Or
+    - !Equals [!Ref QSS3BucketRegion, '']
+    - !Equals [!Ref QSS3KeyPrefix, 'quickstart-atlassian-services/']
   KeyPairProvided:
     !Not [!Equals [!Ref KeyPairName, '']]
   ProvisionBastion: !And
@@ -190,7 +188,7 @@ Resources:
       # do.
       #
       TemplateURL: !If
-        - BucketRegionAndPrefixNotSupplied
+        - NoBucketRegionSuppliedOrPrexixIsDefault
         - !Sub
           - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
           - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
@@ -238,7 +236,7 @@ Resources:
       # do.
       #
       TemplateURL: !If
-        - BucketRegionAndPrefixNotSupplied
+        - NoBucketRegionSuppliedOrPrexixIsDefault
         - !Sub
           - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
           - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
@@ -297,7 +295,7 @@ Outputs:
   VpcTemplateURL:
     Description: The URL used to source the VPC template
     Value: !If
-      - BucketRegionAndPrefixNotSupplied
+      - NoBucketRegionSuppliedOrPrexixIsDefault
       - !Sub
         - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
         - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
@@ -308,7 +306,7 @@ Outputs:
   BastionTemplateURL:
     Description: The URL used to source the Bastion template
     Value: !If
-      - BucketRegionAndPrefixNotSupplied
+      - NoBucketRegionSuppliedOrPrexixIsDefault
       - !Sub
         - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
         - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
