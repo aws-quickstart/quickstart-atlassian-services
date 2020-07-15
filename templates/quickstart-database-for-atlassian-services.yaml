@@ -128,29 +128,9 @@ Parameters:
       It cannot start or end with a hyphen (-).
     Type: String
   QSS3BucketRegion:
-    Default: 'us-east-1'
-    AllowedValues:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - ca-central-1
-      - eu-west-1
-      - eu-central-1
-      - eu-west-2
-      - eu-west-3
-      - eu-north-1
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-south-1
-      - sa-east-1
-      - us-gov-west-1
-      - us-gov-east-1
-    Description: The AWS Region where the Quick Start S3 bucket is hosted.
-      By default, this is set to us-east-1; do not update it unless you're using a custom Quick Start S3 bucket.
+    Default: ''
     Type: String
+    Description: The AWS Region where the Quick Start S3 bucket is hosted.
   QSS3KeyPrefix:
     Default: 'quickstart-atlassian-services/'
     AllowedPattern: ^[0-9a-zA-Z-/]*$
@@ -167,6 +147,9 @@ Parameters:
     Type: String
 
 Conditions:
+  GovCloudCondition: !Equals
+    - !Ref 'AWS::Region'
+    - us-gov-west-1
   UseAurora:
     !Equals [!Ref DatabaseImplementation, 'Amazon Aurora PostgreSQL']
   UsePostgres:
@@ -175,6 +158,8 @@ Conditions:
     !Equals [!Ref QSS3BucketName, 'aws-quickstart']
   UseDatabaseEncryption:
     !Equals [!Ref DBStorageEncrypted, true]
+  NoBucketRegionSupplied:
+    !Equals [!Ref QSS3BucketRegion, '']
 
 Mappings:    
   # Supported semantic version mappings taken from:
@@ -194,11 +179,15 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Condition: UseAurora
     Properties:
-      TemplateURL:
-        !Sub
-        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.template.yaml
-        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+      TemplateURL: !If
+        - NoBucketRegionSupplied
+        - !Sub
+          - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.template.yaml
+          - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
+        - !Sub
+          - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.template.yaml
+          - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+            S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
         DBAllocatedStorageEncrypted: !Ref DBStorageEncrypted
@@ -234,11 +223,15 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Condition: UsePostgres
     Properties:
-      TemplateURL:
-        !Sub
-        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
-        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+      TemplateURL: !If
+        - NoBucketRegionSupplied
+        - !Sub
+          - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
+          - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
+        - !Sub
+          - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
+          - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+            S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
         CustomDBSecurityGroup: !Ref DBSecurityGroup
         DBEngineVersion: !FindInMap [SemanticDBVersions, PostgreSQL, !Ref DBEngineVersion]
@@ -281,19 +274,27 @@ Outputs:
     Condition: UseDatabaseEncryption
     Description: The alias of the encryption key created for RDS
     Value: !If [UseAurora, !GetAtt AuroraDatabase.Outputs.RDSEncryptionKey, !GetAtt PostgresDatabase.Outputs.RDSEncryptionKey]
-  PostgresTemplateURL:
-    Condition: UsePostgres
-    Description: The URL used to source the PostgreSQL Stack template
-    Value:
-      !Sub
-      - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
-      - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-        S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
   AuroraTemplateURL:
     Condition: UseAurora
     Description: The URL used to source the Aurora Stack template
-    Value:
-      !Sub
-      - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.template.yaml
-      - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-        S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+    Value: !If
+      - NoBucketRegionSupplied
+      - !Sub
+        - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.template.yaml
+        - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
+      - !Sub
+        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.template.yaml
+        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+  PostgresTemplateURL:
+    Condition: UsePostgres
+    Description: The URL used to source the PostgreSQL Stack template
+    Value: !If
+      - NoBucketRegionSupplied
+      - !Sub
+        - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
+        - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
+      - !Sub
+        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
+        - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
+          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]

@@ -135,29 +135,9 @@ Parameters:
       It cannot start or end with a hyphen (-).
     Type: String
   QSS3BucketRegion:
-    Default: 'us-east-1'
-    AllowedValues:
-      - us-east-1
-      - us-east-2
-      - us-west-1
-      - us-west-2
-      - ca-central-1
-      - eu-west-1
-      - eu-central-1
-      - eu-west-2
-      - eu-west-3
-      - eu-north-1
-      - ap-northeast-1
-      - ap-northeast-2
-      - ap-southeast-1
-      - ap-southeast-2
-      - ap-south-1
-      - sa-east-1
-      - us-gov-west-1
-      - us-gov-east-1
-    Description: The AWS Region where the Quick Start S3 bucket is hosted.
-      By default, this is set to us-east-1; do not update it unless you're using a custom Quick Start S3 bucket.
+    Default: ''
     Type: String
+    Description: The AWS Region where the Quick Start S3 bucket is hosted.
   QSS3KeyPrefix:
     Default: 'quickstart-atlassian-services/'
     AllowedPattern: ^[0-9a-zA-Z-/]*$
@@ -174,10 +154,13 @@ Parameters:
     Type: String
 
 Conditions:
+  GovCloudCondition: !Equals
+    - !Ref 'AWS::Region'
+    - us-gov-west-1
   UsingDefaultBucket:
     !Equals [!Ref QSS3BucketName, 'aws-quickstart']
-  UsingDefaultPrefix:
-    !Equals [!Ref QSS3KeyPrefix, 'quickstart-atlassian-services/']
+  NoBucketRegionSupplied:
+    !Equals [!Ref QSS3BucketRegion, '']
   KeyPairProvided:
     !Not [!Equals [!Ref KeyPairName, '']]
   ProvisionBastion: !And
@@ -199,16 +182,15 @@ Resources:
       #             
       # If we dont do this stack deployments will fail! 
       #             
-      # As a result we support both scenarios, the first condition, if met, will construct a region specific URL for those templates 
+      # As a result we support both scenarios, the first condition, if met, will construct a non-region specific URL for those templates 
       # that do not provide the mentioned parameters. The second condition will construct a region specific URL for those templates that
       # do.
       #
       TemplateURL: !If
-        - UsingDefaultPrefix
+        - NoBucketRegionSupplied
         - !Sub
-          - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
-          - S3Bucket: !Sub '${QSS3BucketName}-${AWS::Region}'
-            S3Region: !Ref 'AWS::Region'  
+          - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
+          - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
         - !Sub
           - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
           - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
@@ -248,16 +230,15 @@ Resources:
       #             
       # If we dont do this stack deployments will fail! 
       #             
-      # As a result we support both scenarios, the first condition, if met, will construct a region specific URL for those templates 
+      # As a result we support both scenarios, the first condition, if met, will construct a non region specific URL for those templates 
       # that do not provide the mentioned parameters. The second condition will construct a region specific URL for those templates that
       # do.
       #
       TemplateURL: !If
-        - UsingDefaultPrefix
+        - NoBucketRegionSupplied
         - !Sub
-          - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
-          - S3Bucket: !Sub '${QSS3BucketName}-${AWS::Region}'
-            S3Region: !Ref 'AWS::Region'
+          - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
+          - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
         - !Sub
           - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
           - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
@@ -313,11 +294,10 @@ Outputs:
   VpcTemplateURL:
     Description: The URL used to source the VPC template
     Value: !If
-      - UsingDefaultPrefix
+      - NoBucketRegionSupplied
       - !Sub
-        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
-        - S3Bucket: !Sub '${QSS3BucketName}-${AWS::Region}'
-          S3Region: !Ref 'AWS::Region'
+        - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
+        - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       - !Sub
         - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
         - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
@@ -325,12 +305,11 @@ Outputs:
   BastionTemplateURL:
     Description: The URL used to source the Bastion template
     Value: !If
-      - UsingDefaultPrefix
+      - NoBucketRegionSupplied
       - !Sub
-        - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
-        - S3Bucket: !Sub '${QSS3BucketName}-${AWS::Region}'
-          S3Region: !Ref 'AWS::Region'          
+        - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
+        - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       - !Sub
         - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
         - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
-          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
+          S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]  
