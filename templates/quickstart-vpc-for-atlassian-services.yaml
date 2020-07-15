@@ -176,9 +176,8 @@ Parameters:
 Conditions:
   UsingDefaultBucket:
     !Equals [!Ref QSS3BucketName, 'aws-quickstart']
-  UsingDefaultPrefixAndBucket: !And
-    - !Equals [!Ref QSS3KeyPrefix, 'quickstart-atlassian-services/']
-    - !Condition UsingDefaultBucket
+  UsingDefaultPrefix:
+    !Equals [!Ref QSS3KeyPrefix, 'quickstart-atlassian-services/']
   KeyPairProvided:
     !Not [!Equals [!Ref KeyPairName, '']]
   ProvisionBastion: !And
@@ -205,7 +204,7 @@ Resources:
       # do.
       #
       TemplateURL: !If
-        - UsingDefaultPrefixAndBucket
+        - UsingDefaultPrefix
         - !Sub
           - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
           - S3Bucket: !Sub '${QSS3BucketName}-${AWS::Region}'
@@ -254,7 +253,7 @@ Resources:
       # do.
       #
       TemplateURL: !If
-        - UsingDefaultPrefixAndBucket
+        - UsingDefaultPrefix
         - !Sub
           - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
           - S3Bucket: !Sub '${QSS3BucketName}-${AWS::Region}'
@@ -314,7 +313,7 @@ Outputs:
   VpcTemplateURL:
     Description: The URL used to source the VPC template
     Value: !If
-      - UsingDefaultPrefixAndBucket
+      - UsingDefaultPrefix
       - !Sub
         - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
         - S3Bucket: !Sub '${QSS3BucketName}-${AWS::Region}'
@@ -326,7 +325,7 @@ Outputs:
   BastionTemplateURL:
     Description: The URL used to source the Bastion template
     Value: !If
-      - UsingDefaultPrefixAndBucket
+      - UsingDefaultPrefix
       - !Sub
         - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
         - S3Bucket: !Sub '${QSS3BucketName}-${AWS::Region}'
