@@ -177,7 +177,7 @@ Resources:
       #
       # This is also the case for templates sourced from custom S3 buckets! 
       # 
-      # As a result if we change this template we need to make sure it will accommodate those product templates which are being called 
+      # If we change this template we need to make sure it will accommodate those product templates which are being called 
       # from custom S3 buckets and do not pass the parameters; QSS3BucketName, QSS3KeyPrefix. 
       #             
       # If we dont do this stack deployments will fail! 
@@ -189,7 +189,7 @@ Resources:
       TemplateURL: !If
         - NoBucketRegionSupplied
         - !Sub
-          - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
+          - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
           - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
         - !Sub
           - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
@@ -225,7 +225,7 @@ Resources:
       #
       # This is also the case for templates sourced from custom S3 buckets! 
       # 
-      # As a result if we change this template we need to make sure it will accommodate those product templates which are being called 
+      # If we change this template we need to make sure it will accommodate those product templates which are being called 
       # from custom S3 buckets and do not pass the parameters; QSS3BucketName, QSS3KeyPrefix. 
       #             
       # If we dont do this stack deployments will fail! 
@@ -237,7 +237,7 @@ Resources:
       TemplateURL: !If
         - NoBucketRegionSupplied
         - !Sub
-          - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
+          - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
           - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
         - !Sub
           - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
@@ -296,7 +296,7 @@ Outputs:
     Value: !If
       - NoBucketRegionSupplied
       - !Sub
-        - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
+        - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
         - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       - !Sub
         - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
@@ -307,7 +307,7 @@ Outputs:
     Value: !If
       - NoBucketRegionSupplied
       - !Sub
-        - https://${QSS3BucketName}.${S3Region}.amazonaws.com/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
+        - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
         - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
       - !Sub
         - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
