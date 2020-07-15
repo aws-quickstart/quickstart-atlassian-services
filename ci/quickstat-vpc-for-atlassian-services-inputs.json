@@ -8,10 +8,6 @@
         "ParameterValue":"quickstart-atlassian-services/"
     },
     {
-        "ParameterKey":"QSS3BucketRegion",
-        "ParameterValue":"us-east-1"
-    },
-    {
         "ParameterKey": "AvailabilityZones",
         "ParameterValue": "$[taskcat_genaz_2]"
     },
