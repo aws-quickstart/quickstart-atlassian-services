@@ -241,7 +241,7 @@ Resources:
       TemplateURL: !If
         # Historically this template has never been supplied with the parameters; QSS3BucketName or QSS3KeyPrefix therefore it
         # has ALWAYS been interpolated (regardless of product stack) to its default value which in this case is:
-        # http://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
+        # http://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
         #
         # This is also the case for templates sourced from custom S3 buckets! 
         # 
