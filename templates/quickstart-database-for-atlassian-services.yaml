@@ -281,17 +281,17 @@ Outputs:
     Condition: UseDatabaseEncryption
     Description: The alias of the encryption key created for RDS
     Value: !If [UseAurora, !GetAtt AuroraDatabase.Outputs.RDSEncryptionKey, !GetAtt PostgresDatabase.Outputs.RDSEncryptionKey]
-  PostgresTemplateUrl:
+  PostgresTemplateURL:
     Condition: UsePostgres
-    Description: The URL used to source the PostgreSQL Stack Template
+    Description: The URL used to source the PostgreSQL Stack template
     Value:
       !Sub
       - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/templates/quickstart-postgres-for-atlassian-services.yaml
       - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
         S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
-  AuroraTemplateUrl:
+  AuroraTemplateURL:
     Condition: UseAurora
-    Description: The URL used to source the Aurora Stack Template
+    Description: The URL used to source the Aurora Stack template
     Value:
       !Sub
       - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-amazon-aurora/templates/aurora_postgres.template.yaml
