@@ -192,22 +192,22 @@ Resources:
   VPCStack:
     Type: AWS::CloudFormation::Stack
     Properties:
+      # Historically this template has never been supplied with the parameters; QSS3BucketName or QSS3KeyPrefix therefore it
+      # has ALWAYS been interpolated (regardless of product stack) to its default value which in this was:
+      # http://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
+      #
+      # This is also the case for templates sourced from custom S3 buckets! 
+      # 
+      # As a result if we change this template we need to make sure it will accommodate those product templates which are being called 
+      # from custom S3 buckets and do not pass the parameters; QSS3BucketName, QSS3KeyPrefix. 
+      #             
+      # If we dont do this stack deployments will fail! 
+      #             
+      # As a result we support both scenarios, the first condition, if met, will construct a region specific URL for those templates 
+      # that do not provide the mentioned parameters. The second condition will construct a region specific URL for those templates that
+      # do.
+      #
       TemplateURL: !If
-        # Historically this template has never been supplied with the parameters; QSS3BucketName or QSS3KeyPrefix therefore it
-        # has ALWAYS been interpolated (regardless of product stack) to its default value which in this was:
-        # http://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
-        #
-        # This is also the case for templates sourced from custom S3 buckets! 
-        # 
-        # As a result if we change this template we need to make sure it will accommodate those product templates which are being called 
-        # from custom S3 buckets and do not pass the parameters; QSS3BucketName, QSS3KeyPrefix. 
-        #             
-        # If we dont do this stack deployments will fail! 
-        #             
-        # As a result we support both scenarios, the first condition, if met, will construct a region specific URL for those templates 
-        # that do not provide the mentioned parameters. The second condition will construct a region specific URL for those templates that
-        # do.
-        #
         - UsingDefaultPrefixAndBucket
         - !Sub
           - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
@@ -241,22 +241,22 @@ Resources:
     Type: AWS::CloudFormation::Stack
     Condition: ProvisionBastion
     Properties:
+      # Historically this template has never been supplied with the parameters; QSS3BucketName or QSS3KeyPrefix therefore it
+      # has ALWAYS been interpolated (regardless of product stack) to its default value which in this case is:
+      # http://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
+      #
+      # This is also the case for templates sourced from custom S3 buckets! 
+      # 
+      # As a result if we change this template we need to make sure it will accommodate those product templates which are being called 
+      # from custom S3 buckets and do not pass the parameters; QSS3BucketName, QSS3KeyPrefix. 
+      #             
+      # If we dont do this stack deployments will fail! 
+      #             
+      # As a result we support both scenarios, the first condition, if met, will construct a region specific URL for those templates 
+      # that do not provide the mentioned parameters. The second condition will construct a region specific URL for those templates that
+      # do.
+      #
       TemplateURL: !If
-        # Historically this template has never been supplied with the parameters; QSS3BucketName or QSS3KeyPrefix therefore it
-        # has ALWAYS been interpolated (regardless of product stack) to its default value which in this case is:
-        # http://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-services/templates/quickstart-bastion-for-atlassian-services.yaml
-        #
-        # This is also the case for templates sourced from custom S3 buckets! 
-        # 
-        # As a result if we change this template we need to make sure it will accommodate those product templates which are being called 
-        # from custom S3 buckets and do not pass the parameters; QSS3BucketName, QSS3KeyPrefix. 
-        #             
-        # If we dont do this stack deployments will fail! 
-        #             
-        # As a result we support both scenarios, the first condition, if met, will construct a region specific URL for those templates 
-        # that do not provide the mentioned parameters. The second condition will construct a region specific URL for those templates that
-        # do.
-        #
         - UsingDefaultPrefixAndBucket
         - !Sub
           - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}templates/quickstart-bastion-for-atlassian-services.yaml
