@@ -3,5 +3,5 @@
 	url = https://github.com/aws-quickstart/quickstart-aws-vpc.git
 [submodule "submodules/quickstart-amazon-aurora"]
 	path = submodules/quickstart-amazon-aurora
-	url = https://github.com/aws-quickstart/quickstart-amazon-aurora.git
-	branch = master
+	url = https://github.com/atlassian/quickstart-amazon-aurora.git
+	branch = DCD-1051-gov-arn-for-gov-region
