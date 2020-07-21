@@ -138,6 +138,9 @@ Parameters:
     Type: AWS::EC2::Subnet::Id
 
 Conditions:
+  GovCloudCondition: !Equals
+    - !Ref 'AWS::Region'
+    - us-gov-west-1
   DBProvisionedIops:
     !Equals [!Ref DBStorageType, io1]
   UseDatabaseEncryption:
@@ -163,8 +166,9 @@ Resources:
         Statement:
           - Effect: Allow
             Principal:
-              AWS:
-                - !Sub "arn:aws:iam::${AWS::AccountId}:root"
+              AWS: !Sub
+                - arn:${ArnPartition}:iam::${AWS::AccountId}:root
+                - ArnPartition: !If ["GovCloudCondition", "aws-us-gov", "aws"]
             Action: 'kms:*'
             Resource: '*'
       Tags:
@@ -222,7 +226,9 @@ Resources:
             - logs:CreateLogGroup
             - logs:CreateLogStream
             - logs:PutLogEvents
-            Resource: !Sub "arn:aws:logs:*:${AWS::AccountId}:log-group:/aws/lambda/*DBNameGenerator*"
+            Resource: !Sub
+              - arn:${ArnPartition}:logs:*:${AWS::AccountId}:log-group:/aws/lambda/*DBNameGenerator*
+              - ArnPartition: !If ["GovCloudCondition", "aws-us-gov", "aws"]
   DB:
     Type: AWS::RDS::DBInstance
     Properties:
