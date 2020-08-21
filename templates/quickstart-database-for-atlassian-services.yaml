@@ -276,6 +276,9 @@ Outputs:
     Condition: UseDatabaseEncryption
     Description: The alias of the encryption key created for RDS
     Value: !If [UseAurora, !GetAtt AuroraDatabase.Outputs.RDSEncryptionKey, !GetAtt PostgresDatabase.Outputs.RDSEncryptionKey]
+  RDSIdentifier:
+    Description: The ID of the created resource, instance or cluster
+    Value: !If [UseAurora, !GetAtt AuroraDatabase.Outputs.DBClusterIdentifier, !GetAtt PostgresDatabase.Outputs.DBInstanceIdentifier]
   AuroraTemplateURL:
     Condition: UseAurora
     Description: The URL used to source the Aurora Stack template

@@ -262,3 +262,6 @@ Outputs:
     Condition: UseDatabaseEncryption
     Description: The alias of the encryption key created for RDS
     Value: !Ref EncryptionKeyAlias
+  DBInstanceIdentifier:
+    Description: "Database identifier"
+    Value: !Ref DB
