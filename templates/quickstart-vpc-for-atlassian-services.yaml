@@ -2,6 +2,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Master Template for Atlassian Services (qs-1p9o4n3sq)'
 Metadata:
+  QuickStartDocumentation:
+    EntrypointName: "Launch into a new VPC"
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
