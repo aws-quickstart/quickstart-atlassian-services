@@ -6,5 +6,5 @@
 	url = https://github.com/aws-quickstart/quickstart-amazon-aurora.git
 	branch = master
 [submodule "docs/quickstart-documentation-base-common"]
-	path = docs/quickstart-documentation-base-common
+	path = docs/boilerplate
 	url = https://github.com/aws-quickstart/quickstart-documentation-base-common/
