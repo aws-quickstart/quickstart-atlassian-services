@@ -1,0 +1,10 @@
+// Replace the content in <>
+// Briefly describe the software. Use consistent and clear branding.
+// Include the benefits of using the software on AWS, and provide details on usage scenarios.
+
+The {partner-product-name} is a highly available, secure virtual private cloud (VPC) specifically customized to host Atlassian Data Center products.
+The {partner-product-name-short} contains all the components required for the deployment and integration of multiple Atlassian Data Center products within the same VPC. The Quick Starts for all Atlassian Data Center products (namely, https://fwd.aws/Wz3Qb[Jira], https://fwd.aws/kBpWN[Confluence], https://fwd.aws/dEX6W[Bitbucket] and https://fwd.aws/g6Q3D[Crowd]) all require the {partner-product-name-short}. 
+
+You can deploy the {partner-product-name-short} as a stand-alone stack, or as a nested stack of an Atlassian Data Center product. Multiple Atlassian Data Center deployments can use the same {partner-product-name-short}.
+
+

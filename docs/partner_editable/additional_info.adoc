@@ -1,0 +1,17 @@
+=== Deploy Atlassian Products
+
+Now that you’ve set up your stand-alone {partner-product-name-short}, you can provision Jira, Confluence, Bitbucket, or Crowd in it.
+
+[WARNING]
+.Back up and re-deploy old deployments
+====
+If you already deployed Jira, Confluence, or Bitbucket on AWS by using earlier versions (before February 2019) of the Quick Starts for those products, we recommend that you back up your existing instance, redeploy the product by using the new templates, and then restore the product on the new instance.
+====
+
+To deploy these products:
+
+. Review the deployment guide of the Quick Start you're using --  https://fwd.aws/Wz3Qb[Jira], https://fwd.aws/kBpWN[Confluence], https://fwd.aws/dEX6W[Bitbucket] or https://fwd.aws/g6Q3D[Crowd]. Make sure you read the licensing requirements as well.
+. Use the *Deploy into your existing ASI* option to install the product into your VPC.
+. When configuring parameters, choose the VPC ID and subnets from the VPC you created in xref:deploy-steps.adoc#deployment-main[Launching from a cloned Quick Start (recommended for production)].
+. Follow the instructions in the deployment guide to test and configure the product.
+. Repeat these steps to deploy additional Atlassian Data Center products (Jira, Confluence, Bitbucket, and Crowd).
