@@ -5,3 +5,7 @@
 	path = submodules/quickstart-amazon-aurora
 	url = https://github.com/aws-quickstart/quickstart-amazon-aurora.git
 	branch = master
+[submodule "docs/boilerplate"]
+	path = docs/boilerplate
+	url = https://github.com/aws-quickstart/quickstart-documentation-base-common.git
+	branch = main
