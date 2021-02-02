@@ -943,7 +943,7 @@ After you deploy the Quick Start, <a href="https://docs.aws.amazon.com/awsaccoun
 <p>A network address translation (NAT) gateway to allow outbound internet access for resources in the private subnets.</p>
 </li>
 <li>
-<p>A bastion host that enables secure access to ASI without exposing it to the internet. For more information, see <a href="https://docs.aws.amazon.com/quickstart/latest/linux-bastion/architecture.html#bastion-hosts">Bastion Hosts</a>). You can choose not to provision a bastion host if you prefer to access ASI nodes through the <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html">AWS Systems Manager</a>.</p>
+<p>A bastion host that enables secure access to nodes within your infrastructure without exposing it to the internet (for more information, see <a href="https://docs.aws.amazon.com/quickstart/latest/linux-bastion/architecture.html#bastion-hosts">Bastion Hosts</a>). You can choose not to provision a bastion host if you prefer to access ASI nodes through the <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html">AWS Systems Manager</a>.</p>
 </li>
 </ul>
 </div>
@@ -1140,23 +1140,22 @@ Certain Regions are available on an opt-in basis. For more information, see <a h
 <div class="sect3">
 <h4 id="_deployment_options">Deployment options</h4>
 <div class="paragraph">
-<p>This Quick Start includes two AWS CloudFormation templates. The first template builds the Atlassian Standard Infrastructure (ASI), which is a virtual private cloud (VPC) that contains the components required by all Atlassian applications, and then provisions ASI into this ASI. The second template provisions ASI in an existing ASI.</p>
+<p>This Quick Start deploys a stand-alone stack containing the Atlassian Standard Infrastructure. Upon deployment, you can use it as the VPC for any number of Atlassian Data Center Quick Start deployments (<a href="https://fwd.aws/Wz3Qb">Jira Software/Service Desk Data Center</a>, <a href="https://aws.amazon.com/quickstart/architecture/confluence/">Confluence Data Center</a>, <a href="https://fwd.aws/BBeJW">Bitbucket Data Center</a>, and <a href="https://fwd.aws/QXEDE">Crowd Data Center</a>). Deploying multiple Atlassian Data Center products within the same ASI helps ensure smooth cross-product integration.</p>
 </div>
 <div class="paragraph">
-<p>Using these templates, the Quick Start provides two deployment options:</p>
+<p>This Quick Start allows you to deploy with or without a bastion host. This host enables secure access to nodes within your infrastructure without exposing it to the internet (for more information, see <a href="https://docs.aws.amazon.com/quickstart/latest/linux-bastion/architecture.html#bastion-hosts">Bastion Hosts</a>). You can choose not to provision a bastion host if you prefer to access ASI nodes through the <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html">AWS Systems Manager</a>.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Deploy ASI into a new ASI (end-to-end deployment)</strong>. Choose this option if you’re a new user. This option builds the <a href="https://aws.amazon.com/quickstart/architecture/atlassian-standard-infrastructure/">Atlassian Standard Infrastructure (ASI)</a>, which is a VPC that consists of the subnets, NAT gateways, security groups, and other infrastructure components required by all Atlassian applications. It then deploys ASI into this new VPC.</p>
-</li>
-<li>
-<p><strong>Deploy Atlassian Standard Infrastructure into an existing ASI</strong>. This option provisions ASI in an existing ASI, and also offers more customizable parameters. Choose this option if you’ve already deployed the ASI separately by using the <a href="https://fwd.aws/xYyYy">ASI Quick Start</a>, or by deploying another Atlassian product from a Quick Start (<a href="https://fwd.aws/Wz3Qb">Jira Software/Service Desk Data Center</a>, <a href="https://aws.amazon.com/quickstart/architecture/confluence/">Confluence Data Center</a>, <a href="https://fwd.aws/BBeJW">Bitbucket Data Center</a>, or <a href="https://fwd.aws/QXEDE">Crowd Data Center</a>).</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>The Quick Start provides separate templates for these options. It also lets you configure Classless Inter-Domain Routing (CIDR) blocks, instance types, and ASI settings, as discussed later in this guide.</p>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can remove the bastion host from an existing ASI. If you do, you&#8217;ll also need to unlink the bastion host from any Atlassian Data Center products using the ASI. For product-specific instructions, refer to the knowledge bases of <a href="https://confluence.atlassian.com/x/sjvsOw">Jira</a>, <a href="https://confluence.atlassian.com/x/NDrzOw">Confluence</a>, <a href="https://confluence.atlassian.com/x/SzrzOw">Bitbucket</a>, or <a href="https://confluence.atlassian.com/x/eDrzOw">Crowd</a>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
