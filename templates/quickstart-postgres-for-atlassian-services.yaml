@@ -246,9 +246,9 @@ Resources:
           Value: !Sub ["${StackName} PostgreSQL Database", StackName: !Ref 'AWS::StackName']
         # NOTE: The leading COMMIT/TIMESTAMP are used to locate the position to update; see scripts/update-tags.py
         - Key: "atl:quickstart:commit-id"
-          Value: "COMMIT: 343e943a20f6c3c4ca3cbd289cf903905528b98a"
+          Value: "COMMIT: 7afa4e589e4306991e3a45ff8faf55b94d384039"
         - Key: "atl:quickstart:timestamp"
-          Value: "TIMESTAMP: 2020-07-30T01:36:47Z"
+          Value: "TIMESTAMP: 2021-02-12T01:35:01Z"
       VPCSecurityGroups: [!Ref CustomDBSecurityGroup]
     
 Outputs:
