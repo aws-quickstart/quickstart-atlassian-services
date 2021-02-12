@@ -50,7 +50,6 @@ Parameters:
 Resources:
   Bastion:
     Type: AWS::EC2::Instance
-    DeletionPolicy: Retain
     UpdateReplacePolicy: Retain
     Properties:
       ImageId: !Ref LatestAmiId
