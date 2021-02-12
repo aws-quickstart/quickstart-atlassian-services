@@ -50,6 +50,7 @@ Parameters:
 Resources:
   Bastion:
     Type: AWS::EC2::Instance
+    DeletionPolicy: Delete
     UpdateReplacePolicy: Retain
     Properties:
       ImageId: !Ref LatestAmiId
@@ -65,9 +66,9 @@ Resources:
           Value: "Bastion for Atlassian Product VPC"
         # NOTE: The leading COMMIT/TIMESTAMP are used to locate the position to update; see scripts/update-tags.py
         - Key: "atl:quickstart:commit-id"
-          Value: "COMMIT: 7afa4e589e4306991e3a45ff8faf55b94d384039"
+          Value: "COMMIT: 2fe0577982be7ea3d781bae648718936e500820d"
         - Key: "atl:quickstart:timestamp"
-          Value: "TIMESTAMP: 2021-02-12T01:35:01Z"
+          Value: "TIMESTAMP: 2020-01-23T02:34:44Z"
   SecurityGroup:
     Type: "AWS::EC2::SecurityGroup"
     Properties:
