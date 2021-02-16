@@ -23,6 +23,7 @@ Parameters:
       - 9.6
       - 10
       - 11
+      - 12
     Description: "The database engine version to use. We'll install a supported minor version that's suitable for your chosen engine"
     Type: String
   DBAutoMinorVersionUpgrade:
