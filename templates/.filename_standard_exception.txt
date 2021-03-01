@@ -1,0 +1,5 @@
+quickstart-bastion-for-atlassian-services.yaml
+quickstart-cloudwatch-dashboard.yaml
+quickstart-database-for-atlassian-services.yaml
+quickstart-postgres-for-atlassian-services.yaml
+quickstart-vpc-for-atlassian-services.yaml
