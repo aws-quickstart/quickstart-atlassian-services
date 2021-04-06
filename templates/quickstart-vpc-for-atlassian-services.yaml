@@ -22,10 +22,6 @@ Metadata:
           - BastionHostRequired
           - KeyPairName
       - Label:
-          default: Amazon EC2 Configuration
-        Parameters:
-          - NATInstanceType
-      - Label:
           default: AWS Quick Start Configuration
         Parameters:
           - ExportPrefix
@@ -43,8 +39,6 @@ Metadata:
         default: SSH Key Pair Name
       BastionHostRequired:
         default: Deploy Bastion host
-      NATInstanceType:
-        default: NAT Instance Type
       PrivateSubnet1CIDR:
         default: Private Subnet 1 CIDR
       PrivateSubnet2CIDR:
@@ -86,25 +80,6 @@ Parameters:
       - "true"
       - "false"
     Description: Whether to provision a Bastion host instance; if 'true', then you need to provide an EC2 Key Pair
-    Type: String
-  NATInstanceType:
-    Default: t3.small
-    AllowedValues:
-      - t3.nano
-      - t3.micro
-      - t3.small
-      - t3.medium
-      - t3.large
-      - t2.nano
-      - t2.micro
-      - t2.small
-      - t2.medium
-      - t2.large
-      - m3.medium
-      - m3.large
-      - m4.large
-    Description: Amazon EC2 instance type for the NAT Instances. This is only used
-      if the region does not support NAT gateways.
     Type: String
   PrivateSubnet1CIDR:
     Default: 10.0.0.0/19
@@ -178,10 +153,10 @@ Resources:
         # Maintain backward compatibility for non-region support
         - NoBucketRegionSuppliedOrBucketPrefixIsDefault
         - !Sub
-          - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template
+          - https://${QSS3BucketName}.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-aws-vpc/templates/aws-vpc.template.yaml
           - S3Region: !If ["GovCloudCondition", "s3-us-gov-west-1", "s3"]
         - !Sub
-          - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template
+          - https://${S3Bucket}.s3.${S3Region}.${AWS::URLSuffix}/${QSS3KeyPrefix}submodules/quickstart-atlassian-services/submodules/quickstart-aws-vpc/templates/aws-vpc.template.yaml
           - S3Bucket: !If [UsingDefaultBucket, !Sub '${QSS3BucketName}-${AWS::Region}', !Ref QSS3BucketName]
             S3Region: !If [UsingDefaultBucket, !Ref 'AWS::Region', !Ref QSS3BucketRegion]
       Parameters:
@@ -189,8 +164,6 @@ Resources:
           !Join
             - ','
             - !Ref 'AvailabilityZones'
-        KeyPairName: !Ref 'KeyPairName'
-        NATInstanceType: !Ref 'NATInstanceType'
         NumberOfAZs: '2'
         PrivateSubnet1ACIDR: !Ref 'PrivateSubnet1CIDR'
         PrivateSubnet2ACIDR: !Ref 'PrivateSubnet2CIDR'
