@@ -18,12 +18,6 @@
 (`BastionHostRequired`)|`true`|Whether to provision a Bastion host instance; if 'true', then you need to provide an EC2 Key Pair|SSH Key Pair Name
 (`KeyPairName`)|`**__Blank string__**`|Public/private EC2 Key Pairs to allow you to securely access the Bastion host
 |===
-.Amazon EC2 Configuration
-[width="100%",cols="16%,11%,73%",options="header",]
-|===
-|Parameter label (name) |Default value|Description|NAT Instance Type
-(`NATInstanceType`)|`t3.small`|Amazon EC2 instance type for the NAT Instances. This is only used if the region does not support NAT gateways.
-|===
 .AWS Quick Start Configuration
 [width="100%",cols="16%,11%,73%",options="header",]
 |===
