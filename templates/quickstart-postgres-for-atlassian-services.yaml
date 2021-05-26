@@ -224,6 +224,17 @@ Resources:
             - logs:CreateLogStream
             - logs:PutLogEvents
             Resource: !Sub "arn:${AWS::Partition}:logs:*:${AWS::AccountId}:log-group:/aws/lambda/*DBNameGenerator*"
+
+  DBParamGroup:
+    Type: AWS::RDS::DBParameterGroup
+    Properties:
+      Description: "DB Parameter Group for security error logging"
+      Family: !Join [ "", [ "postgres", !Ref DBEngineVersion ] ]
+      Parameters:
+        # The following are recommended to assist security scanning.
+        log_statement: "ddl"
+        log_min_duration_statement: 15000
+
   DB:
     Type: AWS::RDS::DBInstance
     Properties:
@@ -232,6 +243,7 @@ Resources:
       BackupRetentionPeriod: !Ref DBBackupRetentionPeriod
       DBInstanceClass: !Ref DBInstanceClass
       DBInstanceIdentifier: !GetAtt DbInstanceName.DBInstanceName
+      DBParameterGroupName: !Ref DBParamGroup
       DBSubnetGroupName: !Ref DBSubnetGroup
       Engine: postgres
       EngineVersion: !Ref DBEngineVersion
