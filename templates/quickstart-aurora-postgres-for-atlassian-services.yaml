@@ -341,6 +341,7 @@ Resources:
   EncryptionKey:
     Condition: UseDatabaseEncryption
     DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Type: AWS::KMS::Key
     Properties:
       KeyPolicy:
@@ -531,6 +532,7 @@ Resources:
           - CreateSecurityGroup
           - [!Ref RDSSecurityGroup]
           - [!Ref CustomDBSecurityGroup]
+    DeletionPolicy: Retain
     UpdateReplacePolicy: Snapshot
   AuroraDBSubnetGroup: 
     Properties: 
