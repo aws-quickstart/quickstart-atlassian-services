@@ -71,7 +71,7 @@ Parameters:
       Quickstarts.
     Type: String
   KeyPairName:
-    Description: Public/private EC2 Key Pairs to allow you to securely access the Bastion host
+    Description: Public/private EC2 Key Pairs (without file extension) to allow you to securely access the Bastion host.
     Type: String
     Default: ''
   BastionHostRequired:
