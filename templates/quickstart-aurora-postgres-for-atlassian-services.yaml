@@ -357,6 +357,7 @@ Resources:
       Tags:
         - Key: Name
           Value: !Ref AWS::StackName
+    EnableKeyRotation: true
   EncryptionKeyAlias:
     Condition: UseDatabaseEncryption
     Type: AWS::KMS::Alias

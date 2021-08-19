@@ -234,7 +234,7 @@ Resources:
       Parameters:
         # The following are recommended to assist security scanning.
         log_statement: "ddl"
-        log_min_duration_statement: 15000
+        log_min_duration_statement: "15000"
 
   DB:
     Type: AWS::RDS::DBInstance
