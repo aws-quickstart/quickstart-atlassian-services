@@ -352,12 +352,62 @@ Resources:
             Principal:
               AWS:
                 - !Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:root"
-            Action: 'kms:*'
+            Action:
+            - kms:GetKeyPolicy
+            - kms:UpdateKeyDescription
+            - kms:Decrypt
+            - kms:EnableKey
+            - kms:EnableKeyRotation
+            - kms:GenerateDataKeyPair
+            - kms:DescribeKey
+            - kms:ReEncryptFrom
+            - kms:DeleteAlias
+            - kms:ImportKeyMaterial
+            - kms:CancelKeyDeletion
+            - kms:DisconnectCustomKeyStore
+            - kms:DeleteCustomKeyStore
+            - kms:ListKeyPolicies
+            - kms:ListResourceTags
+            - kms:GenerateDataKeyWithoutPlaintext
+            - kms:CreateCustomKeyStore
+            - kms:GetParametersForImport
+            - kms:ListAliases
+            - kms:ListRetirableGrants
+            - kms:GenerateRandom
+            - kms:Encrypt
+            - kms:DisableKeyRotation
+            - kms:UpdateCustomKeyStore
+            - kms:RetireGrant
+            - kms:ReEncryptTo
+            - kms:UpdatePrimaryRegion
+            - kms:GenerateDataKeyPairWithoutPlaintext
+            - kms:ReplicateKey
+            - kms:GetKeyRotationStatus
+            - kms:TagResource
+            - kms:UntagResource
+            - kms:RevokeGrant
+            - kms:CreateKey
+            - kms:SynchronizeMultiRegionKey
+            - kms:ScheduleKeyDeletion
+            - kms:UpdateAlias
+            - kms:Sign
+            - kms:DescribeCustomKeyStores
+            - kms:ConnectCustomKeyStore
+            - kms:DisableKey
+            - kms:CreateAlias
+            - kms:GetPublicKey
+            - kms:PutKeyPolicy
+            - kms:Verify
+            - kms:GenerateDataKey
+            - kms:CreateGrant
+            - kms:ListKeys
+            - kms:ListGrants
+            - kms:DeleteImportedKeyMaterial
             Resource: '*'
       Tags:
         - Key: Name
           Value: !Ref AWS::StackName
-    EnableKeyRotation: true
+      EnableKeyRotation: true
   EncryptionKeyAlias:
     Condition: UseDatabaseEncryption
     Type: AWS::KMS::Alias
@@ -473,7 +523,7 @@ Resources:
         log_rotation_size: '102400'
         # The following are recommended to assist security scanning.
         log_statement: "ddl"
-        log_min_duration_statement: 15000
+        log_min_duration_statement: "15000"
 
   RDSDBClusterParameterGroup:
     Type: AWS::RDS::DBClusterParameterGroup
