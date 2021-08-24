@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
-Description: QS(5027) Atlassian Vpc Bastion Oct,19,2016
+Description: QS(5027) Atlassian Vpc Bastion Oct,19,2016 (qs-bpj6s43e1)
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:

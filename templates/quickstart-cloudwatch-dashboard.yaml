@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Cloudwatch dashboard template
+Description: Cloudwatch dashboard template (qs-apj6s43e0)
 Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
