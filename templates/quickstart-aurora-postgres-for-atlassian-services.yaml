@@ -353,56 +353,56 @@ Resources:
               AWS:
                 - !Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:root"
             Action:
-            - kms:GetKeyPolicy
-            - kms:UpdateKeyDescription
+            - kms:CancelKeyDeletion
+            - kms:ConnectCustomKeyStore
+            - kms:CreateAlias
+            - kms:CreateCustomKeyStore
+            - kms:CreateGrant
+            - kms:CreateKey
             - kms:Decrypt
+            - kms:DeleteAlias
+            - kms:DeleteCustomKeyStore
+            - kms:DeleteImportedKeyMaterial
+            - kms:DescribeCustomKeyStores
+            - kms:DescribeKey
+            - kms:DisableKey
+            - kms:DisableKeyRotation
+            - kms:DisconnectCustomKeyStore
             - kms:EnableKey
             - kms:EnableKeyRotation
-            - kms:GenerateDataKeyPair
-            - kms:DescribeKey
-            - kms:ReEncryptFrom
-            - kms:DeleteAlias
-            - kms:ImportKeyMaterial
-            - kms:CancelKeyDeletion
-            - kms:DisconnectCustomKeyStore
-            - kms:DeleteCustomKeyStore
-            - kms:ListKeyPolicies
-            - kms:ListResourceTags
-            - kms:GenerateDataKeyWithoutPlaintext
-            - kms:CreateCustomKeyStore
-            - kms:GetParametersForImport
-            - kms:ListAliases
-            - kms:ListRetirableGrants
-            - kms:GenerateRandom
             - kms:Encrypt
-            - kms:DisableKeyRotation
-            - kms:UpdateCustomKeyStore
-            - kms:RetireGrant
-            - kms:ReEncryptTo
-            - kms:UpdatePrimaryRegion
+            - kms:GenerateDataKey
+            - kms:GenerateDataKeyPair
             - kms:GenerateDataKeyPairWithoutPlaintext
-            - kms:ReplicateKey
+            - kms:GenerateDataKeyWithoutPlaintext
+            - kms:GenerateRandom
+            - kms:GetKeyPolicy
             - kms:GetKeyRotationStatus
+            - kms:GetParametersForImport
+            - kms:GetPublicKey
+            - kms:ImportKeyMaterial
+            - kms:ListAliases
+            - kms:ListGrants
+            - kms:ListKeyPolicies
+            - kms:ListKeys
+            - kms:ListResourceTags
+            - kms:ListRetirableGrants
+            - kms:PutKeyPolicy
+            - kms:ReEncryptFrom
+            - kms:ReEncryptTo
+            - kms:ReplicateKey
+            - kms:RetireGrant
+            - kms:RevokeGrant
+            - kms:ScheduleKeyDeletion
+            - kms:Sign
+            - kms:SynchronizeMultiRegionKey
             - kms:TagResource
             - kms:UntagResource
-            - kms:RevokeGrant
-            - kms:CreateKey
-            - kms:SynchronizeMultiRegionKey
-            - kms:ScheduleKeyDeletion
             - kms:UpdateAlias
-            - kms:Sign
-            - kms:DescribeCustomKeyStores
-            - kms:ConnectCustomKeyStore
-            - kms:DisableKey
-            - kms:CreateAlias
-            - kms:GetPublicKey
-            - kms:PutKeyPolicy
+            - kms:UpdateCustomKeyStore
+            - kms:UpdateKeyDescription
+            - kms:UpdatePrimaryRegion
             - kms:Verify
-            - kms:GenerateDataKey
-            - kms:CreateGrant
-            - kms:ListKeys
-            - kms:ListGrants
-            - kms:DeleteImportedKeyMaterial
             Resource: '*'
       Tags:
         - Key: Name
