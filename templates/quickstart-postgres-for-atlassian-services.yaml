@@ -166,7 +166,57 @@ Resources:
             Principal:
               AWS:
                 - !Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:root"
-            Action: 'kms:*'
+            Action:
+              - kms:CancelKeyDeletion
+              - kms:ConnectCustomKeyStore
+              - kms:CreateAlias
+              - kms:CreateCustomKeyStore
+              - kms:CreateGrant
+              - kms:CreateKey
+              - kms:Decrypt
+              - kms:DeleteAlias
+              - kms:DeleteCustomKeyStore
+              - kms:DeleteImportedKeyMaterial
+              - kms:DescribeCustomKeyStores
+              - kms:DescribeKey
+              - kms:DisableKey
+              - kms:DisableKeyRotation
+              - kms:DisconnectCustomKeyStore
+              - kms:EnableKey
+              - kms:EnableKeyRotation
+              - kms:Encrypt
+              - kms:GenerateDataKey
+              - kms:GenerateDataKeyPair
+              - kms:GenerateDataKeyPairWithoutPlaintext
+              - kms:GenerateDataKeyWithoutPlaintext
+              - kms:GenerateRandom
+              - kms:GetKeyPolicy
+              - kms:GetKeyRotationStatus
+              - kms:GetParametersForImport
+              - kms:GetPublicKey
+              - kms:ImportKeyMaterial
+              - kms:ListAliases
+              - kms:ListGrants
+              - kms:ListKeyPolicies
+              - kms:ListKeys
+              - kms:ListResourceTags
+              - kms:ListRetirableGrants
+              - kms:PutKeyPolicy
+              - kms:ReEncryptFrom
+              - kms:ReEncryptTo
+              - kms:ReplicateKey
+              - kms:RetireGrant
+              - kms:RevokeGrant
+              - kms:ScheduleKeyDeletion
+              - kms:Sign
+              - kms:SynchronizeMultiRegionKey
+              - kms:TagResource
+              - kms:UntagResource
+              - kms:UpdateAlias
+              - kms:UpdateCustomKeyStore
+              - kms:UpdateKeyDescription
+              - kms:UpdatePrimaryRegion
+              - kms:Verify
             Resource: '*'
       Tags:
         - Key: Name
@@ -234,7 +284,7 @@ Resources:
       Parameters:
         # The following are recommended to assist security scanning.
         log_statement: "ddl"
-        log_min_duration_statement: 15000
+        log_min_duration_statement: "15000"
 
   DB:
     Type: AWS::RDS::DBInstance
