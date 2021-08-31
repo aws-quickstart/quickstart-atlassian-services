@@ -71,7 +71,7 @@ Parameters:
       Quickstarts.
     Type: String
   KeyPairName:
-    Description: Public/private EC2 Key Pairs to allow you to securely access the Bastion host
+    Description: Public/private EC2 Key Pairs (without file extension) to allow you to securely access the Bastion host.
     Type: String
     Default: ''
   BastionHostRequired:
@@ -79,7 +79,7 @@ Parameters:
     AllowedValues:
       - "true"
       - "false"
-    Description: Whether to provision a Bastion host instance; if 'true', then you need to provide an EC2 Key Pair
+    Description: Whether to provision a Bastion host instance; if 'true', then you need to provide an EC2 Key Pair.
     Type: String
   PrivateSubnet1CIDR:
     Default: 10.0.0.0/19
@@ -94,12 +94,12 @@ Parameters:
   PublicSubnet1CIDR:
     Default: 10.0.128.0/20
     AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$
-    Description: CIDR Block for the public DMZ subnet 1 located in Availability Zone 1
+    Description: CIDR Block for the public DMZ subnet 1 located in Availability Zone 1.
     Type: String
   PublicSubnet2CIDR:
     Default: 10.0.144.0/20
     AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$
-    Description: CIDR Block for the public DMZ subnet 2 located in Availability Zone 2
+    Description: CIDR Block for the public DMZ subnet 2 located in Availability Zone 2.
     Type: String
   QSS3BucketName:
     Default: 'aws-quickstart'
@@ -127,7 +127,7 @@ Parameters:
   VPCCIDR:
     Default: 10.0.0.0/16
     AllowedPattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$
-    Description: CIDR Block for the VPC
+    Description: CIDR Block for the VPC.
     Type: String
 
 Conditions:
