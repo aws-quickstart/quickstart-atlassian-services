@@ -532,7 +532,7 @@ Resources:
           - CreateSecurityGroup
           - [!Ref RDSSecurityGroup]
           - [!Ref CustomDBSecurityGroup]
-    DeletionPolicy: Retain
+    DeletionPolicy: Delete
     UpdateReplacePolicy: Snapshot
   AuroraDBSubnetGroup: 
     Properties: 
