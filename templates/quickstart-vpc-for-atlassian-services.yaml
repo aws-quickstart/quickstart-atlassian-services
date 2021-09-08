@@ -2,6 +2,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Master Template for Atlassian Services (qs-1p9o4n3sq)'
 Metadata:
+  QSLint:
+    Exclusions: [W4002, E3012, E1001, E9101, W9006, W9002, W9003, ERDSDBInstancePubliclyAccessible, EIAMPolicyWildcardResource, ERDSStorageEncryptionEnabled]
   QuickStartDocumentation:
     EntrypointName: "Launch into a new VPC"
   AWS::CloudFormation::Interface:

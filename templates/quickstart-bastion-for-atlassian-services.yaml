@@ -2,6 +2,8 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: QS(5027) Atlassian Vpc Bastion Oct,19,2016 (qs-bpj6s43e1)
 Metadata:
+  QSLint:
+    Exclusions: [W4002, E3012, E1001, E9101, W9006, W9002, W9003, ERDSDBInstancePubliclyAccessible, EIAMPolicyWildcardResource, ERDSStorageEncryptionEnabled]
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:

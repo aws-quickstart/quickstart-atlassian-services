@@ -16,6 +16,9 @@
 # DBStorageType
 AWSTemplateFormatVersion: 2010-09-09
 Description: RDS Postgres Database for use in Atlassian Standard Infrastructure (qs-1aj6s44e4)
+Metadata:
+  QSLint:
+    Exclusions: [W4002, E3012, E1001, E9101, W9006, W9002, W9003, ERDSDBInstancePubliclyAccessible, EIAMPolicyWildcardResource, ERDSStorageEncryptionEnabled]
 Parameters:
   DBEngineVersion:
     Default: 9.6
