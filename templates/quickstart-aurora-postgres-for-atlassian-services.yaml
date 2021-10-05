@@ -3,6 +3,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: "AWS Aurora Postgres, Do Not Remove Apache License Version 2.0 (qs-1pj6s43e3) July,23,2019"
 Metadata:
+  QSLint:
+    Exclusions: [W4002, E3012, E1001, E9101, W9006, W9002, W9003, ERDSDBInstancePubliclyAccessible, EIAMPolicyWildcardResource, ERDSStorageEncryptionEnabled]
   LICENSE: Apache License Version 2.0
   AWS::CloudFormation::Interface:
     ParameterGroups:
@@ -352,11 +354,62 @@ Resources:
             Principal:
               AWS:
                 - !Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:root"
-            Action: 'kms:*'
+            Action:
+            - kms:CancelKeyDeletion
+            - kms:ConnectCustomKeyStore
+            - kms:CreateAlias
+            - kms:CreateCustomKeyStore
+            - kms:CreateGrant
+            - kms:CreateKey
+            - kms:Decrypt
+            - kms:DeleteAlias
+            - kms:DeleteCustomKeyStore
+            - kms:DeleteImportedKeyMaterial
+            - kms:DescribeCustomKeyStores
+            - kms:DescribeKey
+            - kms:DisableKey
+            - kms:DisableKeyRotation
+            - kms:DisconnectCustomKeyStore
+            - kms:EnableKey
+            - kms:EnableKeyRotation
+            - kms:Encrypt
+            - kms:GenerateDataKey
+            - kms:GenerateDataKeyPair
+            - kms:GenerateDataKeyPairWithoutPlaintext
+            - kms:GenerateDataKeyWithoutPlaintext
+            - kms:GenerateRandom
+            - kms:GetKeyPolicy
+            - kms:GetKeyRotationStatus
+            - kms:GetParametersForImport
+            - kms:GetPublicKey
+            - kms:ImportKeyMaterial
+            - kms:ListAliases
+            - kms:ListGrants
+            - kms:ListKeyPolicies
+            - kms:ListKeys
+            - kms:ListResourceTags
+            - kms:ListRetirableGrants
+            - kms:PutKeyPolicy
+            - kms:ReEncryptFrom
+            - kms:ReEncryptTo
+            - kms:ReplicateKey
+            - kms:RetireGrant
+            - kms:RevokeGrant
+            - kms:ScheduleKeyDeletion
+            - kms:Sign
+            - kms:SynchronizeMultiRegionKey
+            - kms:TagResource
+            - kms:UntagResource
+            - kms:UpdateAlias
+            - kms:UpdateCustomKeyStore
+            - kms:UpdateKeyDescription
+            - kms:UpdatePrimaryRegion
+            - kms:Verify
             Resource: '*'
       Tags:
         - Key: Name
           Value: !Ref AWS::StackName
+      EnableKeyRotation: true
   EncryptionKeyAlias:
     Condition: UseDatabaseEncryption
     Type: AWS::KMS::Alias
@@ -472,7 +525,7 @@ Resources:
         log_rotation_size: '102400'
         # The following are recommended to assist security scanning.
         log_statement: "ddl"
-        log_min_duration_statement: 15000
+        log_min_duration_statement: "15000"
 
   RDSDBClusterParameterGroup:
     Type: AWS::RDS::DBClusterParameterGroup
@@ -532,7 +585,7 @@ Resources:
           - CreateSecurityGroup
           - [!Ref RDSSecurityGroup]
           - [!Ref CustomDBSecurityGroup]
-    DeletionPolicy: Retain
+    DeletionPolicy: Snapshot
     UpdateReplacePolicy: Snapshot
   AuroraDBSubnetGroup: 
     Properties: 

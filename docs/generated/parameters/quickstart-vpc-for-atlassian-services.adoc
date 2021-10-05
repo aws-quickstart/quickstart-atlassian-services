@@ -7,16 +7,16 @@
 (`AvailabilityZones`)|`**__Requires input__**`|List of Availability Zones to use for the subnets in the VPC. Note: You must specify 2 AZs here; if more are specified only the first 2 will be used.|Private Subnet 1 CIDR
 (`PrivateSubnet1CIDR`)|`10.0.0.0/19`|CIDR block for private subnet 1 located in Availability Zone 1.|Private Subnet 2 CIDR
 (`PrivateSubnet2CIDR`)|`10.0.32.0/19`|CIDR block for private subnet 2 located in Availability Zone 2.|Public Subnet 1 CIDR
-(`PublicSubnet1CIDR`)|`10.0.128.0/20`|CIDR Block for the public DMZ subnet 1 located in Availability Zone 1|Public Subnet 2 CIDR
-(`PublicSubnet2CIDR`)|`10.0.144.0/20`|CIDR Block for the public DMZ subnet 2 located in Availability Zone 2|VPC CIDR
-(`VPCCIDR`)|`10.0.0.0/16`|CIDR Block for the VPC
+(`PublicSubnet1CIDR`)|`10.0.128.0/20`|CIDR Block for the public DMZ subnet 1 located in Availability Zone 1.|Public Subnet 2 CIDR
+(`PublicSubnet2CIDR`)|`10.0.144.0/20`|CIDR Block for the public DMZ subnet 2 located in Availability Zone 2.|VPC CIDR
+(`VPCCIDR`)|`10.0.0.0/16`|CIDR Block for the VPC.
 |===
 .Bastion host provisioning
 [width="100%",cols="16%,11%,73%",options="header",]
 |===
 |Parameter label (name) |Default value|Description|Deploy Bastion host
-(`BastionHostRequired`)|`true`|Whether to provision a Bastion host instance; if 'true', then you need to provide an EC2 Key Pair|SSH Key Pair Name
-(`KeyPairName`)|`**__Blank string__**`|Public/private EC2 Key Pairs to allow you to securely access the Bastion host
+(`BastionHostRequired`)|`true`|Whether to provision a Bastion host instance; if 'true', then you need to provide an EC2 Key Pair.|SSH Key Pair Name
+(`KeyPairName`)|`**__Blank string__**`|Public/private EC2 Key Pairs (without file extension) to allow you to securely access the Bastion host.
 |===
 .AWS Quick Start Configuration
 [width="100%",cols="16%,11%,73%",options="header",]
