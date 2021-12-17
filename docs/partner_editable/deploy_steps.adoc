@@ -32,7 +32,7 @@ aws s3 cp quickstart-atlassian-crowd s3://<BUCKET_NAME> --recursive --acl public
 
 ==== Launch the templates directly from the S3 bucket
 
-After everything is uploaded, deploy your production stack from your S3 bucket as follows:
+After everything is uploaded, deploy your production stack from your S3 bucket as follows. Each deployment takes about {deployment_time} to complete.
 
 . Sign in to your AWS account on the https://console.aws.amazon.com/console/home[AWS Console].
 . Check the AWS Region displayed in the upper-right corner of the navigation bar, and change it if necessary. This Region is where {partner-product-short-name} is built. The template is launched in the `us-east-2` Region by default.
