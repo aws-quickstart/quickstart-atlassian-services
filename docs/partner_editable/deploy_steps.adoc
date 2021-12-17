@@ -1,19 +1,40 @@
-=== Launching from a cloned Quick Start (recommended for production)
+=== Launch from a cloned Quick Start (recommended for production)
 anchor:deployment-main[]
 
-The fastest way to deploy the {partner-product-name-short} with this Quick Start is directly through its AWS Quick Start interface. However, when you deploy {partner-product-name-short} this way, any updates that are made to the Quick Start templates propagate directly to your production deployment. These updates sometimes involve adding or removing parameters, which could introduce unexpected changes or break your deployment.
+The fastest way to deploy the {partner-product-short-name} with this Quick Start is directly through its AWS Quick Start interface. However, when you deploy {partner-product-short-name} this way, any updates that are made to the Quick Start templates propagate directly to your production deployment. These updates sometimes involve adding or removing parameters, which could introduce unexpected changes or break your deployment.
 
-As a best practice, instead of deploying directly through the AWS Quick Start interface, clone the {partner-product-name-short} Quick Start templates to a custom Amazon Simple Storage Service (Amazon S3) bucket. Then, launch the templates directly from the S3 bucket. This practice lets you control when to apply the latest changes to your environment.
+As a best practice, instead of deploying directly through the AWS Quick Start interface, clone the {partner-product-short-name} Quick Start templates to a custom S3 bucket, and then launch the templates directly from the S3 bucket, as detailed in the following sections. This practice lets you control when to apply the latest changes to your environment.
 
-// include::./_clone_quickstart.adoc[]
+==== Clone the ASI Quick Start templates to a custom S3 bucket
 
-After everything is uploaded, you can deploy your production stack from your S3 bucket.
+. Clone a local copy of the Quick Start templates (including all of its submodules) by running the following from the command line:
++
+----
+git clone --recurse-submodules https://github.com/aws-quickstart/quickstart-atlassian-services.git
+----
+. Install and set up the https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html[AWS Command Line Interface (CLI)] so that you can create an S3 bucket and upload content to it.
+. Create an S3 bucket in your Region (replacing the text in brackets):
++
+----
+aws s3 mb s3://<BUCKET_NAME> --region <AWS_REGION>
+----
+. Open the following templates:
++
+* `templates/quickstart-database-for-atlassian-services.yaml`
++
+* `templates/quickstart-vpc-for-atlassian-services.yaml`
+. In both templates, the `QSS3BucketName` default value is set to `aws-quickstart`. Replace this value with the name of the bucket you created earlier (`<BUCKET_NAME>`).
+. Return to the parent directory of your local clone of the Quick Start templates. From there, upload all the files in your local clone to your S3 bucket:
++
+----
+aws s3 cp quickstart-atlassian-crowd s3://<BUCKET_NAME> --recursive --acl public-read
+----
+
+==== Launch the templates directly from the S3 bucket
+
+After everything is uploaded, deploy your production stack from your S3 bucket as follows:
 
 . Sign in to your AWS account on the https://console.aws.amazon.com/console/home[AWS Console].
-. Check the AWS Region displayed in the upper-right corner of the navigation bar, and change it if necessary. This Region is where {product-partner-name-short} is built. The template is launched in the `us-east-2` Region by default.
+. Check the AWS Region displayed in the upper-right corner of the navigation bar, and change it if necessary. This Region is where {partner-product-short-name} is built. The template is launched in the `us-east-2` Region by default.
 . Go to *CloudFormation* > *Create Stack*. When specifying a template, paste in the Object URL of the `templates/quickstart-vpc-for-atlassian-services.yaml` template. Choose *Next* to start configuring your deployment.
-. On the *Specify stack* details page, change the stack name, if needed. Review the parameters for the template, and provide values for parameters that require input. For all other parameters, review the default settings and customize them as necessary. 
-
-// For details about each setting, refer to the section matching your deployment type:
-// - <<launch-into-a-new-vpc>> (if you're deploying an ASI with {partner-product-name-short})
-// - <<launch-into-an-existing-vpc>> (if you're deploying {partner-product-name-short} into a new ASI)
+. On the *Specify stack* details page, change the stack name, if needed. Review the parameters for the template, and provide values for parameters that require input. For all other parameters, review the default settings and customize them as necessary.

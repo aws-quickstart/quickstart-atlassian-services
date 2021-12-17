@@ -1,39 +1,39 @@
-. Choose the URL that is displayed in the *Outputs* tab of the AWS CloudFormation stack to go to the {partner-product-name-short} configuration page.
+. Choose the URL that is displayed in the *Outputs* tab of the AWS CloudFormation stack to go to the {partner-product-short-name} configuration page.
 +
-IMPORTANT: If you get an https://confluence.atlassian.com/kb/network-and-connectivity-troubleshooting-guide-720405335.html[HTTP Error 503] response when you access the URL, it means that {partner-product-name-short} is still loading. This is expected, and you should wait a couple of minutes before trying again.
-. On the *License* page, provide a valid {partner-product-name-short} license key. If you don’t have a valid license, see https://my.atlassian.com/products/index[My Atlassian], and sign up for an evaluation Data Center license (you must log in to your Atlassian account).
+IMPORTANT: If you get an https://confluence.atlassian.com/kb/network-and-connectivity-troubleshooting-guide-720405335.html[HTTP Error 503] response when you access the URL, it means that {partner-product-short-name} is still loading. This is expected, and you should wait a couple of minutes before trying again.
+. On the *License* page, provide a valid {partner-product-short-name} license key. If you don’t have a valid license, see https://my.atlassian.com/products/index[My Atlassian], and sign up for an evaluation Data Center license (you must log in to your Atlassian account).
 +
-.{partner-product-name-short} licensing
+.{partner-product-short-name} licensing
 image::../images/qs-crowd-license.png[License,width=640]
-.	On the *{partner-product-name-short} installation* page, choose *New installation* to continue setting up a new {partner-product-name-short} deployment.
+.	On the *{partner-product-short-name} installation* page, choose *New installation* to continue setting up a new {partner-product-short-name} deployment.
 +
-.New {partner-product-name-short} installation
+.New {partner-product-short-name} installation
 image::../images/qs-crowd-new-install.png[New install,width=640]
 +
-NOTE: From this page, you can also choose *Import data from an XML backup* to migrate data from an existing {partner-product-name-short} deployment. See https://confluence.atlassian.com/x/DAvoE[Migrating Crowd Between Servers] for more information. The rest of this procedure focuses on configuring a new {partner-product-name-short} deployment.
+NOTE: From this page, you can also choose *Import data from an XML backup* to migrate data from an existing {partner-product-short-name} deployment. See https://confluence.atlassian.com/x/DAvoE[Migrating Crowd Between Servers] for more information. The rest of this procedure focuses on configuring a new {partner-product-short-name} deployment.
 . The *Database configuration* page already contains all the required settings to connect to the database. You will not be able to edit these settings from this screen. Choose *Continue* to proceed.
 +
-.{partner-product-name-short} database configuration
+.{partner-product-short-name} database configuration
 image::../images/qs-crowd-dbconfig.png[]
-. On the *Options* page, you can edit the name of the {partner-product-name-short} deployment and set the session's timeout value. Do not change the base URL, because this setting is imported automatically.
+. On the *Options* page, you can edit the name of the {partner-product-short-name} deployment and set the session's timeout value. Do not change the base URL, because this setting is imported automatically.
 +
-.{partner-product-name-short} options
+.{partner-product-short-name} options
 image::../images/qs-crowd-options.png[]
-. On the *Internal directory* page, configure how {partner-product-name-short} should store user, role, and group information. For more information, see https://confluence.atlassian.com/x/X4AbAQ[Configuring an Internal Directory].
+. On the *Internal directory* page, configure how {partner-product-short-name} should store user, role, and group information. For more information, see https://confluence.atlassian.com/x/X4AbAQ[Configuring an Internal Directory].
 +
-.{partner-product-name-short} internal directory
+.{partner-product-short-name} internal directory
 image::../images/qs-internal-directory.png[]
-. Use the *Default administrator* page to create a {partner-product-name-short} administrator account. For more information, see https://confluence.atlassian.com/x/GwEQCQ[Crowd Administrator].
+. Use the *Default administrator* page to create a {partner-product-short-name} administrator account. For more information, see https://confluence.atlassian.com/x/GwEQCQ[Crowd Administrator].
 +
-.{partner-product-name-short} default administrator
+.{partner-product-short-name} default administrator
 image::../images/qs-crowd-first-admin.png[]
 . Enable any integrated applications on the *Integrated applications* screen. You can also wait until after the configuration process to enable these applications.
 +
-.{partner-product-name-short} integrated applications
+.{partner-product-short-name} integrated applications
 image::../images/qs-crowd-intergratedapps.png[]
 . On the login page, use the credentials you created earlier for the *Default administrator* screen.
 +
-.{partner-product-name-short} login
+.{partner-product-short-name} login
 image::../images/qs-crowd-login.png[]
 . Choose *Clustering* from the *Administration console* sidebar, which should have one node displayed. You can now add nodes to your cluster as needed.
 +

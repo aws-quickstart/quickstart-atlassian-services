@@ -2,4 +2,4 @@
 // Identify your target audience and explain how/why they would use this Quick Start.
 //Avoid borrowing text from third-party websites (copying text from AWS service documentation is fine). Also, avoid marketing-speak, focusing instead on the technical aspect.
 
-This Quick Start is for users who want to deploy {partner-product-name} ({partner-product-name-short}) in a supported configuration on the AWS Cloud, following AWS best practices. The Quick Starts for https://fwd.aws/Wz3Qb[Jira], https://fwd.aws/kBpWN[Confluence], https://fwd.aws/dEX6W[Bitbucket] and https://fwd.aws/g6Q3D[Crowd] all require the {partner-product-name-short}. 
+This Quick Start is for users who want to deploy {partner-product-name} ({partner-product-short-name}) in a supported configuration on the AWS Cloud, following AWS best practices. The Quick Starts for https://fwd.aws/Wz3Qb[Jira], https://fwd.aws/kBpWN[Confluence], https://fwd.aws/dEX6W[Bitbucket] and https://fwd.aws/g6Q3D[Crowd] all require the {partner-product-short-name}. 
