@@ -21,9 +21,8 @@ Metadata:
     Exclusions: [W4002, E3012, E1001, E9101, W9006, W9002, W9003, ERDSDBInstancePubliclyAccessible, EIAMPolicyWildcardResource, ERDSStorageEncryptionEnabled]
 Parameters:
   DBEngineVersion:
-    Default: 9.6
+    Default: 10
     AllowedValues:
-      - 9.6
       - 10
       - 11
       - 12
