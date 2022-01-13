@@ -16,13 +16,13 @@ Parameters:
     ConstraintDescription: Must be 'Amazon Aurora PostgreSQL' or 'PostgreSQL'.
     Type: String
   DBEngineVersion:
-    Default: 9
+    Default: 10
     AllowedValues:
       - 9
       - 10
       - 11
       - 12
-    Description: "The database engine version to use. We'll install a supported minor version that's suitable for your chosen engine"
+    Description: "The database engine version to use. We'll install a supported minor version that's suitable for your chosen engine. (Warning: Amazon RDS for PostgreSQL 9.6 will reach end of life on January 31st, 2022. Deployments after this date should not be made using this version. If you wish to upgrade to a major version from 9 see: https://confluence.atlassian.com/x/1IRlQQ)"
     Type: String
   DBSecurityGroup:
     Description: "ID of the security group (e.g. sg-0234se). One will be created for you if left empty."
