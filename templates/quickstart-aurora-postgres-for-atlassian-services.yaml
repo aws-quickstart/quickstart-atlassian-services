@@ -195,7 +195,7 @@ Parameters:
     Description: "The number of days for which automatic database snapshots are retained."
     Type: String
   DBEngineVersion:
-    Description: Select Database Engine Version
+    Description: "Select Database Engine Version. (Warning: Amazon RDS for PostgreSQL 9.6 will reach end of life on January 31st, 2022. Deployments after this date should not be made using this version. If you wish to upgrade to a major version from 9 see: https://confluence.atlassian.com/x/1IRlQQ)"
     Type: String
     Default: 11.9
     AllowedValues:
