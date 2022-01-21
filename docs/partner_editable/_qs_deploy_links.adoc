@@ -1,5 +1,9 @@
 [cols=",]
 |===
-|https://fwd.aws/WNMAy[Deploy {partner-product-name-short} into a new ASI (end-to-end deployment)^]
-|https://fwd.aws/8gBER[Deploy {partner-product-name-short} into an existing ASI^]
+|https://fwd.aws/WNMAy[Deploy {partner-product-short-name} into a new ASI (end-to-end deployment)^]
+|https://fwd.aws/8gBER[Deploy {partner-product-short-name} into an existing ASI^]
 |===
+
+//This file does not seem to be in use. Not sure why it's here, but I'm keep it in the doc set for reference.
+
+// As of 12/17/2021, the landing page had this permalink on Step 2 ("Launch the Quick Start"): https://fwd.aws/5gpJb. I'm removing that permalink there to align with the launch steps given in this doc.

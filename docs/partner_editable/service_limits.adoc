@@ -2,23 +2,13 @@
 
 |===
 |Resource |This deployment uses
+
+// Space needed to maintain table headers
 //|VPC (https://aws.amazon.com/quickstart/architecture/atlassian-standard-infrastructure/[ASI]) | 1
-|Auto Scaling groups | 1 (2 if a Bastion Host is provisioned)
+|Auto Scaling groups | 1 (2 if a bastion host is provisioned)
 //|Application Load Balancers | 1
 |Elastic IP addresses | _variable based on user configuration_
 |AWS Identity and Access Management (IAM) security groups | _variable based on user configuration_
 |IAM roles | _variable based on user configuration_
 |EC2 instances | _variable based on user configuration_
 |===
-
-// |===
-// |Resource |This deployment uses
-// |https://aws.amazon.com/quickstart/architecture/atlassian-standard-infrastructure/[ASI] | 1
-// |Elastic IP addresses | ???
-// |AWS Identity and Access Management (IAM) security groups | ???
-// |IAM roles | ???
-// |Auto Scaling groups | 1
-// |Application Load Balancers | 1
-// |Network Load Balancers | ???
-// |EC2 instances | _variable_
-// |===

@@ -1,6 +1,6 @@
 === Deploy Atlassian Products
 
-Now that you’ve set up your stand-alone {partner-product-name-short}, you can provision Jira, Confluence, Bitbucket, or Crowd in it.
+Now that you’ve set up your stand-alone {partner-product-short-name}, you can provision Jira, Confluence, Bitbucket, or Crowd in it.
 
 [WARNING]
 .Back up and re-deploy old deployments

@@ -1,6 +1,6 @@
 :quickstart-project-name: quickstart-atlassian-services
 :partner-product-name: Atlassian Standard Infrastructure
-:partner-product-name-short: ASI
+:partner-product-short-name: ASI 
 :partner-company-name: Atlassian
 :vpc-name: Atlassian Standard Infrastructure
 :doc-month: February
@@ -10,8 +10,4 @@
 :deployment_time: 20 minutes
 :default_deployment_region: us-east-2
 :control_tower:
-// Uncomment these two attributes if you are leveraging
-// - an AWS Marketplace listing.
-// Additional content will be auto-generated based on these attributes.
-// :marketplace_subscription:
-// :marketplace_listing_url: https://example.com/
+:no_parameters:
