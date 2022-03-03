@@ -4,10 +4,9 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.10">
-<title>Atlassian Standard Infrastructure on the AWS Cloud</title>
+<meta name="generator" content="Asciidoctor 2.0.16">
+<title>Feedback</title>
 <style>
-
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
 /* Uncomment @import statement to use as custom stylesheet */
 @import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
@@ -182,7 +181,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
   padding-top:0;
   overflow:hidden;
   background:#283e5b;
-  border-bottom: 4px solid #435c7c;
+  /* border-bottom: 4px solid #435c7c; */
   width:320px;
   height:154px;
   top:0;
@@ -411,7 +410,7 @@ span.icon>.fa{cursor:default}
 a span.icon>.fa{cursor:inherit}
 .admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
 .admonitionblock td.icon .icon-note::before{content:"\f05a";color:#19407c}
-.admonitionblock td.icon .icon-tip::before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-tip::before{content:"\f0eb";color: rgb(3, 87, 21);}
 .admonitionblock td.icon .icon-warning::before{content:"\f071";color:#bf6900}
 .admonitionblock td.icon .icon-caution::before{content:"\f06d";color:#bf3400}
 .admonitionblock td.icon .icon-important::before{content:"\f06a";color:#bf0000}
@@ -747,8 +746,43 @@ p {
   font-weight  : 300 !important;
 }
 
-#toc.toc2 #toctitle{
-  background-image: url('images/AWS-Logo.svg');
+/* image layout */
+#toc.toc2 #toctitle {
+  background-image: url("images/AWS-Logo.svg");
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center;
+  width: auto;
+  height: 15%;
+}
+
+/* Left Navbar size */
+#toc.toc2 {
+  width: 17%;
+  min-width: 15em;
+}
+
+/* auto width for main page */
+body.toc2 {
+  padding-left: 22%;
+  padding-right: 2%;
+}
+
+/* hide left nav bar if page size is smaller than 767px */
+@media screen and (max-width: 767px) {
+  #toc {
+      display: none !important;
+  }
+  body.toc2 {
+    padding-left: 1%;
+    padding-right: 1%;
+    position: relative;
+  }
+
+  #content {
+    padding-left: 2%;
+    padding-right: 2%;
+  }
 }
 
 /* QS Tables */
@@ -781,6 +815,15 @@ a img {
 
 .footer-text{color:rgba(255,255,255,.8);line-height:1.44;background:#1c222a;padding:1.25em;max-width:100%;margin-bottom:unset}
 p.footer-text a{color:#d7d8d8}
+
+/* This is for the 'dummy' image in the docs to help with reporting on guide views. */
+/* DO NOT MODIFY */
+.image-container img {
+  width: 1px;
+  height: 1px;
+  } 
+/* END dummy image */
+
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -789,28 +832,7 @@ p.footer-text a{color:#d7d8d8}
 <div id="toc" class="toc2">
 <div id="toctitle"></div>
 <ul class="sectlevel1">
-<li><a href="#_overview">Overview</a></li>
-<li><a href="#_atlassian_standard_infrastructure_on_aws">Atlassian Standard Infrastructure on AWS</a></li>
-<li><a href="#_aws_costs">AWS costs</a></li>
-<li><a href="#_software_licenses">Software licenses</a></li>
-<li><a href="#_architecture">Architecture</a></li>
-<li><a href="#_planning_the_deployment">Planning the deployment</a>
-<ul class="sectlevel2">
-<li><a href="#_specialized_knowledge">Specialized knowledge</a></li>
-<li><a href="#_aws_account">AWS account</a></li>
-<li><a href="#_technical_requirements">Technical requirements</a></li>
-</ul>
-</li>
-<li><a href="#_deployment_steps">Deployment steps</a>
-<ul class="sectlevel2">
-<li><a href="#_launching_from_a_cloned_quick_start_recommended_for_production">Launching from a cloned Quick Start (recommended for production)</a></li>
-<li><a href="#_deploy_atlassian_products">Deploy Atlassian Products</a></li>
-</ul>
-</li>
-<li><a href="#_troubleshooting">Troubleshooting</a></li>
-<li><a href="#_send_us_feedback">Send us feedback</a></li>
-<li><a href="#_quick_start_reference_deployments">Quick Start reference deployments</a></li>
-<li><a href="#_github_repository">GitHub repository</a></li>
+<li><a href="#_feedback">Feedback</a></li>
 <li><a href="#_notices">Notices</a></li>
 </ul>
 </div>
@@ -818,543 +840,61 @@ p.footer-text a{color:#d7d8d8}
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
-<h2 id="_atlassian_standard_infrastructure_on_the_aws_cloud" class="discrete text-center">Atlassian Standard Infrastructure on the AWS Cloud</h2>
-<h2 id="_quick_start_reference_deployment" class="discrete text-left text-center">Quick Start Reference Deployment</h2>
-<div class="imageblock text-center">
-<div class="content">
-<img src="https://aws-quickstart.s3.amazonaws.com/quickstart-atlassian-services/docs/boilerplate/.images/aws-quickstart-graphic.png" alt="QS" width="80" height="80">
+<div class="paragraph">
+<p>Unresolved directive in index_deployment_guide.adoc - include::../docs/_deployment_guide.adoc[]
+Unresolved directive in index_deployment_guide.adoc - include::../docs/deployment_guide/partner_editable/_settings.adoc[]</p>
 </div>
+<div class="paragraph">
+<p>Unresolved directive in index_deployment_guide.adoc - include::./boilerplate/deployment_{type}/_layout_deployment.adoc[]</p>
 </div>
-<div class="paragraph text-center">
-<p><strong>February 2020</strong><br>
-<em>Adam Brokes, Ben Partridge, Carlos Corredor, Chris Szmajda, Don Domingo, Dylan Rathbone, Felix Haehnel, Steve Smith, Varun Arbatti</em><br>
-<em>Tony Vattathil - Principal Solutions Architect, AWS</em></p>
-</div>
-<div class="admonitionblock tip text-left">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Visit our <a href="https://github.com/aws-quickstart/quickstart-atlassian-services" target="_blank" rel="noopener">GitHub repository</a> for source files and to post feedback,
-report bugs, or submit feature ideas for this Quick Start.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph text-left">
-<p>This Quick Start was created by Atlassian in collaboration with Amazon Web Services (AWS). <a href="http://aws.amazon.com/quickstart/" target="_blank" rel="noopener">Quick Starts</a> are automated reference deployments that use AWS CloudFormation templates to deploy key technologies on AWS, following AWS best practices.</p>
+<div class="paragraph">
+<p>After you successfully deploy a Quick Start, confirm that your resources and services are updated and configured—including any required patches—to meet your security and other needs. For more information, refer to the <a href="https://aws.amazon.com/compliance/shared-responsibility-model/" target="_blank" rel="noopener">Shared Responsibility Model</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_overview">Overview</h2>
+<h2 id="_feedback">Feedback</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This Quick Start is for users who want to deploy Atlassian Standard Infrastructure (ASI) in a supported configuration on the AWS Cloud, following AWS best practices. The Quick Starts for <a href="https://fwd.aws/Wz3Qb">Jira</a>, <a href="https://fwd.aws/kBpWN">Confluence</a>, <a href="https://fwd.aws/dEX6W">Bitbucket</a> and <a href="https://fwd.aws/g6Q3D">Crowd</a> all require the ASI.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Amazon may share user-deployment information with the AWS Partner that collaborated with AWS on the Quick Start.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_atlassian_standard_infrastructure_on_aws">Atlassian Standard Infrastructure on AWS</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Atlassian Standard Infrastructure is a highly available, secure virtual private cloud (VPC) specifically customized to host Atlassian Data Center products.
-The ASI contains all the components required for the deployment and integration of multiple Atlassian Data Center products within the same VPC. The Quick Starts for all Atlassian Data Center products (namely, <a href="https://fwd.aws/Wz3Qb">Jira</a>, <a href="https://fwd.aws/kBpWN">Confluence</a>, <a href="https://fwd.aws/dEX6W">Bitbucket</a> and <a href="https://fwd.aws/g6Q3D">Crowd</a>) all require the ASI.</p>
-</div>
-<div class="paragraph">
-<p>You can deploy the ASI as a stand-alone stack, or as a nested stack of an Atlassian Data Center product. Multiple Atlassian Data Center deployments can use the same ASI.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_aws_costs">AWS costs</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>You are responsible for the cost of the AWS services and any paid third-party licenses used while running this Quick Start. There is no additional cost for
-using the Quick Start.</p>
-</div>
-<div class="paragraph">
-<p>The AWS CloudFormation templates for Quick Starts include
-configuration parameters that you can customize. Some of the settings,
-such as the instance type, affect the cost of deployment. For cost estimates,
-see the pricing pages for each AWS service you use. Prices are subject to change.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-After you deploy the Quick Start, <a href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-reports-gettingstarted-turnonreports.html" target="_blank" rel="noopener">create AWS Cost and Usage Reports</a> to deliver billing metrics to an Amazon Simple Storage Service (Amazon S3) bucket in your account. These reports provide cost estimates based on usage throughout each month and aggregate the data at the end of the month. For more information, see <a href="https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-reports-costusage.html" target="_blank" rel="noopener">What are AWS Cost and Usage Reports?</a>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_software_licenses">Software licenses</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This Quick Start deploys a cluster-ready infrastructure for the Atlassian Standard Infrastructure, which provides the foundational AWS VPC requirements of Atlassian Data Center products. These products require a license. Refer to <a href="https://www.atlassian.com/software/jira/pricing?tab=self-managed">Jira</a>, <a href="https://www.atlassian.com/software/confluence/pricing?tab=self-managed">Confluence</a>, <a href="https://www.atlassian.com/software/bitbucket/pricing?tab=self-managed">Bitbucket</a> and <a href="https://www.atlassian.com/software/crowd/pricing?tab=self-managed">Crowd</a> pricing information for more details.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_architecture">Architecture</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Deploying this Quick Start for a new <a href="https://aws.amazon.com/quickstart/architecture/Atlassian-standard-infrastructure/">Atlassian Standard Infrastructure (ASI)</a> with default parameters builds the following ASI environment in the AWS Cloud.</p>
-</div>
-<div id="architecture1" class="imageblock">
-<div class="content">
-<img src="images/asi-architecture-diagram.png" alt="Architecture" width="640">
-</div>
-<div class="title">Figure 1. Quick Start architecture for ASI on AWS</div>
-</div>
-<div class="paragraph">
-<p>As shown in figure 1, the Quick Start sets up the following:</p>
+<p>To submit feature ideas and report bugs, use the <strong>Issues</strong> section of the GitHub repository for this Quick Start. To submit code, refer to the <a href="https://aws-quickstart.github.io/" target="_blank" rel="noopener">Quick Start Contributor&#8217;s Guide</a>. For all other feedback, use the following GitHub links:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>A highly available architecture that spans two Availability Zones.</p>
+<p><a href="https://github.com/{quickstart-github-org}/{quickstart-project-name}/issues/new?labels=documentation,grammar+or+spelling&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Grammar or spelling</a></p>
 </li>
 <li>
-<p>In the public subnets:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>A network address translation (NAT) gateway to allow outbound internet access for resources in the private subnets.</p>
+<p><a href="https://github.com/{quickstart-github-org}/{quickstart-project-name}/issues/new?labels=documentation,broken+link&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Broken link</a></p>
 </li>
 <li>
-<p>A bastion host that enables secure access to nodes within your infrastructure without exposing it to the internet (for more information, see <a href="https://docs.aws.amazon.com/quickstart/latest/linux-bastion/architecture.html#bastion-hosts">Bastion Hosts</a>). You can choose not to provision a bastion host if you prefer to access ASI nodes through the <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html">AWS Systems Manager</a>.</p>
+<p><a href="https://github.com/{quickstart-github-org}/{quickstart-project-name}/issues/new?labels=documentation,inaccurate+content&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Inaccurate content</a></p>
+</li>
+<li>
+<p><a href="https://github.com/{quickstart-github-org}/{quickstart-project-name}/issues/new?labels=documentation,display+and+design&amp;title=Deployment+guide+feedback&amp;body=Section+heading:%0ADocumentation+issue+description:%0A" target="_blank" rel="noopener">Display or design</a></p>
 </li>
 </ul>
 </div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>After the Quick Start sets up this foundational stack, it <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-stack-exports.html">exports the stack’s output values</a> to expose these components to other stacks. The Quick Starts for <a href="https://fwd.aws/Wz3Qb">Jira</a>, <a href="https://fwd.aws/kBpWN">Confluence</a>, <a href="https://fwd.aws/dEX6W">Bitbucket</a> and <a href="https://fwd.aws/g6Q3D">Crowd</a> use the exported values to discover these underlying components, so you can easily provision Atlassian products on this infrastructure. For example, Figure 2 shows the Quick Start architecture for Jira, which is built on the ASI.</p>
-</div>
-<div id="architecture2" class="imageblock">
-<div class="content">
-<img src="images/jira-architecture.png" alt="Architecture" width="640">
-</div>
-<div class="title">Figure 2. Quick Start architecture for Jira on AWS</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_planning_the_deployment">Planning the deployment</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_specialized_knowledge">Specialized knowledge</h3>
-<div class="paragraph">
-<p>This deployment requires a moderate level of familiarity with
-AWS services. If you’re new to AWS, see <a href="https://aws.amazon.com/getting-started/" target="_blank" rel="noopener">Getting Started Resource Center</a>
-and <a href="https://aws.amazon.com/training/" target="_blank" rel="noopener">AWS Training and Certification</a>. These sites provide materials for learning how to design,
-deploy, and operate your infrastructure and applications on the AWS Cloud.</p>
-</div>
-<div class="paragraph">
-<p>This Quick Start assumes familiarity with managing Atlassian ASI. Refer to the <a href="https://confluence.atlassian.com/x/ZID7">Crowd Administration Guide</a> for more information.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_aws_account">AWS account</h3>
-<div class="paragraph">
-<p>If you don’t already have an AWS account, create one at <a href="https://aws.amazon.com/" target="_blank" rel="noopener">https://aws.amazon.com</a> by following the on-screen instructions. Part of the sign-up process involves receiving a phone call and entering a PIN using the phone keypad.</p>
-</div>
-<div class="paragraph">
-<p>Your AWS account is automatically signed up for all AWS services. You are charged only for the services you use.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_technical_requirements">Technical requirements</h3>
-<div class="paragraph">
-<p>Before you launch the Quick Start, review the following information and ensure that your account is properly configured. Otherwise, deployment might fail.</p>
-</div>
-<div class="sect3">
-<h4 id="_resource_quotas">Resource quotas</h4>
-<div class="paragraph">
-<p>If necessary, request <a href="https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/" target="_blank" rel="noopener">service quota increases</a> for the following resources. You might request quota increases to avoid exceeding the default limits for any resources that are shared across multiple deployments. The <a href="https://console.aws.amazon.com/servicequotas/home?region=us-east-2#!/" target="_blank" rel="noopener">Service Quotas console</a> displays your usage and quotas for some aspects of some services. For more information, see <a href="https://docs.aws.amazon.com/servicequotas/latest/userguide/intro.html" target="_blank" rel="noopener">What is Service Quotas?</a> and <a href="https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html" target="_blank" rel="noopener">AWS service quotas</a>.</p>
-</div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Resource</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This deployment uses</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Auto Scaling groups</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1 (2 if a Bastion Host is provisioned)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Elastic IP addresses</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>variable based on user configuration</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AWS Identity and Access Management (IAM) security groups</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>variable based on user configuration</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IAM roles</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>variable based on user configuration</em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EC2 instances</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>variable based on user configuration</em></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_supported_regions">Supported Regions</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>Americas</p>
-<div class="ulist">
-<ul>
-<li>
-<p><em>us-east-1	(Northern Virginia)</em></p>
-</li>
-<li>
-<p><em>us-east-2 (Ohio)</em></p>
-</li>
-<li>
-<p><em>us-west-1 (Northern California)</em></p>
-</li>
-<li>
-<p><em>us-west-2 (Oregon)</em></p>
-</li>
-<li>
-<p><em>ca-central-1 (Montreal)</em></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Europe/Middle East/Africa</p>
-<div class="ulist">
-<ul>
-<li>
-<p><em>eu-west-1	(Ireland)</em></p>
-</li>
-<li>
-<p><em>eu-central-1 (Frankfurt)</em></p>
-</li>
-<li>
-<p><em>eu-west-2 (London)</em></p>
-</li>
-<li>
-<p><em>eu-west-3 (Paris)</em></p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Asia Pacific</p>
-<div class="ulist">
-<ul>
-<li>
-<p><em>ap-southeast-1 (Singapore)</em></p>
-</li>
-<li>
-<p><em>ap-northeast-1 (Tokyo)</em></p>
-</li>
-<li>
-<p><em>ap-southeast-2 (Sydney)</em></p>
-</li>
-<li>
-<p><em>ap-northeast-2 (Seoul)</em></p>
-</li>
-<li>
-<p><em>ap-south-1 (Mumbai)</em></p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>This list was last updated on June 20, 2019.</p>
-</div>
-<div class="paragraph">
-<p>The services offered in each region change from time to time. If your preferred region isn&#8217;t on this list, check the <a href="https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/">Regional Product Services</a> table to see if it already supports EFS.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="title">AWS GovCloud is not for production</div>
-<div class="paragraph">
-<p>Our Quick Starts are also available on <a href="https://aws.amazon.com/govcloud-us/">AWS GovCloud</a> regions, but only for testing purposes. We do not support any deployments on GovCloud regions resulting from this Quick Start.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-Certain Regions are available on an opt-in basis. For more information, see <a href="https://docs.aws.amazon.com/general/latest/gr/rande-manage.html" target="_blank" rel="noopener">Managing AWS Regions</a>.
-</td>
-</tr>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_iam_permissions">IAM permissions</h4>
-<div class="paragraph">
-<p>Before launching the Quick Start, you must sign in to the AWS Management Console with IAM permissions for the resources that the templates deploy. The <em>AdministratorAccess</em> managed policy within IAM provides sufficient permissions, although your organization may choose to use a custom policy with more restrictions. For more information, see <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_job-functions.html" target="_blank" rel="noopener">AWS managed policies for job functions</a>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_deployment_options">Deployment options</h4>
-<div class="paragraph">
-<p>This Quick Start deploys a stand-alone stack containing the Atlassian Standard Infrastructure. Upon deployment, you can use it as the VPC for any number of Atlassian Data Center Quick Start deployments (<a href="https://fwd.aws/Wz3Qb">Jira Software/Service Desk Data Center</a>, <a href="https://aws.amazon.com/quickstart/architecture/confluence/">Confluence Data Center</a>, <a href="https://fwd.aws/BBeJW">Bitbucket Data Center</a>, and <a href="https://fwd.aws/QXEDE">Crowd Data Center</a>). Deploying multiple Atlassian Data Center products within the same ASI helps ensure smooth cross-product integration.</p>
-</div>
-<div class="paragraph">
-<p>This Quick Start allows you to deploy with or without a bastion host. This host enables secure access to nodes within your infrastructure without exposing it to the internet (for more information, see <a href="https://docs.aws.amazon.com/quickstart/latest/linux-bastion/architecture.html#bastion-hosts">Bastion Hosts</a>). You can choose not to provision a bastion host if you prefer to access ASI nodes through the <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html">AWS Systems Manager</a>.</p>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-You can remove the bastion host from an existing ASI. If you do, you&#8217;ll also need to unlink the bastion host from any Atlassian Data Center products using the ASI. For product-specific instructions, refer to the knowledge bases of <a href="https://confluence.atlassian.com/x/sjvsOw">Jira</a>, <a href="https://confluence.atlassian.com/x/NDrzOw">Confluence</a>, <a href="https://confluence.atlassian.com/x/SzrzOw">Bitbucket</a>, or <a href="https://confluence.atlassian.com/x/eDrzOw">Crowd</a>.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_deployment_steps">Deployment steps</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="_launching_from_a_cloned_quick_start_recommended_for_production">Launching from a cloned Quick Start (recommended for production)</h3>
-<div class="paragraph">
-<p><a id="deployment-main"></a></p>
-</div>
-<div class="paragraph">
-<p>The fastest way to deploy the ASI with this Quick Start is directly through its AWS Quick Start interface. However, when you deploy ASI this way, any updates that are made to the Quick Start templates propagate directly to your production deployment. These updates sometimes involve adding or removing parameters, which could introduce unexpected changes or break your deployment.</p>
-</div>
-<div class="paragraph">
-<p>As a best practice, instead of deploying directly through the AWS Quick Start interface, clone the ASI Quick Start templates to a custom Amazon Simple Storage Service (Amazon S3) bucket. Then, launch the templates directly from the S3 bucket. This practice lets you control when to apply the latest changes to your environment.</p>
-</div>
-<div class="paragraph">
-<p>After everything is uploaded, you can deploy your production stack from your S3 bucket.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Sign in to your AWS account on the <a href="https://console.aws.amazon.com/console/home">AWS Console</a>.</p>
-</li>
-<li>
-<p>Check the AWS Region displayed in the upper-right corner of the navigation bar, and change it if necessary. This Region is where {product-partner-name-short} is built. The template is launched in the <code>us-east-2</code> Region by default.</p>
-</li>
-<li>
-<p>Go to <strong>CloudFormation</strong> &gt; <strong>Create Stack</strong>. When specifying a template, paste in the Object URL of the <code>templates/quickstart-vpc-for-atlassian-services.yaml</code> template. Choose <strong>Next</strong> to start configuring your deployment.</p>
-</li>
-<li>
-<p>On the <strong>Specify stack</strong> details page, change the stack name, if needed. Review the parameters for the template, and provide values for parameters that require input. For all other parameters, review the default settings and customize them as necessary.</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>In the following tables, parameters are listed by category and described separately for the deployment options. When you finish reviewing and customizing the parameters, choose <strong>Next</strong>.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-Unless you are customizing the Quick Start templates for your own deployment projects, keep the default settings for the parameters <strong>Quick Start S3 bucket name</strong>, <strong>Quick Start S3 bucket Region</strong>, and <strong>Quick Start S3 key prefix</strong>. Changing these settings automatically updates code references to point to a new Quick Start location. For more information, see the <a href="https://aws-quickstart.github.io/option1.html" target="_blank" rel="noopener">AWS Quick Start Contributor’s Guide</a>.
-</td>
-</tr>
-</table>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="5">
-<li>
-<p>On the <strong>Configure stack options</strong> page, you can <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html" target="_blank" rel="noopener">specify tags</a> (key-value pairs) for resources in your stack and <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-add-tags.html" target="_blank" rel="noopener">set advanced options</a>. When you’re finished, choose <strong>Next</strong>.</p>
-</li>
-<li>
-<p>On the <strong>Review</strong> page, review and confirm the template settings. Under <strong>Capabilities</strong>, select the two check boxes to acknowledge that the template creates IAM resources and might require the ability to automatically expand macros.</p>
-</li>
-<li>
-<p>Choose <strong>Create stack</strong> to deploy the stack.</p>
-</li>
-<li>
-<p>Monitor the status of the stack. When the status is <strong>CREATE_COMPLETE</strong>, the Atlassian Standard Infrastructure deployment is ready.</p>
-</li>
-<li>
-<p>Use the values displayed in the <strong>Outputs</strong> tab for the stack, as shown in <a href="#cfn_outputs">Atlassian Standard Infrastructure outputs after successful deployment</a>, to view the created resources.</p>
-</li>
-</ol>
-</div>
-<div id="cfn_outputs" class="imageblock">
-<div class="content">
-<a class="image" href="images/cfn_outputs.png"><img src="images/cfn_outputs.png" alt="cfn_outputs" width="100%" height="100%"></a>
-</div>
-<div class="title">Figure 3. Atlassian Standard Infrastructure outputs after successful deployment</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_deploy_atlassian_products">Deploy Atlassian Products</h3>
-<div class="paragraph">
-<p>Now that you’ve set up your stand-alone ASI, you can provision Jira, Confluence, Bitbucket, or Crowd in it.</p>
-</div>
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-<div class="title">Back up and re-deploy old deployments</div>
-<div class="paragraph">
-<p>If you already deployed Jira, Confluence, or Bitbucket on AWS by using earlier versions (before February 2019) of the Quick Starts for those products, we recommend that you back up your existing instance, redeploy the product by using the new templates, and then restore the product on the new instance.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>To deploy these products:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Review the deployment guide of the Quick Start you&#8217;re using&#8201;&#8212;&#8201; <a href="https://fwd.aws/Wz3Qb">Jira</a>, <a href="https://fwd.aws/kBpWN">Confluence</a>, <a href="https://fwd.aws/dEX6W">Bitbucket</a> or <a href="https://fwd.aws/g6Q3D">Crowd</a>. Make sure you read the licensing requirements as well.</p>
-</li>
-<li>
-<p>Use the <strong>Deploy into your existing ASI</strong> option to install the product into your VPC.</p>
-</li>
-<li>
-<p>When configuring parameters, choose the VPC ID and subnets from the VPC you created in <a href="deploy-steps.html#deployment-main">Launching from a cloned Quick Start (recommended for production)</a>.</p>
-</li>
-<li>
-<p>Follow the instructions in the deployment guide to test and configure the product.</p>
-</li>
-<li>
-<p>Repeat these steps to deploy additional Atlassian Data Center products (Jira, Confluence, Bitbucket, and Crowd).</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_troubleshooting">Troubleshooting</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>Q.</strong> I encountered a <strong>CREATE_FAILED</strong> error when I launched the Quick Start.</p>
-</div>
-<div class="paragraph">
-<p><strong>A.</strong> If AWS CloudFormation fails to create the stack, relaunch the template with <strong>Rollback on failure</strong> set to <strong>Disabled</strong>. (This setting is under <strong>Advanced</strong> in the AWS CloudFormation console on the <strong>Options</strong> page.) With this setting, the stack’s state is retained and the instance is left running, so you can troubleshoot the issue. (Review the log files in <code>/var/log/atl.log</code> and <code>/var/log/cfn-init.log</code>.)</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-When you set <strong>Rollback on failure</strong> to <strong>Disabled</strong>, you continue to incur AWS charges for this stack. Ensure that you delete the stack when you finish troubleshooting.
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>For additional information, see <a href="https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/troubleshooting.html">Troubleshooting AWS CloudFormation</a> on the AWS website.</p>
-</div>
-<div class="paragraph">
-<p><strong>Q.</strong> I encountered a size limitation error when I deployed the AWS CloudFormation templates.</p>
-</div>
-<div class="paragraph">
-<p><strong>A.</strong> Launch the Quick Start templates from the links in this guide or from another S3 bucket. If you deploy the templates from a local copy on your computer or from a location other than an S3 bucket, you might encounter template size limitations. For more information about AWS CloudFormation quotas, see the <a href="http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cloudformation-limits.html">AWS documentation</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_send_us_feedback">Send us feedback</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To post feedback, submit feature ideas, or report bugs, use the <strong>Issues</strong> section of the <a href="https://github.com/aws-quickstart/quickstart-atlassian-services" target="_blank" rel="noopener">GitHub repository</a> for this Quick Start. To submit code, see the <a href="https://aws-quickstart.github.io/" target="_blank" rel="noopener">Quick Start Contributor’s Guide</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_quick_start_reference_deployments">Quick Start reference deployments</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>See the <a href="https://aws.amazon.com/quickstart/">AWS Quick Start home page</a>.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_github_repository">GitHub repository</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Visit our <a href="https://github.com/aws-quickstart/quickstart-atlassian-services" target="_blank" rel="noopener">GitHub repository</a> to download
-the templates and scripts for this Quick Start, to post your comments,
-and to share your customizations with others.</p>
-</div>
-<hr>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_notices">Notices</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This document is provided for informational purposes only. It represents AWS’s current product offerings and practices as of the date of issue of this document, which are subject to change without notice. Customers are responsible for making their own independent assessment of the information in this document and any use of AWS’s products or services, each of which is provided “as is” without warranty of any kind, whether expressed or implied. This document does not create any warranties, representations, contractual commitments, conditions, or assurances from AWS, its affiliates, suppliers, or licensors. The responsibilities and liabilities of AWS to its customers are controlled by AWS agreements, and this document is not part of, nor does it modify, any agreement between AWS and its customers.</p>
+<p>This document is provided for informational purposes only. It represents current AWS product offerings and practices as of the date of issue of this document, which are subject to change without notice. Customers are responsible for making their own independent assessment of the information in this document and any use of AWS products or services, each of which is provided “as is” without warranty of any kind, whether expressed or implied. This document does not create any warranties, representations, contractual commitments, conditions, or assurances from AWS, its affiliates, suppliers, or licensors. The responsibilities and liabilities of AWS to its customers are controlled by AWS agreements, and this document is not part of, nor does it modify, any agreement between AWS and its customers.</p>
 </div>
 <div class="paragraph">
-<p>The software included with this paper is licensed under the Apache License, version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at <a href="http://aws.amazon.com/apache2.0/" target="_blank" rel="noopener">http://aws.amazon.com/apache2.0/</a> or in the accompanying "license" file. This code is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either expressed or implied. See the License for specific language governing permissions and limitations.</p>
+<p>The software included with this paper is licensed under the Apache License, version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at <a href="http://aws.amazon.com/apache2.0/" target="_blank" rel="noopener">http://aws.amazon.com/apache2.0/</a> or in the accompanying "license" file. This code is distributed on an "as is" basis, without warranties or conditions of any kind, either expressed or implied. See the License for specific language governing permissions and limitations.</p>
 </div>
 </div>
 </div>
 </div>
-<p class="footer-text">
-<!-- We can use document attributes: -->
-<!-- Generated with Asciidoctor v2.0.10. -->
-<a href="https://aws.amazon.com/privacy/">Privacy</a> | <a href="https://aws.amazon.com/terms/">Site terms</a> | &copy; 2021, Amazon Web Services, Inc. or its affiliates and Atlassian. All rights reserved.
-</p>
+<footer>
+    <p class="footer-text">
+        <!-- We can use document attributes: -->
+        <!-- Generated with Asciidoctor v2.0.16. -->
+        <a href="https://aws.amazon.com/privacy/">Privacy</a> | <a href="https://aws.amazon.com/terms/">Site terms</a> |
+        &copy; 2022, Amazon Web Services, Inc. or its affiliates. All rights reserved.
+    </p>
+</footer>
 </body>
 </html>
