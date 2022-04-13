@@ -30,9 +30,9 @@ Parameters:
     Default: ''
   DBAutoMinorVersionUpgrade:
     AllowedValues:
-      - "true"
-      - "false"
-    Default: "false"
+      - true
+      - false
+    Default: true
     Description: "Select true/false to setup Auto Minor Version upgrade. e.g. PostgreSQL 9.6.8 -> 9.6.11"
     Type: String
   DBBackupRetentionPeriod:
