@@ -20,7 +20,7 @@
         "ParameterValue": "$[taskcat_random-string]"
     },
     {
-        "ParameterKey": "KeyPairName",
-        "ParameterValue": "replaced-by-taskcat-override-file"
+        "ParameterKey": "BastionHostRequired",
+        "ParameterValue": "false"
     }
 ]
