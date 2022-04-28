@@ -23,5 +23,5 @@ global:
 
 tests:
   atlassian-vpc:
-    parameter_input: quickstat-vpc-for-atlassian-services-inputs.json
+    parameter_input: quickstart-vpc-for-atlassian-services-inputs.json
     template_file: quickstart-vpc-for-atlassian-services.yaml
