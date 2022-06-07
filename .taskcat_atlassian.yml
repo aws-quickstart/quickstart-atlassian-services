@@ -1,0 +1,19 @@
+project:
+  name: quickstart-atlassian-services
+  owner: quickstart-eng@amazon.com
+  package_lambda: false
+  s3_regional_buckets: true
+  auth:
+    us-east-1: tests
+  regions:
+  - us-east-1
+tests:
+  services:
+    template: 'templates/quickstart-vpc-for-atlassian-services.yaml'
+    parameters:
+      QSS3BucketName: $[taskcat_autobucket]
+      QSS3KeyPrefix: 'quickstart-atlassian-services/'
+      AvailabilityZones: $[taskcat_genaz_2]
+      AccessCIDR: '10.0.0.0/16'
+      ExportPrefix: $[taskcat_random-string]
+      BastionHostRequired: 'false'
