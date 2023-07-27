@@ -1,0 +1,29 @@
+// Include any postdeployment steps here, such as steps necessary to test that the deployment was successful. If there are no postdeployment steps, leave this file empty.
+
+== Postdeployment steps
+
+. Choose the URL that is displayed in the *Outputs* tab of the AWS CloudFormation stack to go to the {partner-product-short-name} configuration page.
++
+IMPORTANT: If you get an https://confluence.atlassian.com/kb/network-and-connectivity-troubleshooting-guide-720405335.html[HTTP Error 503] response when you access the URL, it means that {partner-product-short-name} is still loading. This is expected, and you should wait a couple of minutes before trying again.
+. On the *License* page, provide a valid {partner-product-short-name} license key. If you don’t have a valid license, see https://my.atlassian.com/products/index[My Atlassian], and sign up for an evaluation Data Center license (you must log in to your Atlassian account).
++
+.{partner-product-short-name} licensing
+.	On the *{partner-product-short-name} installation* page, choose *New installation* to continue setting up a new {partner-product-short-name} deployment.
+
+=== Deploy Atlassian Products
+
+Now that you’ve set up your stand-alone {partner-product-short-name}, you can provision Jira, Confluence, Bitbucket, or Crowd in it.
+
+[WARNING]
+.Back up and re-deploy old deployments
+====
+If you already deployed Jira, Confluence, or Bitbucket on AWS by using earlier versions (before February 2019) of the Partner Solutions for those products, we recommend that you back up your existing instance, redeploy the product by using the new templates, and then restore the product on the new instance.
+====
+
+To deploy these products:
+
+. Review the deployment guide of the Partner Solution you're using --  https://fwd.aws/Wz3Qb[Jira], https://fwd.aws/kBpWN[Confluence], https://fwd.aws/dEX6W[Bitbucket] or https://fwd.aws/g6Q3D[Crowd]. Make sure you read the licensing requirements as well.
+. Use the *Deploy into your existing ASI* option to install the product into your VPC.
+. When configuring parameters, choose the VPC ID and subnets from the VPC you created in xref:deploy-steps.adoc#deployment-main[Launching from a cloned Quick Start (recommended for production)].
+. Follow the instructions in the deployment guide to test and configure the product.
+. Repeat these steps to deploy additional Atlassian Data Center products (Jira, Confluence, Bitbucket, and Crowd).

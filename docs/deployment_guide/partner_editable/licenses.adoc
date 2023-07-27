@@ -1,0 +1,3 @@
+// Include details about any licenses and how to sign up. Provide links as appropriate.
+
+This Partner Solution deploys a cluster-ready infrastructure for the {partner-product-name}, which provides the foundational AWS VPC requirements of Atlassian Data Center products. These products require a license. Refer to https://www.atlassian.com/software/jira/pricing?tab=self-managed[Jira], https://www.atlassian.com/software/confluence/pricing?tab=self-managed[Confluence], https://www.atlassian.com/software/bitbucket/pricing?tab=self-managed[Bitbucket] and https://www.atlassian.com/software/crowd/pricing?tab=self-managed[Crowd] pricing information for more details.
